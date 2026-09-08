@@ -988,12 +988,12 @@ h1 em, .h1 em{ color: inherit; }
   min-height: 480px;
   isolation: isolate;
 }
-.residence-big img{
+.residence-big img, .residence-big video{
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   transition: transform 1.4s var(--ease-out);
 }
 /* Subtle per spec (1.02–1.04), not a dramatic zoom. */
-.residence-big:hover img{ transform: scale(1.03); }
+.residence-big:hover img, .residence-big:hover video{ transform: scale(1.03); }
 .residence-big::before{
   content: '';
   position: absolute; inset: 0; z-index: 1;

@@ -109,6 +109,8 @@ const SITE_DATA = {
       photo: "assets/images/gallery/16.jpg",
       photoAlt: "assets/images/gallery/13.jpg",
       photoNote: "Foto interior representativa de nuestras residencias (no es la fachada de esta sede específica) — ver websiteInfo.txt",
+      video: "assets/videos/residencia-dali.mp4",
+      videoPoster: "assets/videos/residencia-dali-poster.jpg",
       phones: ["+51 978 653 991", "(+511) 744 57 11"]
     }
   ],

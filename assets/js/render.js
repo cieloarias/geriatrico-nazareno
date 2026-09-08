@@ -442,9 +442,12 @@ function renderResidenceBig(containerId){
   el.innerHTML = SITE_DATA.sedes.map(function(s, i){
     const d = s[lang] || s.es;
     const badge = s.badge ? (s.badge[lang] || s.badge.es) : "";
+    const media = s.video
+      ? `<video src="${s.video}" poster="${s.videoPoster || ""}" autoplay muted loop playsinline aria-label="${d.name}"></video>`
+      : `<img src="${s.photo}" alt="${d.name}" loading="lazy">`;
     return `
     <article class="residence-big" data-reveal style="--i:${i}" id="sede-${s.slug}">
-      <img src="${s.photo}" alt="${d.name}" loading="lazy">
+      ${media}
       ${badge ? `<span class="pill-label residence-badge">${badge}</span>` : ""}
       <a class="residence-arrow-btn" href="${SITE_DATA.brand.whatsapp.agendar}" target="_blank" rel="noopener" aria-label="${(I18N[lang] && I18N[lang]["cta.agendarVisita"]) || "Agendar visita"}">${ICONS.arrow}</a>
       <div class="residence-big-body">
