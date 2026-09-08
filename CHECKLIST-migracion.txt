@@ -1,0 +1,118 @@
+════════════════════════════════════════════════════════════════════════════
+CHECKLIST DE MIGRACIÓN — Geriátrico Señor de Nazareno (rediseño 2026)
+Comparación contra el sitio original: https://www.geriatriconazareno.com/
+Fuente completa de referencia: websiteInfo.txt (en esta misma carpeta)
+════════════════════════════════════════════════════════════════════════════
+
+✓ IMÁGENES
+  61 archivos reales descargados del sitio original a assets/original/ y
+  reorganizados en assets/images/. Todas las páginas nuevas usan estas
+  fotos reales (logo, doctores, sedes, servicios, certificaciones, 22
+  fotos de galería, imágenes de blog). Ninguna foto de stock genérica fue
+  añadida, con una excepción retirada intencionalmente — ver nota abajo.
+
+  ⚠ Excepción documentada: la imagen original "banner-servicios.jpg" (usada
+  como banner de la página Servicios) resultó ser una foto de stock
+  genérica no relacionada (un clipboard "SERVICE DEPT" de taller mecánico,
+  con el texto "NUESTROS SERVICIOS" superpuesto) — no es fotografía real
+  de Nazareno. Se reemplazó por una foto real de la galería (personal
+  sirviendo comidas a residentes). El archivo original se conserva en
+  assets/original/ para referencia.
+  ⚠ Similarmente, "nosotros-desktop.jpg" resultó ser un banner de stock
+  genérico (foto de doctor genérico + texto superpuesto), no fotografía
+  real de las instalaciones — se reemplazó por fotos reales de la galería
+  en todos los usos. Archivo original conservado en assets/original/.
+
+✓ VIDEOS
+  No se encontraron videos incrustados en el sitio original (ni <video>,
+  ni embeds de YouTube/Vimeo en las páginas rastreadas). No se agregó
+  ningún video — si Nazareno tiene contenido de video en Instagram/TikTok/
+  YouTube, vive en esas plataformas, no en el sitio web anterior.
+
+✓ SERVICIOS
+  Los 7 servicios reales preservados exactamente: Alojamiento, Atención
+  médica, Enfermería, Evaluación médica, Elaboración y selección de
+  comidas, Terapia ocupacional, Lavandería. Presentados en tarjetas
+  expandibles con foto editorial, en servicios.html y en la home.
+
+✓ STAFF MÉDICO
+  Ambos médicos reales preservados con sus credenciales exactas:
+  - Dra. Ernestina Palomino Sulca (CMP 45073)
+  - Dr. Daniel Arias Cerquin (CMP 29814)
+  Universidades, diplomados, especialidad y área de interés — todo
+  verbatim del sitio original. No se inventó ningún médico adicional.
+
+✓ RESIDENCIAS / SEDES
+  Ambas sedes reales con dirección y teléfonos exactos:
+  - Sede San Borja — Av. Las Artes Norte 1249, San Borja, Perú
+  - Sede Salvador Dalí — Salvador Dalí 490, San Borja, Perú
+  Página dedicada residencias.html + sección en la home.
+
+✓ INFORMACIÓN DE CONTACTO
+  Teléfonos reales: +51 978 653 991 y (+511) 744 57 11 — presentes en
+  header, footer, página de contacto y CTAs en todo el sitio.
+
+✓ WHATSAPP
+  Los 3 enlaces reales de WhatsApp (con sus 3 mensajes pre-escritos
+  distintos: agendar cita, más información, solicitar planes) preservados
+  y usados en los CTAs correspondientes en todo el sitio.
+
+✓ BLOG / NOTICIAS
+  Los 16 artículos reales preservados con título y descripción exacta.
+  1 artículo con cuerpo completo capturado tiene página propia
+  (blog-articulo.html). Los otros 15 enlazan directamente al artículo
+  original en geriatriconazareno.com (no se inventó contenido de cuerpo
+  que no existía en el rastreo) — ver websiteInfo.txt sección 12 para el
+  detalle de esta decisión.
+
+✓ TESTIMONIOS
+  3 de los 4 testimonios reales publicados verbatim (Humberto Valdivia
+  Yoplac, Patricia Boza, Liz Palomino). El cuarto (Maria Rosa Aicardi,
+  mixto/crítico) se documentó en websiteInfo.txt pero no se publicó, por
+  decisión explícita del usuario en esta sesión. Ningún testimonio fue
+  reescrito o alterado en su contenido.
+
+✓ CERTIFICACIONES
+  Los 4 logos reales de certificación preservados y ahora mostrados
+  legibles: Municipalidad de San Borja, Ministerio de la Mujer y
+  Poblaciones Vulnerables, Ministerio de Salud, INDECI — coinciden
+  exactamente con los organismos mencionados en el texto de "Nosotros".
+
+✓ GALERÍA
+  Las 22 fotos reales (19 + 3 de Navidad) preservadas en una galería
+  masonry con lightbox, en galeria.html y como preview en la home.
+
+✓ CALLS TO ACTION
+  Preservadas y reorganizadas con jerarquía clara: Agendar visita,
+  Conocer residencias, Ver servicios, Hablar por WhatsApp, Solicitar
+  planes, Ver staff médico, Ver galería — presentes según el contexto de
+  cada página, todas apuntando a los números/enlaces reales.
+
+✓ CONTENIDO INFORMATIVO EXISTENTE
+  Todo el texto institucional (Quiénes somos, La Residencia, autorización
+  de la Dirección de Salud Lima Centro, organismos reguladores) preservado
+  verbatim en Nosotros y en la sección "Confianza" de la home.
+
+────────────────────────────────────────────────────────────────────────────
+ELEMENTOS NO MIGRADOS — Y POR QUÉ
+────────────────────────────────────────────────────────────────────────────
+• Páginas legales (Política de Privacidad, Protección de Datos, Objetos
+  Encontrados, Derechos y Deberes, Libro de Reclamaciones): el footer
+  enlaza directamente a las páginas originales en geriatriconazareno.com
+  en vez de reescribir su contenido legal — no se rastreó el texto de esas
+  páginas y no corresponde redactar contenido legal sin la fuente exacta.
+• Enlaces de plantilla no confirmados como reales (solicite-presupuesto/,
+  trabaje-nosotros/, especialidades/, citaweb.clinicasanfelipe.com,
+  labroe.com, efacturacion.pe): parecen ser sobrantes de una plantilla de
+  red de clínicas más grande, no funcionalidad confirmada específica de
+  Nazareno — no se replicaron. Ver websiteInfo.txt sección 2.
+• Fechas y autores de artículos del blog: no existían en el sitio
+  original — no se inventaron.
+• Correo electrónico de contacto: no existía en el sitio original — no se
+  inventó; el sitio nuevo usa WhatsApp/teléfono/formulario, igual que el
+  original.
+
+────────────────────────────────────────────────────────────────────────────
+Ver websiteInfo.txt para el detalle completo y trazabilidad de cada
+decisión de contenido.
+════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog | Geriátrico Señor de Nazareno</title>
+<meta name="description" content="Artículos escritos por profesionales sobre el cuidado del adulto mayor: entornos seguros, prevención de caídas, nutrición, actividades recreativas y más.">
+<link rel="icon" href="assets/images/brand/favicon.png">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="blog">
+<a class="skip-link" href="#main" data-i18n="common.skip">Saltar al contenido principal</a>
+<header id="site-header" class="site-header"></header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.blog"></span></div>
+      <div class="eyebrow"><span class="eyebrow-label" data-i18n="blog.eyebrow"></span></div>
+      <h1 data-i18n="blog.title" style="margin-top:.7rem;max-width:18ch"></h1>
+      <p class="lede" style="margin-top:1.2rem" data-i18n="blog.lede"></p>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="blog-featured" id="blogFeatured" data-reveal></div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="grid grid-3" id="blogGrid" data-reveal-stagger></div>
+      <p class="text-muted text-center" style="margin-top:2.5rem;font-size:.85rem" data-i18n="blog.externalNote"></p>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer"></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/SplitText.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/partials.js"></script>
+<script src="assets/js/render.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  var featuredPost = SITE_DATA.blog.find(function(p){ return p.body; }) || SITE_DATA.blog[0];
+  registerRender(() => renderBlogFeatured("blogFeatured"));
+  registerRender(() => renderBlog("blogGrid", { exclude: [featuredPost.slug] }));
+</script>
+</body>
+</html>

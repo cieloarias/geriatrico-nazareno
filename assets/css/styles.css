@@ -1,0 +1,1330 @@
+/* ==========================================================================
+   GERIÁTRICO SEÑOR DE NAZARENO — Design System
+   Premium geriatric-care brand: warmth + trust + medical professionalism.
+   Real brand colors (from existing site CSS) kept as the source palette,
+   refined into a warm, restrained, editorial system.
+   ========================================================================== */
+
+/* ---- Fonts ---- */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+:root{
+  /* Real Nazareno brand hues, kept for authenticity */
+  --nazareno-blue:      #0043A5;
+  --nazareno-green:     #84BD00;
+  --nazareno-orange:    #FF6B00;
+
+  /* Refined premium palette — deliberately restrained to ONE dominant
+     chromatic authority (the deepened Nazareno blue) and ONE warm accent
+     (an amber-terracotta, closer to gold than orange), following the
+     single-accent restraint pattern common to premium editorial systems:
+     a near-monochrome base earns its "expensive" feeling by NOT competing
+     with itself. The old sage-green tertiary accent is retired — three
+     accent colors read as a template; one reads as a decision. */
+  --color-ink:          #141C25;   /* near-black warm charcoal, primary text — deepened for more confident contrast */
+  --color-ink-soft:     #4B5768;   /* secondary text */
+  --color-sand:         #F7F3EC;   /* warm ivory background */
+  --color-sand-deep:    #EFE7D8;   /* slightly deeper warm surface */
+  --color-cream:        #FFFDF9;   /* card surface, near white with warmth */
+  --color-line:         #E4DCCB;   /* hairline borders on sand */
+  --color-line-cool:    #D8DEE6;   /* hairline borders on white */
+
+  --color-primary:      #0B3F86;   /* deepened Nazareno blue — the system's one dominant color */
+  --color-primary-ink:  #051C3B;   /* darkened further for full-bleed dark sections and hero scrims */
+  --color-primary-tint: #E7EEF7;
+
+  --color-accent:       #A9682E;   /* amber-terracotta — warmer/richer than a plain orange, reads as gold-adjacent premium rather than "brand orange" */
+  --color-accent-deep:  #8A5223;
+  --color-accent-tint:  #F3E7D8;
+
+  --color-whatsapp:     #25D366;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --container: 1240px;
+  --gutter: clamp(20px, 5vw, 64px);
+
+  --radius-sm: 12px;
+  --radius-md: 22px;
+  --radius-lg: 36px;
+  --radius-pill: 999px;
+
+  /* Flat-first: hierarchy comes from color contrast, generous radius, and
+     spacing — not elevation. Shadows are reserved for the rare case where
+     something floats above unrelated content (e.g. the lightbox), never
+     for routine card/button "lift". */
+  --shadow-float: 0 20px 48px -16px rgba(8,13,20,.35);
+
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --dur-fast: .22s;
+  --dur-med: .5s;
+  --dur-slow: .9s;
+  --dur-slower: 1.4s;
+
+  --header-h: 88px;
+  color-scheme: light;
+}
+
+/* ---- Reset ---- */
+*, *::before, *::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *, *::before, *::after{
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+body{
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-sand);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  font-size: 16.5px;
+}
+img{ max-width: 100%; display: block; }
+a{ color: inherit; text-decoration: none; }
+button{ font: inherit; cursor: pointer; }
+ul{ margin: 0; padding: 0; list-style: none; }
+h1,h2,h3,h4,p{ margin: 0; }
+input, textarea, select{ font: inherit; }
+
+:focus-visible{
+  outline: 2.5px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.container{
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+section{ position: relative; }
+
+/* ---- Typography scale ---- */
+.eyebrow{
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: .8rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: .6em;
+  /* Fully drawn by default (no-JS / reduced-motion); initReveal grows
+     this from 0 as the section scrolls into view — see main.js. */
+  --line-scale: 1;
+}
+.eyebrow::before{
+  content: '';
+  width: 28px; height: 1.5px;
+  background: currentColor;
+  display: inline-block;
+  transform: scaleX(var(--line-scale));
+  transform-origin: left center;
+}
+.eyebrow-label{ display: inline-block; }
+
+/* Masked line-by-line heading reveal (see initHeadingReveal in main.js):
+   SplitText breaks a heading into per-line spans, each wrapped in one of
+   these overflow-hidden masks, so the line can slide up into view from
+   below the mask instead of the whole block just fading in. */
+.hr-line-mask{ display: block; overflow: hidden; }
+.hr-line{ display: block; }
+
+h1, .h1{
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -.01em;
+  font-size: clamp(2.6rem, 5.4vw, 4.6rem);
+  color: var(--color-ink);
+}
+h2, .h2{
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.005em;
+  font-size: clamp(2rem, 3.4vw, 3rem);
+}
+h3, .h3{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+  line-height: 1.25;
+}
+.lede{
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  color: var(--color-ink-soft);
+  line-height: 1.65;
+  max-width: 56ch;
+}
+.text-muted{ color: var(--color-ink-soft); }
+
+/* Editorial emphasis: a single italic word inside a display heading reads
+   as intentional, human warmth rather than corporate flatness — used
+   sparingly (one or two words per heading, never a whole sentence). */
+h1 em, h2 em, .h1 em, .h2 em{
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-accent);
+}
+h1 em, .h1 em{ color: inherit; }
+
+/* Oversized section numerals ("01", "02"...) — a recurring editorial
+   device used sparingly to number services, steps, or paginated content. */
+.section-num{
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  color: var(--color-ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Small uppercase pill label — a lighter-weight cousin of .eyebrow for
+   badges on top of photography (e.g. "SEDE PRINCIPAL"). */
+.pill-label{
+  display: inline-flex; align-items: center;
+  font-family: var(--font-body); font-weight: 600;
+  font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+  padding: .45em 1em;
+  border-radius: var(--radius-pill);
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.3);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+
+/* Text link with a shifting arrow — used for "Ver todos los servicios",
+   "Leer más" style inline navigation throughout the editorial sections. */
+.link-arrow{
+  display: inline-flex; align-items: center; gap: .5em;
+  font-weight: 600; font-size: .92rem; color: var(--color-primary);
+}
+.link-arrow svg{ width: 1em; height: 1em; transition: transform var(--dur-fast) var(--ease); }
+.link-arrow:hover svg{ transform: translateX(4px); }
+.link-arrow.on-dark{ color: #fff; }
+
+/* ---- Buttons ---- */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55em;
+  padding: .95em 1.7em;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: .97rem;
+  border: 1.5px solid transparent;
+  transition: transform var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  white-space: nowrap;
+}
+.btn:active{ transform: scale(.97); }
+.btn-primary{
+  background: var(--color-primary);
+  color: #fff;
+}
+.btn-primary:hover{ background: var(--color-primary-ink); }
+.btn-accent{
+  background: var(--color-accent);
+  color: #fff;
+}
+.btn-accent:hover{ background: var(--color-accent-deep); }
+.btn-outline{
+  background: transparent;
+  border-color: var(--color-line-cool);
+  color: var(--color-ink);
+}
+.btn-outline:hover{ border-color: var(--color-primary); color: var(--color-primary); }
+.btn-ghost-light{
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.5);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+.btn-ghost-light:hover{ background: rgba(255,255,255,.22); }
+.btn-whatsapp{
+  background: var(--color-whatsapp);
+  color: #fff;
+}
+.btn-whatsapp:hover{ background: #1EBE5A; }
+.btn-sm{ padding: .65em 1.3em; font-size: .85rem; }
+.btn svg{ width: 1.1em; height: 1.1em; flex: none; }
+
+/* ---- Header / Nav ---- */
+.site-header{
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 100;
+  height: var(--header-h);
+  display: flex; align-items: center;
+  transition: height var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  background: rgba(250,246,239,.72);
+  backdrop-filter: blur(14px) saturate(1.1);
+  border-bottom: 1px solid transparent;
+}
+.site-header.is-scrolled{
+  height: 68px;
+  background: rgba(250,246,239,.92);
+  border-color: var(--color-line);
+}
+/* Over the full-bleed video hero (homepage only — toggled by JS whenever
+   a .hero-cinematic is present and the page hasn't scrolled past it),
+   the nav sits directly on the footage: no background, light text. The
+   logo and lang-switch keep their own opaque chips, so they stay legible
+   without needing a separate "light" logo asset. */
+.site-header.on-hero{
+  background: transparent;
+  border-color: transparent;
+}
+.site-header.on-hero .nav-links a{ color: rgba(255,255,255,.9); }
+.site-header.on-hero .nav-links a:hover{ color: #fff; }
+.site-header.on-hero .nav-links a::after{ background: #fff; }
+.site-header.on-hero .nav-toggle span{ background: #fff; }
+.site-header.on-hero .btn-outline{ border-color: rgba(255,255,255,.5); color: #fff; }
+.site-header.on-hero .btn-outline:hover{ border-color: #fff; color: #fff; }
+/* The mobile drawer sits underneath the header in z-order (it's a full
+   opaque overlay, so that's fine visually) — but some browser compositors
+   mishandle a blurred backdrop-filter layer paired with a sibling fixed,
+   opacity-transitioned overlay, letting page content bleed through the
+   overlay. Dropping the header's blur while the drawer is open sidesteps
+   that risk entirely, at zero visual cost since the header is covered. */
+.site-header.backdrop-off{
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--color-sand);
+}
+.nav-inner{
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem;
+}
+.brand{
+  display: flex; align-items: center; gap: .7rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-ink);
+  flex: none;
+}
+.brand img{ height: 44px; width: auto; transition: height var(--dur-fast) var(--ease); }
+.site-header.is-scrolled .brand img{ height: 36px; }
+
+.nav-links{
+  display: flex; align-items: center; gap: 1.5rem;
+  flex: none;
+}
+.nav-links a{
+  font-size: .88rem; font-weight: 500; color: var(--color-ink-soft);
+  position: relative; padding: .3em 0;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease);
+}
+.nav-links a::after{
+  content:''; position:absolute; left:0; right:100%; bottom:-2px; height:2px;
+  background: var(--color-accent); transition: right var(--dur-fast) var(--ease);
+}
+.nav-links a:hover{ color: var(--color-ink); }
+.nav-links a:hover::after, .nav-links a.is-active::after{ right: 0; }
+.nav-links a.is-active{ color: var(--color-ink); font-weight: 600; }
+
+.nav-right{ display: flex; align-items: center; gap: .8rem; flex: none; }
+
+.lang-switch{
+  display: flex; align-items: center; border: 1.5px solid var(--color-line-cool);
+  border-radius: var(--radius-pill); padding: 3px; background: var(--color-cream);
+}
+.lang-switch button{
+  border: none; background: transparent; padding: .32em .8em; border-radius: var(--radius-pill);
+  font-size: .78rem; font-weight: 700; letter-spacing: .04em; color: var(--color-ink-soft);
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.lang-switch button.is-active{ background: var(--color-primary); color: #fff; }
+
+.nav-toggle{
+  display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 8px;
+}
+.nav-toggle span{ width: 24px; height: 2px; background: var(--color-ink); border-radius: 2px; transition: transform var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease); }
+
+/* Mobile nav drawer */
+.mobile-drawer{
+  position: fixed; inset: 0; z-index: 99;
+  background: var(--color-sand);
+  display: flex; flex-direction: column;
+  padding: calc(var(--header-h) + 1rem) var(--gutter) 2rem;
+  transform: translateY(-8px);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity var(--dur-med) var(--ease), transform var(--dur-med) var(--ease), visibility 0s linear var(--dur-med);
+}
+.mobile-drawer.is-open{
+  opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
+  transition: opacity var(--dur-med) var(--ease), transform var(--dur-med) var(--ease), visibility 0s;
+}
+.mobile-drawer nav{ display: flex; flex-direction: column; gap: 1.6rem; margin-top: 1rem; }
+.mobile-drawer nav a{ font-family: var(--font-display); font-size: 1.9rem; font-weight: 600; }
+.mobile-drawer .drawer-actions{ margin-top: auto; display: flex; flex-direction: column; gap: .9rem; }
+
+/* The full 8-item nav + brand + lang switch + CTA needs real room to
+   breathe — below ~1180px it switches to the mobile drawer rather than
+   cramming into a single crowded row. */
+@media (max-width: 1180px){
+  .nav-links{ display: none; }
+  .nav-toggle{ display: inline-flex; }
+}
+@media (min-width: 1181px){
+  .mobile-drawer{ display: none; }
+}
+@media (max-width: 1180px){
+  .nav-cta{ display: none; }
+}
+
+/* ---- Hero ---- */
+.hero{
+  min-height: 100svh;
+  display: flex; align-items: flex-end;
+  padding-top: var(--header-h);
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+.hero-media{ position: absolute; inset: 0; z-index: 0; }
+.hero-media img{ width: 100%; height: 100%; object-fit: cover; object-position: center 38%; transform: scale(1.06); }
+.hero-media::after{
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(17,22,29,.55) 0%, rgba(17,22,29,.15) 32%, rgba(17,22,29,.35) 62%, rgba(14,18,24,.86) 100%);
+}
+.hero-content{ position: relative; z-index: 1; width: 100%; padding-bottom: clamp(2.5rem, 6vw, 5rem); }
+.hero .eyebrow{ color: #F3D9C4; }
+.hero h1{ color: #fff; max-width: 15ch; }
+.hero .lede{ color: rgba(255,255,255,.86); margin-top: 1.1rem; }
+.hero-actions{ display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2rem; }
+
+.hero-badges{
+  display: flex; flex-wrap: wrap; gap: 2.5rem;
+  margin-top: clamp(2.4rem, 5vw, 3.6rem);
+  padding-top: 1.8rem;
+  border-top: 1px solid rgba(255,255,255,.22);
+}
+.hero-badge b{ font-family: var(--font-display); font-size: 1.7rem; display: block; font-weight: 600; }
+.hero-badge span{ font-size: .85rem; color: rgba(255,255,255,.75); }
+
+.scroll-cue{
+  position: absolute; right: var(--gutter); bottom: 2rem; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  color: rgba(255,255,255,.75); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+.scroll-cue .line{ width: 1px; height: 46px; background: rgba(255,255,255,.5); animation: scrollcue 2.2s var(--ease) infinite; }
+@keyframes scrollcue{ 0%{ transform: scaleY(0); transform-origin: top; } 50%{ transform: scaleY(1); transform-origin: top; } 50.01%{ transform-origin: bottom; } 100%{ transform: scaleY(0); transform-origin: bottom; } }
+@media (max-width: 700px){ .scroll-cue{ display: none; } }
+
+/* ---- Section spacing ---- */
+.section{ padding-block: clamp(4.5rem, 9vw, 8.5rem); }
+.section-tight{ padding-block: clamp(3rem, 6vw, 5rem); }
+/* Used specifically by the editorial compositions (services, residencias,
+   life, testimonials, blog) — these carry their own internal density via
+   the grid/photography, so they don't need the generous breathing room a
+   plain heading+content section does. Keeps 1440×900 showing more than
+   one section title per screen. */
+.section-editorial{ padding-block: clamp(2.75rem, 5vw, 4rem); }
+.section-head{ max-width: 720px; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.section-head.center{ margin-inline: auto; text-align: center; }
+.section-alt{ background: var(--color-sand-deep); }
+.section-dark{ background: var(--color-primary-ink); color: #fff; }
+.section-dark .text-muted{ color: rgba(255,255,255,.7); }
+
+/* ---- Reveal animation ----
+   No CSS-driven hidden state on purpose: GSAP applies the "before" state
+   via gsap.from() at runtime (main.js), so if the GSAP CDN script is ever
+   blocked, [data-reveal] content simply stays visible instead of being
+   stuck invisible forever — safer for accessibility and for crawlers that
+   don't execute JS. Reduced-motion is handled in JS via matchMedia. */
+
+/* ---- Trust strip ---- */
+.trust-strip{
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--color-line);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.trust-item{
+  background: var(--color-cream);
+  padding: 1.8rem 1.6rem;
+  display: flex; align-items: flex-start; gap: 1rem;
+}
+.trust-item .ico{
+  flex: none; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--color-primary-tint); color: var(--color-primary);
+  display: flex; align-items: center; justify-content: center;
+}
+.trust-item strong{ display: block; font-size: .98rem; margin-bottom: .2rem; }
+.trust-item p{ font-size: .87rem; color: var(--color-ink-soft); }
+@media (max-width: 800px){ .trust-strip{ grid-template-columns: 1fr; } }
+
+/* ---- Cards ---- */
+.card{
+  background: var(--color-cream);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
+}
+.card:hover{ transform: translateY(-6px); border-color: var(--color-primary); }
+
+.card-media{ aspect-ratio: 4/3; overflow: hidden; background: var(--color-sand-deep); }
+.card-media img{ width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease); }
+.card:hover .card-media img{ transform: scale(1.07); }
+.card-body{ padding: 1.6rem; }
+.card-body h3{ margin-bottom: .5rem; }
+.card-body p{ font-size: .92rem; color: var(--color-ink-soft); }
+
+.grid{ display: grid; gap: clamp(1.2rem, 2.4vw, 2rem); }
+.grid-2{ grid-template-columns: repeat(2, 1fr); }
+.grid-3{ grid-template-columns: repeat(3, 1fr); }
+.grid-4{ grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 980px){ .grid-3, .grid-4{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px){ .grid-2, .grid-3, .grid-4{ grid-template-columns: 1fr; } }
+
+/* Service card — editorial style with expand */
+.service-card{
+  background: var(--color-cream); border: 1px solid var(--color-line);
+  border-radius: var(--radius-md); padding: 1.7rem;
+  display: flex; flex-direction: column; gap: .9rem;
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.service-card:hover{ border-color: var(--color-primary); background: var(--color-primary-tint); }
+.service-card .ico{
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--color-accent-tint); color: var(--color-accent);
+  display: flex; align-items: center; justify-content: center;
+}
+.service-card .more{
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height var(--dur-med) var(--ease), opacity var(--dur-med) var(--ease), margin-top var(--dur-med) var(--ease);
+  font-size: .88rem; color: var(--color-ink-soft);
+}
+.service-card.is-open .more{ max-height: 200px; opacity: 1; margin-top: .2rem; }
+.service-card .chev{ margin-left: auto; flex: none; width: 18px; height: 18px; transition: transform var(--dur-fast) var(--ease); color: var(--color-ink-soft); }
+.service-card .chev svg{ width: 100%; height: 100%; display: block; }
+.service-card.is-open .chev{ transform: rotate(180deg); }
+.service-card .row-top{ display:flex; align-items:center; gap: .9rem; }
+
+/* Sede / location card */
+.sede-card{
+  display: grid; grid-template-columns: 1.1fr 1fr;
+  border: 1px solid var(--color-line); border-radius: var(--radius-lg); overflow: hidden;
+  background: var(--color-cream);
+}
+.sede-card .sede-media{ position: relative; min-height: 340px; }
+.sede-card .sede-media img{ width: 100%; height: 100%; object-fit: cover; }
+.sede-card .sede-body{ padding: clamp(1.8rem, 3vw, 2.8rem); display: flex; flex-direction: column; }
+.sede-card .sede-services{ display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.2rem 0 1.6rem; }
+.sede-tag{
+  font-size: .78rem; font-weight: 600; padding: .4em .9em; border-radius: var(--radius-pill);
+  background: var(--color-primary-tint); color: var(--color-primary);
+}
+.sede-actions{ display: flex; flex-wrap: wrap; gap: .7rem; margin-top: auto; }
+@media (max-width: 860px){ .sede-card{ grid-template-columns: 1fr; } .sede-card .sede-media{ min-height: 260px; } }
+
+/* Staff card */
+.staff-card{
+  background: var(--color-cream); border: 1px solid var(--color-line); border-radius: var(--radius-lg);
+  overflow: hidden; display: grid; grid-template-columns: .85fr 1.15fr;
+}
+.staff-card .staff-media{ aspect-ratio: 3/4; overflow:hidden; }
+.staff-card .staff-media img{ width:100%; height:100%; object-fit: cover; object-position: top center; }
+.staff-card .staff-body{ padding: clamp(1.6rem,2.6vw,2.4rem); display:flex; flex-direction:column; gap: .9rem; }
+.staff-meta{ display: grid; grid-template-columns: 1fr 1fr; gap: .9rem 1.2rem; margin: .4rem 0; }
+.staff-meta dt{ font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--color-ink-soft); }
+.staff-meta dd{ margin: .15rem 0 0; font-weight: 600; font-size: .93rem; }
+.staff-list{ font-size: .88rem; color: var(--color-ink-soft); }
+.staff-list li{ position: relative; padding-left: 1.1em; margin-bottom: .3em; }
+.staff-list li::before{ content:'—'; position:absolute; left:0; color: var(--color-accent); }
+@media (max-width: 700px){ .staff-card{ grid-template-columns: 1fr; } .staff-card .staff-media{ aspect-ratio: 16/10; } }
+
+/* ---- Testimonials — dark immersive section, NO card boxes. Four
+   asymmetric columns (intro / featured / secondary / secondary) sitting
+   directly on the dark ground; hierarchy comes from a decorative quote
+   mark + type scale + a single accent rule, not from background boxes.
+   The testimonial with the most substance is "featured" (larger, marked
+   by the accent rule + oversized quote glyph); the two shorter real
+   quotes sit beside it, separated only by a hairline. No star ratings —
+   the source site never published star ratings, so displaying them would
+   be a fabricated trust signal. ---- */
+.testimonials-dark-grid{
+  display: grid;
+  grid-template-columns: minmax(0, 24fr) minmax(0, 42fr) minmax(0, 17fr) minmax(0, 17fr);
+  gap: clamp(1.4rem, 3vw, 2.6rem);
+  align-items: start;
+}
+.testimonials-dark-intro{ padding-top: .2rem; }
+.testimonials-dark-intro h2{ font-size: clamp(2rem, 3.2vw, 2.7rem); line-height: 1.08; }
+.testimonials-dark-intro .lede{ margin-top: 1.1rem; color: rgba(255,255,255,.7); max-width: 30ch; }
+
+/* display:contents flattens this wrapper so its two children become
+   direct siblings of .testi-featured in the grid — a genuine 4-column
+   row, not a stack squeezed into one column. */
+.testi-secondary-stack{ display: contents; }
+
+.testi-featured, .testi-secondary{
+  display: flex; flex-direction: column; gap: 1rem;
+  background: none; border: none; padding: 0;
+}
+.testi-featured{
+  position: relative;
+  padding: 2.6rem 0 0 1.6rem;
+  border-left: 2px solid var(--color-accent);
+}
+.testi-featured::before{
+  content: '\201C';
+  position: absolute; top: -.7rem; left: 1.5rem;
+  font-family: var(--font-display); font-size: 4.6rem; line-height: 1;
+  color: var(--color-accent); opacity: .6; font-style: normal;
+}
+.testi-featured p{
+  font-family: var(--font-display); font-style: italic;
+  font-size: clamp(1.25rem, 1.9vw, 1.55rem); line-height: 1.48; color: #fff;
+}
+.testi-secondary{
+  padding-top: 1.7rem;
+  border-top: 1px solid rgba(255,255,255,.18);
+}
+.testi-secondary p{
+  font-family: var(--font-display); font-style: italic;
+  font-size: .98rem; line-height: 1.55; color: rgba(255,255,255,.82);
+}
+
+.testi-who{ display: flex; align-items: center; gap: .7rem; margin-top: auto; }
+.testi-avatar{
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .78rem; flex: none;
+  background: rgba(255,255,255,.12); color: #fff;
+}
+.testi-featured .testi-avatar{ background: var(--color-accent); color: #1a1006; }
+.testi-who strong{ display: block; font-size: .88rem; font-weight: 600; color: #fff; }
+
+@media (max-width: 900px){
+  .testimonials-dark-grid{ grid-template-columns: 1fr; }
+  .testi-featured{ padding-top: 2.4rem; }
+}
+
+/* Blog card — lean, not boxed: no background/border/shadow container.
+   Hierarchy comes from the image, a thin hairline, and type alone. */
+.blog-card-lean{ display: flex; flex-direction: column; }
+.blog-card-lean-media{ display: block; aspect-ratio: 4/3; border-radius: var(--radius-sm); overflow: hidden; }
+.blog-card-lean-media img{ width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease-out); }
+.blog-card-lean:hover .blog-card-lean-media img{ transform: scale(1.06); }
+.blog-card-lean-body{
+  padding-top: 1rem; margin-top: 1rem;
+  border-top: 1px solid var(--color-line);
+}
+.blog-card-lean-body h3{ font-size: 1.1rem; line-height: 1.3; }
+.blog-card-lean-body h3 a:hover{ color: var(--color-primary); }
+.blog-card-lean-body p{ margin-top: .5rem; font-size: .87rem; color: var(--color-ink-soft); line-height: 1.55; }
+.blog-tag{
+  display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  color: var(--color-accent); margin-bottom: .5rem;
+}
+.blog-card-lean .read-more{ display:inline-flex; align-items:center; gap:.4em; margin-top:.8rem; font-weight:600; font-size:.85rem; color: var(--color-primary); }
+.blog-card-lean .read-more svg{ width:1em; height:1em; transition: transform var(--dur-fast) var(--ease); }
+.blog-card-lean:hover .read-more svg{ transform: translateX(4px); }
+
+/* Dedicated blog.html — a featured article (the one real post with a full
+   captured body, so it links in-site) above the rest of the archive grid. */
+.blog-featured{
+  display: grid; grid-template-columns: minmax(0, 56fr) minmax(0, 44fr);
+  gap: clamp(1.5rem, 3vw, 3rem); align-items: center;
+}
+.blog-featured-media{ display: block; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3; }
+.blog-featured-media img{ width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease-out); }
+.blog-featured-media:hover img{ transform: scale(1.04); }
+.blog-featured-body h3{ margin-top: .6rem; font-size: clamp(1.6rem, 2.6vw, 2.2rem); }
+.blog-featured-body p{ margin-top: .9rem; color: var(--color-ink-soft); max-width: 48ch; }
+.blog-featured-body .link-arrow{ margin-top: 1.3rem; }
+@media (max-width: 800px){
+  .blog-featured{ grid-template-columns: 1fr; }
+}
+
+/* Homepage blog teaser — editorial split, matching the services/life/
+   testimonials rhythm: a narrow intro column beside the article cards. */
+.blog-editorial{
+  display: grid;
+  grid-template-columns: minmax(0, 26fr) minmax(0, 74fr);
+  gap: clamp(1.6rem, 3vw, 2.6rem);
+  align-items: start;
+}
+.blog-editorial-intro .lede{ margin-top: 1rem; max-width: 30ch; }
+.blog-editorial-intro .link-arrow{ margin-top: 1.3rem; }
+@media (max-width: 900px){
+  .blog-editorial{ grid-template-columns: 1fr; }
+}
+
+/* Certifications */
+.cert-strip{ display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap: clamp(1.5rem,4vw,3.5rem); }
+.cert-strip img{ height: 76px; width:auto; filter: grayscale(1) contrast(1.05); opacity:.75; transition: filter var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease); }
+.cert-strip img:hover{ filter:none; opacity:1; }
+
+/* Gallery */
+.gallery-grid{
+  columns: 4 220px; column-gap: 1rem;
+}
+.gallery-grid figure{ break-inside: avoid; margin: 0 0 1rem; border-radius: var(--radius-sm); overflow: hidden; cursor: zoom-in; position: relative; }
+.gallery-grid img{ width:100%; display:block; transition: transform 1s var(--ease); }
+.gallery-grid figure:hover img{ transform: scale(1.05); }
+.gallery-grid figcaption{
+  position:absolute; inset:auto 0 0 0; padding: .8rem 1rem;
+  background: linear-gradient(0deg, rgba(0,0,0,.65), transparent);
+  color:#fff; font-size:.78rem; opacity:0; transition: opacity var(--dur-fast) var(--ease);
+}
+.gallery-grid figure:hover figcaption{ opacity:1; }
+@media (max-width: 700px){ .gallery-grid{ columns: 2 160px; } }
+
+.lightbox{
+  position: fixed; inset:0; z-index: 200; background: rgba(15,18,22,.92);
+  display:flex; align-items:center; justify-content:center; padding: 4vh 4vw;
+  opacity:0; visibility:hidden; transition: opacity var(--dur-med) var(--ease), visibility 0s linear var(--dur-med);
+}
+.lightbox.is-open{ opacity:1; visibility:visible; transition: opacity var(--dur-med) var(--ease), visibility 0s; }
+.lightbox img{ max-width: 100%; max-height: 88vh; border-radius: var(--radius-sm); box-shadow: var(--shadow-float); }
+.lightbox-close, .lightbox-nav{
+  position:absolute; background: rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.3);
+  border-radius:50%; width:46px; height:46px; display:flex; align-items:center; justify-content:center;
+  transition: background var(--dur-fast) var(--ease);
+}
+.lightbox-close:hover, .lightbox-nav:hover{ background: rgba(255,255,255,.28); }
+.lightbox-close{ top: 2vh; right: 2vw; }
+.lightbox-nav.prev{ left: 2vw; top:50%; transform: translateY(-50%); }
+.lightbox-nav.next{ right: 2vw; top:50%; transform: translateY(-50%); }
+
+/* Editorial photo grid (about/services) */
+.photo-editorial{ display:grid; grid-template-columns: 1.2fr 1fr; gap: 1.2rem; align-items: stretch; }
+.photo-editorial .big{ border-radius: var(--radius-lg); overflow:hidden; }
+.photo-editorial .big img{ width:100%; height:100%; object-fit:cover; min-height: 380px; }
+.photo-editorial .stack{ display:flex; flex-direction:column; gap:1.2rem; }
+.photo-editorial .stack .card-media{ border-radius: var(--radius-md); }
+@media (max-width: 800px){ .photo-editorial{ grid-template-columns: 1fr; } }
+
+/* Stat / counter */
+.stat-row{ display:flex; flex-wrap:wrap; gap: clamp(2rem,5vw,4.5rem); }
+.stat b{ font-family: var(--font-display); font-size: clamp(2.2rem,4vw,3.2rem); display:block; color: var(--color-primary); }
+.stat span{ font-size:.85rem; color: var(--color-ink-soft); }
+
+/* CTA band */
+.cta-band{
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--color-primary-ink), var(--color-primary));
+  color: #fff; padding: clamp(2.4rem,5vw,4rem);
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:2rem;
+}
+.cta-band h2{ color:#fff; max-width: 18ch; }
+.cta-band .actions{ display:flex; flex-wrap:wrap; gap:.9rem; }
+
+/* Forms */
+.form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+.field{ display:flex; flex-direction:column; gap:.4rem; }
+.field.full{ grid-column: 1 / -1; }
+.field label{ font-size:.82rem; font-weight:600; color: var(--color-ink-soft); }
+.field input, .field textarea{
+  padding: .85em 1em; border-radius: var(--radius-sm); border: 1.5px solid var(--color-line-cool);
+  background: var(--color-cream); transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.field input:focus, .field textarea:focus{ border-color: var(--color-primary); box-shadow: 0 0 0 4px var(--color-primary-tint); outline:none; }
+.field textarea{ resize: vertical; min-height: 130px; }
+@media (max-width: 640px){ .form-grid{ grid-template-columns: 1fr; } }
+
+.form-note{ font-size:.82rem; color: var(--color-ink-soft); margin-top:.8rem; }
+
+/* Contact info tiles */
+.contact-tile{
+  display:flex; gap:1rem; align-items:flex-start; padding: 1.4rem;
+  border:1px solid var(--color-line); border-radius: var(--radius-md); background: var(--color-cream);
+}
+.contact-tile .ico{ width:44px; height:44px; border-radius:50%; background: var(--color-primary-tint); color: var(--color-primary); display:flex; align-items:center; justify-content:center; flex:none; }
+
+/* Floating WhatsApp (mobile) */
+.wa-float{
+  position: fixed; right: 18px; bottom: 18px; z-index: 90;
+  width: 58px; height: 58px; border-radius: 50%; background: var(--color-whatsapp);
+  color:#fff; display:flex; align-items:center; justify-content:center; box-shadow: var(--shadow-float);
+  transition: transform var(--dur-fast) var(--ease);
+}
+.wa-float:hover{ transform: scale(1.08); }
+.wa-float svg{ width: 28px; height:28px; }
+
+/* Footer */
+.site-footer{ background: var(--color-primary-ink); color: rgba(255,255,255,.82); padding-block: clamp(3.5rem,6vw,5.5rem) 2rem; }
+.footer-grid{ display:grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 2.5rem; }
+.footer-grid h4{ color:#fff; font-family: var(--font-body); font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.1rem; }
+.footer-grid ul li{ margin-bottom:.65rem; font-size:.92rem; }
+.footer-grid ul li a:hover{ color:#fff; }
+/* The real logo has its own white background and a full-color illustration
+   (not a transparent mark), so inverting it to white would erase the
+   illustration entirely — shown as-is in a small rounded card instead,
+   which reads cleanly against the dark footer. */
+.footer-brand img{ height: 44px; margin-bottom: 1rem; border-radius: 8px; background: #fff; padding: 4px; }
+.footer-brand p{ font-size:.88rem; color: rgba(255,255,255,.65); max-width: 34ch; }
+.footer-social{ display:flex; gap:.7rem; margin-top:1.2rem; }
+.footer-social a{ width:38px; height:38px; border-radius:50%; border:1px solid rgba(255,255,255,.28); display:flex; align-items:center; justify-content:center; transition: background var(--dur-fast) var(--ease); }
+.footer-social a:hover{ background: rgba(255,255,255,.14); }
+.footer-bottom{ border-top:1px solid rgba(255,255,255,.15); margin-top: 3rem; padding-top:1.6rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; font-size:.8rem; color: rgba(255,255,255,.55); }
+.footer-bottom a:hover{ color:#fff; }
+@media (max-width: 900px){ .footer-grid{ grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px){ .footer-grid{ grid-template-columns: 1fr; } }
+
+.article-body p{ margin-bottom: 1.3em; }
+.article-body p:first-child{ font-size: 1.1em; color: var(--color-ink); }
+
+/* Breadcrumb / page hero (interior pages) */
+.page-hero{
+  padding-top: calc(var(--header-h) + clamp(3rem,7vw,5.5rem));
+  padding-bottom: clamp(2.5rem,5vw,4rem);
+}
+.page-hero .eyebrow{ margin-bottom: 1rem; }
+.breadcrumb{ font-size:.82rem; color: var(--color-ink-soft); margin-bottom: 1.2rem; }
+.breadcrumb a:hover{ color: var(--color-primary); }
+
+.icon-sm{ width: 20px; height: 20px; flex: none; color: var(--color-primary); }
+.icon-sm svg{ width: 100%; height: 100%; display: block; }
+
+/* Utility */
+.mt-0{ margin-top:0 !important; }
+.flex{ display:flex; }
+.items-center{ align-items:center; }
+.gap-2{ gap: .6rem; }
+.text-center{ text-align:center; }
+.sr-only{ position:absolute; width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
+.skip-link{
+  position:absolute; left:-999px; top:auto; background:#fff; color:#000; padding: 1em 1.4em; z-index: 999; border-radius: var(--radius-sm);
+}
+.skip-link:focus{ left: 1rem; top: 1rem; }
+
+/* ==========================================================================
+   ITERATION 3 — Full-bleed cinematic video hero (the video IS the canvas,
+   not a card beside the copy), sonar signal texture, interactive services,
+   large residence cards, "Life at Nazareno", and refined microinteractions.
+   ========================================================================== */
+
+/* ---- Cinematic full-bleed video hero ----
+   Nav, headline, copy and CTAs are composed directly on top of the video —
+   one continuous frame, not a text-column-beside-a-video-card layout. */
+.hero-cinematic{
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--color-primary-ink);
+  color: #fff;
+}
+.hero-media{ position: absolute; inset: 0; z-index: 0; }
+.hero-media video{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
+.hero-media::after{
+  /* Scrim: keeps overlaid white type legible everywhere the headline can
+     sit — this particular footage is a light studio render (dark navy
+     building against a pale gray backdrop), so unlike a typically dark
+     hero photo the scrim can't fade to near-zero in the middle; it holds
+     a solid dark floor throughout and only deepens further at the very
+     bottom where the CTAs and badges need the most separation. */
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5,10,16,.5) 0%, rgba(5,10,16,.4) 40%, rgba(5,10,16,.5) 62%, rgba(5,10,16,.88) 100%);
+}
+/* Scroll-out transition: a plain opacity fade (cheaper than filter/
+   backdrop tricks) that darkens the whole hero as the next section
+   arrives, driven by a scrubbed ScrollTrigger tween in main.js. Starts
+   fully transparent so it has zero effect until the user actually
+   scrolls. */
+.hero-exit-scrim{
+  position: absolute; inset: 0; z-index: 0;
+  background: var(--color-primary-ink);
+  opacity: 0;
+  pointer-events: none;
+}
+.hero-overlay{
+  position: relative; z-index: 1;
+  width: 100%;
+  padding-block: clamp(2.5rem, 7vw, 5rem);
+}
+.hero-overlay .eyebrow{ color: #E8C9A4; text-shadow: 0 1px 12px rgba(0,0,0,.4); }
+.hero-overlay h1{
+  margin-top: .9rem;
+  color: #fff;
+  font-weight: 500;
+  max-width: 17ch;
+  font-size: clamp(2.8rem, 6.4vw, 6rem);
+  letter-spacing: -.02em;
+  line-height: .98;
+  /* This particular footage varies from dark (the building) to near-white
+     (the studio backdrop) behind the same line of text — a shadow keeps
+     the headline reading as solid white everywhere, independent of the
+     scrim, rather than only over the darker portions of the frame. */
+  text-shadow: 0 4px 32px rgba(0,0,0,.5), 0 1px 3px rgba(0,0,0,.3);
+}
+/* Words revealed by GSAP SplitText get their own inline-block wrapper so
+   each can translate independently without breaking line-wrapping. */
+.hero-overlay h1 .word{ display: inline-block; will-change: transform; }
+.hero-overlay .lede{ margin-top: 1.4rem; max-width: 44ch; color: rgba(255,255,255,.86); text-shadow: 0 2px 16px rgba(0,0,0,.4); }
+.hero-overlay .hero-actions{ margin-top: 2.2rem; }
+.hero-overlay .hero-badges{
+  border-top-color: rgba(255,255,255,.22);
+  margin-top: clamp(2.4rem, 5vw, 3.6rem);
+}
+.hero-overlay .hero-badge b{ color: #fff; }
+.hero-overlay .hero-badge span{ color: rgba(255,255,255,.72); }
+
+@media (max-width: 700px){
+  .hero-overlay h1{ max-width: 13ch; }
+}
+
+/* ---- Sonar grid texture ---- */
+.sonar-host{ position: relative; isolation: isolate; }
+.sonar-canvas{
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  color: var(--color-primary);
+  pointer-events: none;
+}
+.sonar-host.sonar-interactive .sonar-canvas{ pointer-events: auto; }
+.sonar-host > *:not(.sonar-canvas){ position: relative; z-index: 1; }
+
+/* ---- Services — interactive editorial explorer ---- */
+.services-explorer{
+  display: grid;
+  grid-template-columns: minmax(0, 40fr) minmax(0, 60fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+  /* NOT stretch: the list's height varies as rows expand/collapse, and a
+     grid item stretched to match it turns a landscape photo into a tall
+     sliver under object-fit:cover — cropping the actual subject out. A
+     fixed height on .services-visual (below) keeps the photo intentional
+     regardless of how tall the list gets. */
+  align-items: start;
+}
+.services-list{ display: flex; flex-direction: column; }
+.service-row{
+  display: flex; align-items: center; gap: 1.1rem;
+  padding: 1.3rem .5rem;
+  border-top: 1px solid var(--color-line);
+  cursor: pointer;
+  background: none; border-left: none; border-right: none; border-bottom: none;
+  text-align: left; width: 100%;
+  transition: padding var(--dur-fast) var(--ease);
+}
+.services-list .service-row:last-child{ border-bottom: 1px solid var(--color-line); }
+.service-row .num{
+  font-family: var(--font-display); font-size: 1rem; color: var(--color-ink-soft);
+  width: 2ch; flex: none;
+}
+.service-row h3{
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  transition: color var(--dur-fast) var(--ease);
+}
+.service-row .desc{
+  font-size: .88rem; color: var(--color-ink-soft); margin-top: .35rem;
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height var(--dur-med) var(--ease), opacity var(--dur-med) var(--ease), margin-top var(--dur-med) var(--ease);
+}
+.service-row .arrow-ico{
+  margin-left: auto; width: 18px; height: 18px; flex: none; color: var(--color-ink-soft);
+  opacity: 0; transform: translateX(-6px);
+  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.service-row .arrow-ico svg{ width: 100%; height: 100%; display: block; }
+.service-row:hover h3, .service-row.is-active h3{ color: var(--color-primary); }
+.service-row:hover .arrow-ico, .service-row.is-active .arrow-ico{ opacity: 1; transform: none; }
+.service-row.is-active{ padding-left: 1rem; }
+.service-row.is-active .num{ color: var(--color-accent); }
+.service-row.is-active .desc{ max-height: 6em; opacity: 1; margin-top: .6rem; }
+
+.services-visual{
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  height: 480px;
+  background: var(--color-sand-deep);
+}
+.services-visual img{
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transform: scale(1.06);
+  transition: opacity .7s var(--ease-out), transform 1.1s var(--ease-out);
+}
+.services-visual img.is-active{ opacity: 1; transform: scale(1); }
+.services-visual::after{
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(0deg, rgba(6,41,84,.55), transparent 55%);
+}
+.services-visual .visual-label{
+  position: absolute; left: 1.6rem; bottom: 1.5rem; z-index: 1;
+  color: #fff; font-family: var(--font-display); font-size: 1.3rem;
+}
+@media (max-width: 900px){
+  .services-explorer{ grid-template-columns: 1fr; }
+  .services-visual{ height: 300px; order: -1; position: static; }
+}
+
+/* ---- Residencias — large architectural cards ---- */
+.residence-big{
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-height: 480px;
+  isolation: isolate;
+}
+.residence-big img{
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.4s var(--ease-out);
+}
+/* Subtle per spec (1.02–1.04), not a dramatic zoom. */
+.residence-big:hover img{ transform: scale(1.03); }
+.residence-big::before{
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(0deg, rgba(6,20,38,.86) 0%, rgba(6,20,38,.35) 45%, rgba(6,20,38,.05) 70%);
+  transition: background var(--dur-med) var(--ease);
+}
+.residence-big:hover::before{
+  background: linear-gradient(0deg, rgba(6,20,38,.92) 0%, rgba(6,20,38,.45) 45%, rgba(6,20,38,.1) 70%);
+}
+.residence-big-body{
+  position: relative; z-index: 2;
+  margin-top: auto;
+  padding: clamp(1.6rem, 3vw, 2.8rem);
+  color: #fff;
+  display: flex; flex-direction: column;
+  transition: transform var(--dur-med) var(--ease);
+}
+.residence-big:hover .residence-big-body{ transform: translateY(-4px); }
+.residence-big-body .eyebrow{ color: rgba(255,255,255,.75); }
+.residence-big-body h3{ color: #fff; font-size: clamp(1.5rem, 2.4vw, 2.1rem); margin-top: .5rem; }
+.residence-big-body p{ color: rgba(255,255,255,.82); max-width: 46ch; margin-top: .6rem; }
+.residence-big-meta{
+  display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: 1.2rem;
+  font-size: .88rem; color: rgba(255,255,255,.9);
+}
+.residence-big-meta span{ display: inline-flex; align-items: center; gap: .5rem; }
+.residence-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+.residence-grid .residence-big:first-child{ min-height: 620px; }
+.residence-grid .residence-big:last-child{ min-height: 620px; }
+@media (max-width: 900px){
+  .residence-grid{ grid-template-columns: 1fr; }
+  .residence-grid .residence-big{ min-height: 420px !important; }
+}
+
+/* ---- Life at Nazareno — warm asymmetric mosaic ---- */
+.life-mosaic{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 160px;
+  gap: 1rem;
+}
+.life-tile{
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.life-tile:has(video){ cursor: default; }
+.life-tile img, .life-tile video{
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1s var(--ease-out);
+}
+.life-tile:hover img, .life-tile:hover video{ transform: scale(1.06); }
+/* A larger, more immersive scale for the dedicated gallery page vs. the
+   compact homepage teaser. */
+.life-mosaic.mosaic-lg{ grid-auto-rows: 220px; gap: 1.1rem; }
+@media (max-width: 900px){
+  .life-mosaic.mosaic-lg{ grid-auto-rows: 220px; }
+}
+.life-tile figcaption{
+  position: absolute; inset: auto 0 0 0; padding: 1rem 1.1rem;
+  background: linear-gradient(0deg, rgba(6,20,38,.75), transparent);
+  color: #fff; font-size: .85rem;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.life-tile:hover figcaption{ opacity: 1; transform: none; }
+.life-tile.span-wide{ grid-column: span 2; }
+.life-tile.span-tall{ grid-row: span 2; }
+@media (max-width: 900px){
+  .life-mosaic{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+  .life-tile.span-wide{ grid-column: span 2; }
+  .life-tile.span-tall{ grid-row: span 1; }
+}
+
+/* ---- Microinteractions ---- */
+.btn{ will-change: transform; }
+.btn:hover{ transform: translateY(-1.5px); }
+.btn:active{ transform: translateY(0) scale(.97); }
+.btn .btn-arrow{ display:inline-flex; width:1em; height:1em; transition: transform var(--dur-fast) var(--ease); }
+.btn:hover .btn-arrow{ transform: translateX(3px); }
+
+.lang-switch{ position: relative; }
+.lang-switch .lang-thumb{
+  position: absolute; top: 3px; bottom: 3px; left: 3px;
+  width: calc(50% - 3px);
+  background: var(--color-primary);
+  border-radius: var(--radius-pill);
+  transition: transform var(--dur-fast) var(--ease-out);
+  z-index: 0;
+}
+.lang-switch[data-active="en"] .lang-thumb{ transform: translateX(100%); }
+.lang-switch button{ position: relative; z-index: 1; transition: color var(--dur-fast) var(--ease); }
+.lang-switch button.is-active{ background: transparent; }
+
+.wa-float{ position: fixed; }
+.wa-float::before{
+  content: '';
+  position: absolute; inset: 0; border-radius: 50%;
+  background: var(--color-whatsapp);
+  animation: waPulse 2.6s var(--ease-out) infinite;
+  z-index: -1;
+}
+@media (prefers-reduced-motion: reduce){ .wa-float::before{ animation: none; } }
+@keyframes waPulse{
+  0%{ transform: scale(1); opacity: .55; }
+  70%{ transform: scale(1.7); opacity: 0; }
+  100%{ transform: scale(1.7); opacity: 0; }
+}
+
+.field input, .field textarea{ transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.field input:focus, .field textarea:focus{ transform: translateY(-1px); }
+
+.nav-links a{ will-change: color; }
+.nav-toggle span{ transform-origin: center; }
+
+/* Section rhythm helpers — used to break the "every section looks the
+   same" pattern the brief calls out. */
+.section-immersive{ padding-block: 0; }
+.section-compact{ padding-block: clamp(2.5rem, 4vw, 3.5rem); }
+.section-dark-editorial{ background: var(--color-primary-ink); color: #fff; }
+.section-dark-editorial .eyebrow{ color: #F3D9C4; }
+.section-dark-editorial h2, .section-dark-editorial h3{ color: #fff; }
+.section-dark-editorial .text-muted{ color: rgba(255,255,255,.68); }
+
+/* ==========================================================================
+   ITERATION 4 — Editorial art direction for everything after the hero:
+   an interactive services experience with numbered pagination, a dark
+   immersive Residencias moment, and a filmstrip-style "Vida en Nazareno".
+   The hero itself is untouched.
+   ========================================================================== */
+
+/* ---- Services — editorial composition: intro + circular service
+   selector on the left, ONE dominant landscape photograph with an
+   overlapping (not contained) information panel on the right. The panel
+   deliberately hangs off the image's bottom edge rather than sitting
+   inside it — the overlap itself is the point. ---- */
+.services-editorial{
+  display: grid;
+  grid-template-columns: minmax(0, 40fr) minmax(0, 60fr);
+  gap: clamp(1.6rem, 3.5vw, 3.5rem);
+  align-items: center;
+}
+.services-editorial-intro h2{ margin-top: .6rem; max-width: 12ch; }
+.services-editorial-intro .lede{ margin-top: .9rem; max-width: 34ch; }
+.services-editorial-intro .link-arrow{ margin-top: 1.2rem; }
+
+/* Circular minimal selector — no card box around each option; only the
+   active one gets a filled circle. This is the opposite of a tab bar. */
+.services-tabstrip{ display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: clamp(1.8rem, 3.5vw, 2.6rem); }
+.service-tab{
+  display: flex; flex-direction: column; align-items: center; gap: .55rem;
+  width: 64px; background: none; border: none; padding: 0;
+  cursor: pointer; text-align: center;
+}
+.service-tab .ico{
+  width: 50px; height: 50px; border-radius: 50%; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--color-line-cool); color: var(--color-ink-soft);
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.service-tab .ico svg{ width: 20px; height: 20px; }
+.service-tab span{ font-size: .68rem; font-weight: 600; line-height: 1.2; color: var(--color-ink-soft); transition: color var(--dur-fast) var(--ease); }
+.service-tab:hover .ico{ border-color: var(--color-primary); transform: translateY(-2px); }
+.service-tab.is-active .ico{ background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+.service-tab.is-active span{ color: var(--color-ink); font-weight: 700; }
+
+/* Room below the media for the panel to hang into without colliding with
+   whatever comes next in the page. */
+.services-editorial-visual{ position: relative; padding-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+.services-editorial-media{
+  position: relative; overflow: hidden; border-radius: var(--radius-lg);
+  aspect-ratio: 16 / 10.5;
+}
+.services-editorial-media img{
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transform: scale(1.06);
+  transition: opacity .7s var(--ease-out), transform 1.3s var(--ease-out);
+}
+.services-editorial-media img.is-active{ opacity: 1; transform: scale(1); }
+
+.services-editorial-card{
+  position: absolute; z-index: 2;
+  left: clamp(1.2rem, 3vw, 2.8rem);
+  bottom: 0;
+  transform: translateY(45%);
+  width: min(380px, calc(100% - clamp(2.4rem, 6vw, 5.6rem)));
+  background: var(--color-cream);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.6rem;
+  box-shadow: var(--shadow-float);
+}
+.services-editorial-card .row-top{ display: flex; align-items: flex-start; gap: .9rem; }
+.services-editorial-card .row-top h3{ flex: 1; margin: 0; }
+.services-editorial-card .arrow-ico{ width: 18px; height: 18px; color: var(--color-accent); flex: none; margin-top: .3rem; }
+.services-editorial-card .arrow-ico svg{ width: 100%; height: 100%; display: block; }
+.services-editorial-card p{ margin-top: .7rem; font-size: .89rem; color: var(--color-ink-soft); line-height: 1.55; }
+
+/* Sits on the photo itself, top-right corner — the bottom edge belongs
+   entirely to the floating card, so pagination lives up top to avoid
+   ever colliding with it (a text-shadow keeps it legible over any
+   photo). */
+.services-editorial-pagination{
+  position: absolute; z-index: 3;
+  top: clamp(1rem, 2.5vw, 1.4rem); right: clamp(1rem, 2.5vw, 1.4rem);
+  display: flex; flex-wrap: wrap; gap: 1rem;
+}
+.services-editorial-pagination button{
+  background: none; border: none; padding: 0;
+  font-family: var(--font-display); font-size: .92rem;
+  color: rgba(255,255,255,.78); text-shadow: 0 1px 6px rgba(0,0,0,.5);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease);
+}
+.services-editorial-pagination button:hover{ color: #fff; }
+.services-editorial-pagination button.is-active{ color: var(--color-accent); text-decoration: underline; text-underline-offset: 5px; }
+
+@media (max-width: 900px){
+  .services-editorial{ grid-template-columns: 1fr; }
+  .services-editorial-visual{ padding-bottom: 0; margin-top: 2.5rem; }
+  .services-editorial-media{ aspect-ratio: 4/3.4; }
+  .services-editorial-card{ position: static; transform: none; width: 100%; margin-top: -2rem; margin-inline: auto; box-shadow: none; border: 1px solid var(--color-line); }
+  .services-editorial-pagination{ position: static; margin-top: 1rem; justify-content: center; color: var(--color-ink-soft); }
+  .services-editorial-pagination button{ color: var(--color-ink-soft); text-shadow: none; }
+}
+
+/* ---- Residencias — dark immersive moment ---- */
+.residencias-dark-grid{
+  display: grid;
+  grid-template-columns: minmax(0, 27fr) minmax(0, 73fr);
+  gap: clamp(1.6rem, 3vw, 3rem);
+  align-items: start;
+}
+.residencias-dark-intro h2{ margin-top: .7rem; max-width: 11ch; }
+.residencias-dark-intro .lede{ margin-top: 1rem; }
+.residencias-dark-intro .btn{ margin-top: 1.6rem; }
+.residencias-quote{
+  margin-top: clamp(2.2rem, 4vw, 3rem);
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(255,255,255,.2);
+  max-width: 34ch;
+}
+.residencias-quote p{
+  font-family: var(--font-display); font-style: italic; font-weight: 400;
+  font-size: 1.15rem; line-height: 1.45; color: #fff;
+}
+.residencias-quote span{ display: block; margin-top: .8rem; font-size: .82rem; color: rgba(255,255,255,.65); }
+
+.residence-grid .residence-big{ position: relative; }
+.residence-badge{ position: absolute; top: 1.4rem; left: 1.4rem; z-index: 2; }
+.residence-arrow-btn{
+  position: absolute; z-index: 2; right: 1.4rem; bottom: 1.4rem;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.4);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.residence-arrow-btn svg{ width: 18px; height: 18px; transform: rotate(-45deg); transition: transform var(--dur-fast) var(--ease); }
+.residence-big:hover .residence-arrow-btn{ background: var(--color-accent); border-color: var(--color-accent); }
+.residence-big:hover .residence-arrow-btn svg{ transform: rotate(0deg); }
+
+@media (max-width: 900px){
+  .residencias-dark-grid{ grid-template-columns: 1fr; }
+  .residencias-dark-intro h2{ max-width: none; }
+}
+
+/* ---- Vida en Nazareno — editorial filmstrip. Left: intro copy + a real
+   progress counter and prev/next controls. Right: a wide horizontal strip
+   of real photography with permanently-visible editorial captions. ---- */
+.life-editorial{
+  display: grid;
+  grid-template-columns: minmax(0, 27fr) minmax(0, 73fr);
+  gap: clamp(1.6rem, 3vw, 3rem);
+  align-items: start;
+}
+.life-editorial-intro .lede{ margin-top: 1rem; max-width: 30ch; }
+.life-editorial-intro .link-arrow{ margin-top: 1.3rem; }
+.life-editorial-controls{
+  display: flex; align-items: center; gap: 1rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.life-editorial-counter{
+  font-family: var(--font-display); font-size: .92rem; color: var(--color-ink-soft);
+  font-variant-numeric: tabular-nums; letter-spacing: .02em;
+}
+.life-strip-nav{ display: flex; gap: .6rem; }
+.life-strip-nav button{
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid var(--color-line-cool); background: var(--color-cream);
+  display: flex; align-items: center; justify-content: center; color: var(--color-ink);
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.life-strip-nav button:hover{ background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+.life-strip-nav svg{ width: 16px; height: 16px; }
+
+/* Deliberately NOT a grid: an editorial story strip where the first frame
+   is large/landscape (the establishing shot) and the rest are narrower
+   portrait frames — varied widths, not a repeating unit, and the strip is
+   wide enough that the last visible frame is always cut by the container
+   edge, signaling there's more to scroll to. */
+.life-strip{
+  display: flex; align-items: flex-end; gap: 1.1rem; overflow-x: auto; scroll-snap-type: x proximity;
+  scrollbar-width: none; padding-bottom: .3rem;
+}
+.life-strip::-webkit-scrollbar{ display: none; }
+.life-strip-item{
+  position: relative; flex: 0 0 auto;
+  width: min(42%, 340px);
+  aspect-ratio: 5/4;
+  border-radius: var(--radius-md); overflow: hidden; scroll-snap-align: start;
+}
+.life-strip-item.is-tall{
+  width: min(24%, 200px);
+  aspect-ratio: 3/4.4;
+}
+.life-strip-item img{ width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1s var(--ease-out); }
+.life-strip-item:hover img{ transform: scale(1.05); }
+.life-strip-item figcaption{
+  position: absolute; inset: auto 0 0 0; padding: 1.1rem 1.2rem;
+  background: linear-gradient(0deg, rgba(6,20,38,.8), transparent 60%);
+  color: #fff; font-family: var(--font-display); font-size: 1rem; font-style: italic;
+  transform: translateY(4px); transition: transform var(--dur-fast) var(--ease);
+}
+.life-strip-item:hover figcaption{ transform: translateY(0); }
+
+@media (max-width: 900px){
+  .life-editorial{ grid-template-columns: 1fr; }
+  .life-editorial-controls{ margin-top: 1.4rem; }
+  .life-strip-item{ width: min(78%, 300px); aspect-ratio: 4/3.4; }
+  .life-strip-item.is-tall{ width: min(58%, 220px); aspect-ratio: 3/4; }
+}

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Servicios | Geriátrico Señor de Nazareno</title>
+<meta name="description" content="Alojamiento, atención médica, enfermería, evaluación médica, alimentación, terapia ocupacional y lavandería: conoce los servicios de la Residencia Geriátrica Señor de Nazareno en San Borja, Lima.">
+<link rel="icon" href="assets/images/brand/favicon.png">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="servicios">
+<a class="skip-link" href="#main" data-i18n="common.skip">Saltar al contenido principal</a>
+<header id="site-header" class="site-header"></header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.servicios"></span></div>
+      <div class="eyebrow"><span class="eyebrow-label" data-i18n="services.eyebrow"></span></div>
+      <h1 data-i18n="services.title" style="margin-top:.7rem;max-width:18ch"></h1>
+      <p class="lede" style="margin-top:1.2rem" data-i18n="services.lede"></p>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="services-editorial" id="servicesEditorial" data-reveal></div>
+    </div>
+  </section>
+
+  <section class="section section-dark-editorial">
+    <div class="container">
+      <div class="residencias-dark-grid">
+        <div class="residencias-dark-intro" data-reveal>
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="home.sedesEyebrow"></span></div>
+          <h2 data-i18n-html="home.sedesTitleHtml"></h2>
+          <p class="lede" style="color:rgba(255,255,255,.75)" data-i18n="sedes.lede"></p>
+          <a class="btn btn-accent" href="residencias.html" data-i18n="cta.conocerResidencias"></a>
+          <blockquote class="residencias-quote" id="residenciasQuote"></blockquote>
+        </div>
+        <div class="residence-grid" id="residenceBigGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container" data-reveal>
+      <div class="cta-band">
+        <div>
+          <h2 data-i18n="home.ctaBandTitle"></h2>
+          <p style="color:rgba(255,255,255,.78);margin-top:.6rem" data-i18n="home.ctaBandLede"></p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-accent" id="ctaPlanes" target="_blank" rel="noopener" data-i18n="cta.solicitarPlanes"></a>
+          <a class="btn btn-ghost-light" id="ctaWhatsapp" target="_blank" rel="noopener" data-i18n="cta.hablarWhatsapp"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer"></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/SplitText.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/partials.js"></script>
+<script src="assets/js/render.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  document.getElementById("ctaPlanes").href = SITE_DATA.brand.whatsapp.planes;
+  document.getElementById("ctaWhatsapp").href = SITE_DATA.brand.whatsapp.info;
+  registerRender(() => renderServicesEditorial("servicesEditorial"));
+  registerRender(() => renderResidenceBig("residenceBigGrid"));
+  registerRender(function(){
+    const el = document.getElementById("residenciasQuote");
+    const lang = getLang();
+    const t = SITE_DATA.testimonials.find(x => x.name === "Humberto Valdivia Yoplac") || SITE_DATA.testimonials[0];
+    el.innerHTML = `<p>&ldquo;${t[lang] || t.es}&rdquo;</p><span>— ${t.name}</span>`;
+  });
+</script>
+</body>
+</html>

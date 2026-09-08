@@ -1,0 +1,588 @@
+════════════════════════════════════════════════════════════════════════════
+WEBSITE INFO — SOURCE ANALYSIS
+Compiled 2026-09-07 by direct crawl of live sites (HTML/CSS fetched via curl,
+content extracted, images downloaded to /assets/original/).
+════════════════════════════════════════════════════════════════════════════
+
+████████████████████████████████████████████████████████████████████████████
+PART A — DESIGN REFERENCE: ANGELS NURSING HEALTH CENTER (angelsnc.com)
+Used ONLY for visual/UX inspiration. Not to be copied — no shared brand
+name, copy, layout, or identity with Nazareno's site.
+████████████████████████████████████████████████████████████████████████████
+
+BRAND NAME
+  Angels Nursing Health Center (Los Angeles, CA — skilled nursing & rehab)
+
+TAGLINE
+  "A Premier Experience of Healthcare & Wellness"
+
+ONE-LINER
+  Skilled nursing and rehabilitation facility providing round-the-clock,
+  compassionate care in Los Angeles.
+
+BRAND VOICE
+  Warm, reassuring, family-oriented, quietly clinical. Leads with dignity
+  and quality of life rather than medical jargon. Short declarative
+  sentences, mission-driven language ("a better quality of life for every
+  soul that enters our doors").
+
+COLORS
+  Not exposed as a documented brand palette in markup (classic small
+  WordPress/Elementor build). Visual tone reads as clinical blue/white with
+  warm neutral photography. No distinctive proprietary hex system found —
+  this is a plain, conventional healthcare template, functionally simple.
+
+NAVIGATION MENU
+  Home · About Us · Services · Amenities · Gallery · Virtual Tour · Contact Us
+
+HERO SECTION
+  Headline: "Welcome to Angels Nursing Health Center"
+  Subhead: "A Premier Experience of Healthcare & Wellness"
+  CTAs: "Our Services" / "Contact Us"
+  Imagery: exterior photos of the two physical homes (West Haven Home,
+  Hilltop Home) — static images, no video/parallax.
+
+SHADERS / BACKGROUNDS
+  None. Flat WordPress build, no WebGL/shader/gradient-mesh backgrounds,
+  no animated canvas elements.
+
+SCROLL AREAS
+  Standard vertical scroll, no scroll-jacking, no visible scroll-triggered
+  reveal animations in source.
+
+FEATURES SECTION
+  3-column card layout:
+    • Skilled Nursing — "Round-the-clock care from experienced and
+      compassionate professionals"
+    • Rehab & Therapy — "Tailored rehabilitation programs enhancing
+      recovery and independence"
+    • Special Features — semi-private rooms, modern facilities, warm
+      community atmosphere
+
+PRICING SECTION
+  None present — healthcare/insurance-based facility, no public pricing.
+
+CALLS TO ACTION
+  "Our Services" · "Contact Us" · contact form "Send" button.
+  CTA density is low and unobtrusive — one clear action per section.
+
+CARDS
+  Simple icon/image + heading + one-paragraph description, minimal
+  ornamentation, no hover-motion system observed in source.
+
+FOOTER
+  Address: 415 S Union Ave, Los Angeles, CA 90017
+  Phone: 213.484.0784 · Emails: info@angelsnc.com, administrator@angelsnc.com
+  Quick links mirror nav · Social: Facebook, Instagram, LinkedIn
+  reCAPTCHA + Google Privacy/Terms boilerplate.
+
+TAKEAWAYS FOR OUR REDESIGN (structure, not literal copy):
+  - Clear, shallow nav; one obvious primary action per view
+  - Photography of the REAL physical place, not stock/illustration
+  - Calm 3-part "why trust us" feature structure
+  - Low CTA pressure — reassurance over sales pressure
+  - Missing (and worth doing better): motion design, editorial typography,
+    a cohesive color system, cinematic hero, staff bios, testimonials,
+    location depth, blog integration. This is where Nazareno's new site
+    should clearly outclass the reference.
+
+  ADDITIONAL MOOD-BOARD REFERENCES (images supplied by the client, not
+  angelsnc.com itself): large architectural/real-estate sites — "Steel
+  Farm" style hero with oversized display type over a cinematic dusk photo,
+  small stat badges ("94+ residences", "500+ happy residents"), warm
+  sand/terracotta neutral palette, soft-organic architecture photography,
+  pill-shaped buttons, and editorial 2–3 column photo grids with captions
+  ("Private Library — a quiet space where..."). These inform the premium
+  editorial layout language (big serif/grotesk headlines, generous
+  whitespace, warm neutrals, small credibility badges, captioned photo
+  grids) applied to Nazareno — adapted to a warm medical-trust palette
+  rather than a real-estate one.
+
+
+████████████████████████████████████████████████████████████████████████████
+PART B — EXISTING SITE: GERIÁTRICO SEÑOR DE NAZARENO
+https://www.geriatriconazareno.com/  (PHP site, Bootstrap 4/5 + Owl Carousel)
+This is the CONTENT SOURCE OF TRUTH for the rebuild. Nothing here is invented.
+████████████████████████████████████████████████████████████████████████████
+
+--------------------------------------------------------------------------
+1. BRAND IDENTITY
+--------------------------------------------------------------------------
+Full legal/display name: "Casa de reposo y Residencia Geriátrica Señor de
+Nazareno"
+Short name used in UI: "Geriátrico Señor de Nazareno"
+Logo file: images/logo-wide.png (wide horizontal lockup) — saved to
+  assets/original/images_logo-wide.png
+Favicon: images/favicon.png — saved to assets/original/images_favicon.png
+Meta description (SEO, authoritative summary of the brand):
+  "En Geriátrico Señor de Nazareno brindamos atención integral y
+  especializada para personas mayores, en un entorno seguro, cómodo y
+  lleno de calidez humana."
+
+Three brand pillars (used as trust badges site-wide):
+  1. Atención personalizada al cliente
+  2. Experiencia y Calidad en Servicio
+  3. Contamos con todos los Permisos Y Regulaciones
+
+BRAND VOICE (as observed in existing copy)
+  Warm, familial, reassuring, plain-spoken Spanish. Refers to itself as
+  "una familia" and to residents' comfort and dignity repeatedly. Leans on
+  regulatory legitimacy (Ministerio de Salud, MIMP, Municipalidad de San
+  Borja, INDECI) to build trust rather than marketing superlatives.
+
+COLOR PALETTE (extracted directly from site's own CSS — css/home.min.css
+and css/style.min.css — this is the REAL existing brand palette to
+modernize, not invent):
+  Primary blue:      #0043A5 (also seen as #12489e)
+  Accent green:      #84BD00
+  Accent orange:     #FF6B00 (also #D45420)
+  Accent light blue: #00A1FF
+  Neutral text gray: #667076
+  Neutral border:    #BFC8CF
+  Neutral bg:        #F3F3F3
+  White / Black:     #FFFFFF / #000000
+Typeface: "Work Sans" (Medium / Regular weights) — Google Fonts family,
+  clean geometric grotesk. Good candidate to keep or upgrade in the same
+  family for continuity.
+
+--------------------------------------------------------------------------
+2. SITE STRUCTURE / URLS FOUND
+--------------------------------------------------------------------------
+  index.php          Home
+  nosotros.php        Nosotros (About)
+  servicios.php       Servicios (Services)
+  medicos.php         Staff Médico
+  medico-single.php   Doctor profile — Dra. Ernestina Palomino Sulca
+  medico-single2.php  Doctor profile — Dr. Daniel Arias Cerquin
+  blog.php            Blog listing
+  blog6.php–blog16.php + slug-named posts   Individual articles
+  galeria.php         Gallery
+  contacto.php        Contact form
+  /libro/libro-de-reclamaciones.html   Peru-mandated "Libro de Reclamaciones"
+  politica-privacidad, politica-corporativa-proteccion-datos-personales,
+  politica-de-gestion-de-objetos-encontrados, derechos-y-deberes,
+  determinacion-de-beneficiario-final  — legal/compliance footer pages
+  (present as links; content not required for the redesign brief but
+  should remain linked/preserved as legal pages)
+  Note: solicite-presupuesto/, trabaje-nosotros/, especialidades/ and the
+  citaweb.clinicasanfelipe.com / labroe.com / efacturacion.pe links appear
+  in the shared template footer but look like leftover boilerplate from a
+  larger clinic-network template (not specific confirmed Nazareno
+  features) — flagged, not treated as real Nazareno functionality unless
+  confirmed by the client.
+
+--------------------------------------------------------------------------
+3. NAVIGATION (as built)
+--------------------------------------------------------------------------
+Primary menu: Nosotros · Servicios · Staff Médico · Blog · Galería · Contacto
+Top utility bar: phone numbers + "Agendar cita" button (opens WhatsApp)
+Mobile: hamburger menu; on-page search icon ("¿Qué podemos ayudarte a
+  encontrar?")
+Sticky header on scroll (class "header.sticky-top")
+
+--------------------------------------------------------------------------
+4. HOMEPAGE CONTENT (index.php, literal copy)
+--------------------------------------------------------------------------
+H1 / Hero title: "Casa de reposo y Residencia Geriátrica Señor de Nazareno"
+Hero CTAs (4, each "Ver más"):
+  - "Quiero agendar mi cita"
+  - "Ver instalaciones"
+  - "Ver Staff"
+  - "Solicitar Planes"
+Hero background: images/slider/banner11.jpg (Owl Carousel slider)
+Trust strip (3 pillars, repeated from brand identity):
+  Atención personalizada al cliente / Experiencia y Calidad en Servicio /
+  Contamos con todos los Permisos Y Regulaciones
+Secondary CTA block: "¿Tienes alguna consulta?" → "Contáctanos ahora" → Contacto
+Blog teaser intro: "Nuestro staff de especialistas pone a tu disposición
+  distintos contenidos, a través de nuestro blog, para que te mantengas
+  informado sobre tu salud y la de tu familia." — features 3 latest posts
+  (see Blog section below for the 3 featured + full archive)
+Testimonials block header: "Testimonios — Lo que dicen nuestros clientes"
+  (see Testimonials section)
+Certifications block: "Nuestras Certificaciones" — 4 certification images
+  (images/1.webp…4.webp, alt="Certificaciones Geriátrico Señor de Nazareno";
+  no readable certifying-body text in the alt/markup — treat as visual
+  certification badges only; do not invent names of certifying bodies)
+Locations block: "Estamos cerca de ti y tu familia" → "Conoce nuestras
+  sedes" (see Locations section)
+Footer CTA repeats: "Agendar citas" / "Enviar un mensaje"
+
+--------------------------------------------------------------------------
+5. NOSOTROS / ABOUT (nosotros.php, literal copy)
+--------------------------------------------------------------------------
+"¿Quiénes somos?"
+  "Somos una familia dedicada al bienestar y la felicidad de cada persona
+  que forma parte de nuestro hogar. Nuestro equipo está compuesto por
+  profesionales comprometidos y dedicados, que se esfuerzan por brindar un
+  cuidado personalizado y de excelencia."
+
+Full institutional paragraph:
+  "Somos una entidad que cuenta con la autorización de la Dirección de
+  Salud Lima Centro del Ministerio de Salud y está conformada por
+  profesionales de la salud debidamente acreditados. Para brindar un
+  servicio de calidad, se han elaborado modernos sistemas de atención
+  integral que permiten ofrecer a nuestros residentes programas de
+  atención que promueven el ejercicio físico, la motivación psíquica y la
+  integración social. Nuestras residencias están ubicadas en las mejores
+  zonas de San Borja, cálidas y acogedoras. La casa cuenta con áreas
+  comunes, cocina, comedores al interior y al aire libre, y salas de
+  recibo con estaciones de enfermería en cada piso."
+
+"La Residencia":
+  "Ha sido diseñada y construida especialmente para el adulto mayor.
+  Cumplimos con todas las certificaciones solicitadas por el Ministerio de
+  Salud, el Ministerio de la Mujer y Poblaciones Vulnerables, la
+  Municipalidad de San Borja y el INDECI."
+
+"Estamos cerca de ti y tu familia" → "Conoce nuestras sedes":
+  Sede Las Artes Norte, San Borja / Sede Dalí, San Borja
+Images used: images/nosotros-desktop.jpg (hero), images/sede1.jpg (large
+  facility photo)
+
+--------------------------------------------------------------------------
+6. SERVICIOS (servicios.php, literal copy)
+--------------------------------------------------------------------------
+Section title: "Conoce nuestros servicios en la Residencia Geriátrica
+  Señor de Nazareno"
+Services (identical list at both sedes):
+  1. Alojamiento — images/*/room photography implied, general lodging
+  2. Atención médica
+  3. Enfermería
+  4. Evaluación médica
+  5. Elaboración y selección de comidas — image: images/comida.webp
+  6. Terapia ocupacional — image: images/terapia.webp
+  7. Lavandería — image: images/lavanderia.webp
+Additional icon images present in source (categories from a shared clinic
+  template, not confirmed unique Nazareno services — verify before using):
+  images/1_Ambulatorio.webp, 1_Apoyo-al-disgnostico.webp, 1_Emergencia.webp,
+  1_Hospitalizacion.webp
+Banner image: images/banner-servicios.jpg — on inspection this is a generic
+  stock photo (a clipboard reading "SERVICE DEPT", unrelated to geriatric
+  care — appears to be leftover template stock art, not real Nazareno
+  photography) with "NUESTROS SERVICIOS" text baked into the image. NOT
+  carried into the redesign for this reason; replaced with a real gallery
+  photo (a staff member serving meals to residents) that actually
+  represents the Servicios page content. Original file kept in
+  assets/original/ for the record.
+No pricing shown on this page (matches "Solicitar Planes" CTA elsewhere —
+  plans/pricing are requested via WhatsApp, not published).
+
+--------------------------------------------------------------------------
+7. STAFF MÉDICO (medicos.php + 2 profile pages, literal copy)
+--------------------------------------------------------------------------
+Section intro: "Conoce a los médicos en nuestra Residencia geriátrica
+  señor de nazareno" — "Siempre listos para cuidarte"
+
+DOCTOR 1
+  Name: Dra. Ernestina Palomino Sulca
+  Photo: images/doctora.webp
+  Especialidad: Medicina
+  Tipo de Atención: Particular
+  Atiende en: San Borja
+  CMP (Colegio Médico del Perú reg. no.): 45073
+  Formación: Universidad Ricardo Palma; Diplomado en Geriatría y
+    Gerontología
+  Área de interés: Atención del Adulto Mayor
+  CTAs: "Conócela aquí" / "Agenda una cita"
+
+DOCTOR 2
+  Name: Dr. Daniel Arias Cerquin
+  Photo: images/doctor.webp
+  Especialidad: Medicina General
+  Tipo de Atención: Particular
+  Atiende en: San Borja
+  CMP: 29814
+  Formación: Universidad San Martín de Porres; Maestría de Geriatría por
+    la Universidad Cayetano Heredia; Diplomado de Geriatría y Gerontología
+  Área de interés: Atención del Adulto Mayor
+  CTAs: "Conócelo aquí" / "Agenda una cita"
+
+No other staff members/credentials are published on the current site —
+do not invent additional doctors, nurses, or therapists by name.
+
+--------------------------------------------------------------------------
+8. RESIDENCIAS / SEDES (LOCATIONS)
+--------------------------------------------------------------------------
+SEDE SAN BORJA (Las Artes Norte)
+  Address: Av. Las Artes Norte 1249, San Borja, Perú
+  Phones: (+51) 978 653 991 · (+511) 744 57 11
+  Services shown: Alojamiento, Atención médica, Enfermería, Evaluación
+    médica, Elaboración y selección de comidas, Terapia ocupacional,
+    Lavandería
+  Map image: images/mapa.webp (or mapa2.webp for the second sede)
+
+SEDE SALVADOR DALÍ
+  Address: Salvador Dalí 490, San Borja, Perú
+  Phones: (+51) 978 653 991 · (+511) 744 57 11
+  Services shown: identical list to Sede San Borja
+  Map image: images/mapa2.webp
+
+Both sedes are in San Borja, Lima, Peru — presented as sister residences
+under the same brand, same phone/WhatsApp line, same services.
+
+--------------------------------------------------------------------------
+9. GALERÍA (galeria.php)
+--------------------------------------------------------------------------
+Page title: "Galería de imágenes de la residencia geriátrico Señor de
+  Nazareno"
+22 real photographs of the facility (downloaded to assets/original/gallery/):
+  1.jpg – 19.jpg  (general facility/resident/activity photography)
+  navidad1.jpg, navidad2.jpg, navidad3.jpg  (Christmas/holiday event photos)
+No captions/alt text differentiating individual images was present in the
+  markup — treat all 22 as an undifferentiated real photo library of the
+  residences, staff, residents, and events (do not caption with invented
+  specifics; use generic descriptive alt text or ask client for captions).
+Additional real photography found and preserved:
+  images/slider/banner11.jpg (homepage hero)
+  images/nosotros-desktop.jpg, images/sede1.jpg (About/Nosotros)
+  images/banner-servicios.jpg (Servicios)
+  cms/uploads/popup/img_6296.webp (homepage popup image)
+No video files were found embedded in the crawled HTML (no <video> tags or
+  linked mp4/YouTube embeds detected on the pages crawled). If Nazareno has
+  video content on Instagram/TikTok/YouTube (@geriatriconazareno /
+  @geriatrico_nazareno), it lives on those platforms, not the current
+  website — flag as a placeholder opportunity, do not fabricate a video.
+
+--------------------------------------------------------------------------
+10. TESTIMONIOS (from homepage, literal — do not reword)
+--------------------------------------------------------------------------
+1. Humberto Valdivia Yoplac
+   "Permanente y calida atención las 24 horas"
+
+2. Patricia Boza
+   "Realmente es una casa excepcional. Profesionales A1. Muchísimo Amor en
+   la atención Personal altamente Calificado Información valiosa a los
+   familiares. Oportunos Un local IMPECABLE Muy Organizados Humanidad a
+   todo nivel Acceso a los doctores (dueños) Dedicados. Recomendable a
+   todo nivel en toda su máxima expresión. Tengo a mi hermana Susy ahí. Si
+   gustan más info. inbox. Gracias a la Residencia"
+
+3. Maria Rosa Aicardi (mixed/critical — preserved verbatim per brief;
+   confirm with client before publishing — see open question to user)
+   "Mi madrecita vivió en esta residencia casi dos años ... Durante el
+   tiempo que pasó en este lugar tuvo una persona (que empleamos) que la
+   acompañaba cada día, pues faltaba personal que se ocupe de sus
+   huéspedes... la atención a pesar de la buena voluntad de ciertas
+   técnicas era pues deficiente. Residencia recomendada para personas
+   validas pero no así para personas dependientes como fue el caso de mi
+   madrecita."
+
+4. Liz Palomino
+   "Buen cuidado para el adulto mayor"
+
+--------------------------------------------------------------------------
+11. CERTIFICACIONES
+--------------------------------------------------------------------------
+4 certification badge images displayed on homepage: images/1.webp,
+  2.webp, 3.webp, 4.webp. At full resolution these ARE legible real
+  logos — confirmed on rendering the rebuilt site:
+    1.webp — Municipalidad de San Borja ("San Borja — mi orgullo!")
+    2.webp — Ministerio de la Mujer y Poblaciones Vulnerables (Perú)
+    3.webp — Ministerio de Salud (Perú)
+    4.webp — INDECI (Instituto Nacional de Defensa Civil)
+  These match exactly the regulatory bodies named in the About page copy
+  below — displayed as real logo badges, not invented text.
+Regulatory bodies referenced in copy (About page) — real, keep exactly:
+  Dirección de Salud Lima Centro (Ministerio de Salud), Ministerio de la
+  Mujer y Poblaciones Vulnerables, Municipalidad de San Borja, INDECI.
+
+--------------------------------------------------------------------------
+12. BLOG / NEWS (blog.php + individual articles)
+--------------------------------------------------------------------------
+Intro copy: "Mantente informado con nuestros blogs de la residencia
+  geriátrico Señor de Nazareno." / "Lee artículos escritos por
+  profesionales."
+3 posts featured on the homepage:
+  - La importancia de un entorno seguro y adaptado para personas mayores
+  - Prevención de caídas: creando entornos seguros para personas mayores
+  - Beneficios de los cuidados geriátricos: ¿por qué elegirlos para tus
+    seres queridos?
+
+Full article archive (16 articles found, titles + dek copy, literal):
+  1. Áreas Recreativas en Geriátricos: Espacios para el Bienestar y la
+     Conexión — "El bienestar integral de los adultos mayores va más allá
+     del cuidado médico; también incluye ofrecer espacios que fomenten la
+     recreación, la socialización y el ejercicio mental."
+  2. Baños Adaptados: Cómo Diseñarlos para Evitar Accidentes en Adultos
+     Mayores — "Los baños son espacios esenciales en cualquier hogar o
+     casa de reposo, pero también representan uno de los lugares más
+     propensos a accidentes, especialmente para los adultos mayores."
+  3. Beneficios Emocionales de una Casa de Reposo: Un Refugio de
+     Tranquilidad y Bienestar — "En una sociedad que avanza a un ritmo
+     vertiginoso, encontrar un espacio de paz y tranquilidad se vuelve
+     fundamental para nuestra salud emocional."
+  4. Fortaleciendo Lazos Familiares: Una Guía para Mantener Conexiones
+     Significativas desde el Geriátrico — "Los lazos familiares son
+     fundamentales para el bienestar emocional y la calidad de vida de
+     nuestros adultos mayores..."
+  5. Nutrición en la Tercera Edad: Guía Completa para una Alimentación
+     Saludable — "La nutrición juega un papel fundamental en la calidad de
+     vida de nuestros adultos mayores..."
+  6. Estadísticas Relevantes sobre el Cuidado de Adultos Mayores — "Las
+     estadísticas nos ayudan a comprender mejor la importancia de tomar
+     decisiones informadas sobre el cuidado de nuestros adultos mayores."
+  7. Señales que Indican que es Momento de Considerar un Geriátrico: Guía
+     Completa para Familias — "Tomar la decisión de trasladar a un ser
+     querido a un geriátrico es uno de los momentos más desafiantes..."
+  8. El rol del personal médico y de cuidado en Señor de Nazareno — "En
+     Señor de Nazareno, entendemos que nuestro personal médico y de
+     cuidado es el corazón de nuestra casa de reposo..."
+  9. Mitos y verdades sobre el cuidado geriátrico — "Cuando se habla de
+     geriátricos, a menudo surgen ideas preconcebidas que no reflejan la
+     realidad..."
+  10. La importancia de una nutrición adecuada en la tercera edad — "En la
+      etapa de la tercera edad, la alimentación juega un papel crucial..."
+  11. Beneficios de las actividades recreativas para adultos mayores — "A
+      medida que las personas envejecen, mantenerse activo no solo es
+      beneficioso para la salud física..."
+  12. Consejos para elegir la mejor casa de reposo en Lima — "Tomar la
+      decisión de ingresar a un ser querido en una casa de reposo es un
+      acto de amor y responsabilidad..."
+  13. Datos Curiosos sobre Envejecimiento Saludable: Un Viaje de Bienestar
+      y Sabiduría — "El envejecimiento no es un destino, sino un viaje
+      fascinante lleno de posibilidades y aprendizajes..."
+  14. Beneficios de los cuidados geriátricos: ¿por qué elegirlos para tus
+      seres queridos? — "Los cuidados geriátricos son esenciales..."
+  15. Prevención de caídas: creando entornos seguros para personas mayores
+      — "En nuestro geriátrico, la seguridad es una prioridad absoluta..."
+  16. La importancia de un entorno seguro y adaptado para personas mayores
+      — full body copy captured (see FULL SAMPLE ARTICLE below)
+
+No publish dates or author bylines were present in the crawled markup for
+  any article — flag as a placeholder gap (dates to be added if client
+  supplies them; do not invent dates).
+Article images found: images/blog1.webp, blog2.webp, blog4.jpg, blog5.webp,
+  blog6.webp, blog7.webp, blog8.webp, b1.webp, b2.webp, b3.webp, b31.webp,
+  b9.webp, 111.webp, nutri.webp, cccc.jpg, ss.jpg — saved to
+  assets/original/blog/. Exact article↔image pairing wasn't recoverable
+  from list markup alone; will map sensibly by topic (e.g. nutri.webp →
+  nutrition articles) and flag any forced pairing as a placeholder.
+
+FULL SAMPLE ARTICLE BODY (article #16, captured in full, literal — this is
+the level of real detail available per post; used as the template for
+article-page layout):
+  "La importancia de un entorno seguro y adaptado para personas mayores"
+  "En nuestro geriátrico, nos aseguramos de ofrecer un entorno diseñado no
+  solo para garantizar la seguridad física, sino también para promover la
+  comodidad y el bienestar integral de nuestros residentes. Aquí te
+  compartimos en detalle cómo logramos este objetivo:
+  Prevención de accidentes en cada rincón — Sabemos que las caídas son uno
+  de los principales riesgos para las personas mayores. Por ello, todos
+  nuestros espacios cuentan con pisos antideslizantes, pasamanos
+  ergonómicos y excelente iluminación, incluso en horarios nocturnos.
+  Además, nuestras puertas y pasillos son lo suficientemente amplios para
+  permitir un fácil acceso, incluso para personas con sillas de ruedas o
+  andadores.
+  Habitaciones personalizadas y seguras — Cada residente encuentra en
+  nuestras instalaciones una habitación que se adapta a sus necesidades
+  específicas. Las camas son ajustables, lo que facilita su uso diario
+  tanto para el residente como para el personal médico. Los baños,
+  equipados con barras de apoyo y duchas a nivel del suelo, permiten mayor
+  independencia sin comprometer la seguridad.
+  Zonas comunes que invitan al disfrute — Creemos que la seguridad no debe
+  sacrificar la comodidad. Por ello, nuestras áreas comunes están
+  diseñadas con mobiliario seguro y acogedor, pensado para promover la
+  interacción social y el entretenimiento.
+  Tecnología al servicio del cuidado — La tecnología es nuestra aliada
+  para garantizar el bienestar de los residentes. Contamos con sistemas de
+  monitoreo y alarmas conectadas que permiten una rápida respuesta del
+  personal ante cualquier emergencia.
+  Cuidando el bienestar emocional — Un entorno seguro va más allá de lo
+  físico. Para nosotros, también es esencial ofrecer tranquilidad
+  emocional tanto a los residentes como a sus familias.
+  ¿Te gustaría conocer más? ¡Agenda una visita hoy mismo! Ven y descubre
+  cómo nuestro espacio está pensado para el bienestar integral de tus
+  seres queridos."
+
+--------------------------------------------------------------------------
+13. CONTACT / CONVERSION
+--------------------------------------------------------------------------
+Phones: (+51) 978 653 991  ·  (+511) 744 57 11
+WhatsApp number (all links resolve to the same number, 51 978 653 991)
+  with three distinct pre-filled intents:
+    - Agendar cita: https://wa.link/64zu2j → "Hola me gustaría agendar una
+      cita..."
+    - Más información: https://wa.link/bae8y7 → "Hola quisiera mayor
+      información sobre..."
+    - Solicitar planes/pricing: https://wa.link/htq4tt → "Hola me
+      gustaría conocer más sobre los planes..."
+Contact page copy: "Déjanos tu mensaje" / "Llena el formulario y nuestro
+  equipo responderá a la brevedad"
+Contact form fields (contacto.php, exact field names):
+  nombres (text, required) · apellidos (text, required) ·
+  telefono (text, max 9 digits, required) · correo (email, required) ·
+  comentario (textarea, optional) · submit button "Enviar"
+Social media:
+  Facebook: facebook.com/people/RESIDENCIA-GERIATRICA-SEÑOR-DE-NAZARENO
+  Instagram: instagram.com/geriatriconazareno
+  TikTok: tiktok.com/@geriatrico_nazareno
+No public email address was found in the crawled markup (contact is
+  channeled through WhatsApp/phone/form only) — flag as a gap; do not
+  invent an email address.
+
+Minor observation, not acted on: one lobby photo (gallery/8.jpg) shows a
+  physical sign reading "Residencia Geriátrica 'Jesús de Nazareno'" — a
+  variant of the devotional name distinct from "Señor de Nazareno" used
+  consistently everywhere else (domain, page titles, meta description,
+  social handles). Likely an older sign, a colloquial variant of the same
+  Catholic image, or a sister/legacy naming — the brand name used
+  everywhere on the live site and in this redesign is kept as "Señor de
+  Nazareno" throughout; flagging the discrepancy for the client rather
+  than silently resolving it.
+
+--------------------------------------------------------------------------
+14. FOOTER (site-wide, literal)
+--------------------------------------------------------------------------
+Repeats: logo, "Agendar citas" CTA, nav links (Nosotros / Servicios /
+  Staff Médicos / Blog), "Enviar un mensaje" CTA, social icons
+  (Facebook/Instagram/TikTok/YouTube icon assets present: fb2.webp,
+  insta2.webp, ytb2.webp, phone.webp, logo3.webp — small footer icon set),
+  legal links: Libro de Reclamaciones, Política de Privacidad, Política
+  Corporativa de Protección de Datos Personales, Política de Gestión de
+  Objetos Encontrados, Derechos y Deberes.
+
+--------------------------------------------------------------------------
+15. ASSETS PRESERVED LOCALLY
+--------------------------------------------------------------------------
+All real images successfully downloaded from the live site into:
+  /Users/cieloarias/Desktop/Claude-Test1/assets/original/
+    logo-wide.png, favicon.png
+    doctor.webp, doctora.webp (staff photos)
+    sede1.jpg, nosotros-desktop.jpg, banner-servicios.jpg (facility photos)
+    comida.webp, lavanderia.webp, terapia.webp (service photos)
+    1_Ambulatorio.webp, 1_Apoyo-al-disgnostico.webp, 1_Emergencia.webp,
+      1_Hospitalizacion.webp (template service icons — verify relevance)
+    slider_banner11.jpg (hero image)
+    1.webp–4.webp (certification badges)
+    mapa.webp, mapa2.webp (location maps)
+    icons_instalaciones.png
+    cms_uploads_popup_img_6296.webp (popup photo)
+    gallery/1.jpg–19.jpg + navidad1–3.jpg (22 real facility/event photos)
+    blog/ — blog1.webp, blog2.webp, blog4.jpg, blog5.webp, blog6.webp,
+      blog7.webp, blog8.webp, b1.webp, b2.webp, b3.webp, b31.webp, b9.webp,
+      111.webp, nutri.webp, cccc.jpg, ss.jpg
+  61 files total, ~32 MB, all real photography/assets — no stock imagery
+  used in the source library.
+No downloadable PDFs, brochures, or video files were found on the crawled
+  pages.
+
+════════════════════════════════════════════════════════════════════════════
+OPEN QUESTIONS / GAPS TO CONFIRM WITH CLIENT (do not silently resolve
+these with invented content):
+  1. The Maria Rosa Aicardi testimonial is mixed/critical. Brief says
+     "preserve testimonials, don't reword" — confirm whether to include it
+     as-is (authentic trust signal) or omit (keep only positive ones) for
+     the new site.
+  2. No blog post dates/authors exist in source — leave undated or ask
+     client for real dates before publishing.
+  3. No public email address exists on the current site — confirm whether
+     one should be added, or keep phone/WhatsApp/form-only contact.
+  4. RESOLVED — certification badges (1–4.webp) ARE legible at full
+     resolution: San Borja municipality, Ministerio de la Mujer y
+     Poblaciones Vulnerables, Ministerio de Salud, and INDECI. Displayed
+     as real logo badges in a trust strip on the new site.
+  5. Individual gallery photos have no captions — will use neutral
+     descriptive captions (e.g. "Áreas comunes", "Habitación") unless the
+     client supplies real captions per photo.
+════════════════════════════════════════════════════════════════════════════
