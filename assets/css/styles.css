@@ -515,7 +515,7 @@ h1 em, .h1 em{ color: inherit; }
   overflow: hidden;
   transition: transform var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease);
 }
-.card:hover{ transform: translateY(-6px); border-color: var(--color-primary); }
+.card:hover{ transform: translateY(-4px); border-color: var(--color-primary); }
 
 .card-media{ aspect-ratio: 4/3; overflow: hidden; background: var(--color-sand-deep); }
 .card-media img{ width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease); }
@@ -1540,7 +1540,7 @@ h1 em, .h1 em{ color: inherit; }
   gap: clamp(1.6rem, 3.5vw, 3.5rem);
   align-items: center;
 }
-.services-editorial-intro h2{ margin-top: .6rem; max-width: 12ch; }
+.services-editorial-intro h2{ margin-top: 0; max-width: 12ch; }
 .services-editorial-intro .lede{ margin-top: .9rem; max-width: 34ch; }
 .services-editorial-intro .link-arrow{ margin-top: 1.2rem; }
 
@@ -1630,7 +1630,10 @@ h1 em, .h1 em{ color: inherit; }
   gap: clamp(1.6rem, 3vw, 3rem);
   align-items: start;
 }
-.residencias-dark-intro h2{ margin-top: .7rem; max-width: 11ch; }
+.residencias-dark-intro h2{
+  margin-top: 0; max-width: 10ch;
+  font-size: clamp(2.5rem, 4.4vw, 3.8rem); line-height: 1.04;
+}
 .residencias-dark-intro .lede{ margin-top: 1rem; }
 .residencias-dark-intro .btn{ margin-top: 1.6rem; }
 .residencias-quote{

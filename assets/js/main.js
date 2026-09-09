@@ -458,6 +458,31 @@ function initOpenerScroll(){
   });
 }
 
+/* ---- Page-opener stat — count up once, on entry ----
+   The single real number on each opener ("2 sedes", "22 momentos"...)
+   counts up from 0 the first time it scrolls into view instead of just
+   appearing — section-motion tier, plays exactly once per page load,
+   so it never becomes noise. Reads the target from the number already
+   in the DOM (set by each page's inline script before this runs). */
+function initCountUp(){
+  const els = document.querySelectorAll(".page-opener-stat strong");
+  if (!els.length || REDUCED_MOTION) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+  gsap.registerPlugin(ScrollTrigger);
+  els.forEach(el => {
+    const target = parseInt(el.textContent, 10);
+    if (!Number.isFinite(target)) return;
+    const counter = { val: 0 };
+    ScrollTrigger.create({
+      trigger: el, start: "top 92%", once: true,
+      onEnter: () => gsap.to(counter, {
+        val: target, duration: 1.1, ease: "power2.out",
+        onUpdate: () => { el.textContent = Math.round(counter.val); }
+      })
+    });
+  });
+}
+
 /* ---- Residencias opener — DNA accent slow rotation on scroll ----
    A tiny, continuous rotation tied to the opener's own scroll range
    (same scrub pattern as initOpenerScroll) — perceptible but slow,
@@ -517,6 +542,7 @@ document.addEventListener("DOMContentLoaded", function(){
   initHeroScrollTransition();
   initOpenerScroll();
   initDnaAccentScroll();
+  initCountUp();
   refreshInteractive(); // initServiceCards + initReveal + initLightbox (render.js)
   initHeadingReveal(); // must run after i18n + render.js have populated real heading text
   initGalleryMosaicReveal();

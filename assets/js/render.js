@@ -456,7 +456,6 @@ function renderServicesEditorial(containerId){
   const first = services[0][lang] || services[0].es;
   el.innerHTML = `
     <div class="services-editorial-intro">
-      <div class="eyebrow"><span class="eyebrow-label" data-i18n="home.servicesEyebrow"></span></div>
       <h2 data-i18n-html="home.servicesTitleHtml"></h2>
       <p class="lede" data-i18n="home.servicesLede"></p>
       <a class="link-arrow" href="servicios.html"><span data-i18n="cta.verServicios"></span>${ICONS.arrow}</a>
@@ -792,8 +791,7 @@ function renderLifeEditorial(containerId){
 
   el.innerHTML = `
     <div class="life-editorial-intro">
-      <div class="eyebrow"><span class="eyebrow-label" data-i18n="home.lifeEyebrow"></span></div>
-      <h2 data-i18n-html="home.lifeTitleHtml" style="margin-top:.6rem"></h2>
+      <h2 data-i18n-html="home.lifeTitleHtml"></h2>
       <p class="lede" data-i18n="home.lifeLede"></p>
       <a class="link-arrow" href="galeria.html"><span data-i18n="cta.verGaleria"></span>${ICONS.arrow}</a>
       <div class="life-editorial-controls">
