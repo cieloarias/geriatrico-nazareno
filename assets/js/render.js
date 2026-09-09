@@ -468,6 +468,31 @@ function renderServicesEditorial(containerId){
   });
 }
 
+/* ---- Services — full editorial chapters (dedicated servicios.html) ----
+   Every real service gets its own full chapter: a large photo and its
+   complete (real, not truncated) description, alternating which side the
+   photo sits on so seven chapters don't read as seven identical rows. */
+function renderServicesChapters(containerId){
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const lang = getLang();
+  el.innerHTML = SITE_DATA.services.map(function(s, i){
+    const d = s[lang] || s.es;
+    const num = String(i + 1).padStart(2, "0");
+    const photo = `<figure class="split-editorial-media"><img src="${s.image}" alt="${d.title}" loading="lazy"></figure>`;
+    const info = `
+      <div class="split-editorial-intro">
+        <div class="service-chapter-head">
+          <span class="section-num">${num}</span>
+          <h2>${d.title}</h2>
+        </div>
+        <p class="lede">${d.long || d.short}</p>
+      </div>`;
+    const body = i % 2 === 0 ? photo + info : info + photo;
+    return `<article class="split-editorial service-chapter" data-reveal>${body}</article>`;
+  }).join("");
+}
+
 /* ---- Residencias — large architectural cards in the dark immersive
    section: a real "sede principal / segunda residencia" badge (taken
    directly from the existing description copy, not invented), the photo,

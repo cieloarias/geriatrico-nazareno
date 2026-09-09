@@ -109,6 +109,7 @@ const I18N = {
     "services.eyebrow": "Servicios",
     "services.title": "Conoce nuestros servicios",
     "services.lede": "El mismo cuidado integral está disponible en ambas sedes: alojamiento, salud, nutrición, actividad y bienestar.",
+    "services.stat": "áreas de atención integral, disponibles en ambas sedes",
     "services.expandHint": "Toca para ver más",
 
     "sedes.eyebrow": "Residencias",
@@ -291,6 +292,7 @@ const I18N = {
     "services.eyebrow": "Services",
     "services.title": "Explore our services",
     "services.lede": "The same comprehensive care is available at both locations: lodging, health, nutrition, activity, and well-being.",
+    "services.stat": "areas of comprehensive care, available at both locations",
     "services.expandHint": "Tap to read more",
 
     "sedes.eyebrow": "Locations",

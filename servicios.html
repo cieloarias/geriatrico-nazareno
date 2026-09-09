@@ -13,18 +13,36 @@
 <header id="site-header" class="site-header"></header>
 
 <main id="main">
-  <section class="page-hero">
+  <!-- ================= OPENER — type + photo together ================= -->
+  <section class="page-opener">
     <div class="container">
-      <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.servicios"></span></div>
-      <div class="eyebrow"><span class="eyebrow-label" data-i18n="services.eyebrow"></span></div>
-      <h1 data-i18n="services.title" style="margin-top:.7rem;max-width:18ch"></h1>
-      <p class="lede" style="margin-top:1.2rem" data-i18n="services.lede"></p>
+      <div class="page-opener-grid">
+        <div class="page-opener-intro" data-reveal>
+          <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.servicios"></span></div>
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="services.eyebrow"></span></div>
+          <h1 data-i18n="services.title"></h1>
+          <p class="lede" data-i18n="services.lede"></p>
+          <div class="page-opener-stat">
+            <strong id="servicesCount"></strong>
+            <span data-i18n="services.stat"></span>
+          </div>
+        </div>
+        <div class="page-opener-media" data-reveal>
+          <figure class="page-opener-figure-main">
+            <img id="servicesPhotoMain" src="" alt="" loading="eager">
+          </figure>
+          <figure class="page-opener-figure-peek">
+            <img id="servicesPhotoPeek" src="" alt="" loading="eager">
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section-tight">
+  <!-- ================= FULL CHAPTERS — one per real service, alternating composition ================= -->
+  <section class="section">
     <div class="container">
-      <div class="services-editorial" id="servicesEditorial" data-reveal></div>
+      <div id="servicesChapters"></div>
     </div>
   </section>
 
@@ -45,7 +63,8 @@
 
   <section class="section-tight">
     <div class="container" data-reveal>
-      <div class="cta-band">
+      <div class="cta-band cta-band-photo">
+        <img src="assets/images/gallery/2.jpg" alt="" aria-hidden="true">
         <div>
           <h2 data-i18n="home.ctaBandTitle"></h2>
           <p style="color:rgba(255,255,255,.78);margin-top:.6rem" data-i18n="home.ctaBandLede"></p>
@@ -72,7 +91,12 @@
 <script>
   document.getElementById("ctaPlanes").href = SITE_DATA.brand.whatsapp.planes;
   document.getElementById("ctaWhatsapp").href = SITE_DATA.brand.whatsapp.info;
-  registerRender(() => renderServicesEditorial("servicesEditorial"));
+  document.getElementById("servicesCount").textContent = SITE_DATA.services.length;
+  document.getElementById("servicesPhotoMain").src = SITE_DATA.services[0].image;
+  document.getElementById("servicesPhotoMain").alt = SITE_DATA.services[0].es.title;
+  document.getElementById("servicesPhotoPeek").src = SITE_DATA.services[2].image;
+  document.getElementById("servicesPhotoPeek").alt = SITE_DATA.services[2].es.title;
+  registerRender(() => renderServicesChapters("servicesChapters"));
   registerRender(() => renderResidenceBig("residenceBigGrid"));
   registerRender(function(){
     const el = document.getElementById("residenciasQuote");
