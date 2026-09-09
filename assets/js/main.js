@@ -423,6 +423,11 @@ function initHeroScrollTransition(){
    transform-only, skipped under reduced-motion. Runs on every page that
    has a .page-opener — a no-op everywhere else. */
 function initOpenerScroll(){
+  // Galería's opener gets the heavier pinned expand treatment below
+  // instead — running both on the same section would double-scale (the
+  // figure AND the image inside it) and fight over what "end" means once
+  // one of them is pinning the scroll position.
+  if (document.getElementById("galleryOpener")) return;
   const opener = document.querySelector(".page-opener");
   const media = document.querySelector(".page-opener-figure-main img, .page-opener-figure-main video");
   if (!opener || !media || REDUCED_MOTION) return;
@@ -432,6 +437,42 @@ function initOpenerScroll(){
     scale: 1.14, ease: "none",
     scrollTrigger: { trigger: opener, start: "top top", end: "bottom top", scrub: true }
   });
+}
+
+/* ---- Galería — scroll-pinned media expansion ----
+   Adapted from a scroll-expansion-hero interaction pattern (the mechanic:
+   pin the section, grow the media as the user scrolls, let the intro
+   text exit, then release into the content below) — reimplemented here
+   in vanilla GSAP/ScrollTrigger rather than React/Framer Motion, since
+   this site has no build step, and driven by transform/opacity only
+   (never width/height) so it stays GPU-cheap per the performance rules
+   this project already follows elsewhere. This is the one page that
+   gets this heavier treatment — see the brief's own note that the
+   Galería opener-to-collection transition should be "the impressive
+   part," not a sitewide pattern. Single photo throughout — no
+   photo-on-photo. Full-page-reload fallback, no pin, under
+   reduced-motion. */
+function initGalleryScrollExpand(){
+  const opener = document.getElementById("galleryOpener");
+  const media = document.querySelector("#galleryOpener .page-opener-figure-main");
+  const intro = document.querySelector("#galleryOpener .page-opener-intro");
+  if (!opener || !media || !intro || REDUCED_MOTION) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: opener,
+      start: "top top",
+      end: () => "+=" + Math.round(window.innerHeight * .8),
+      scrub: true,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true
+    }
+  })
+    .to(media, { scale: 1.28, ease: "none" }, 0)
+    .to(intro, { opacity: 0, y: -36, ease: "none" }, 0);
 }
 
 /* Boot order matters: header/footer (partials.js) mount on DOMContentLoaded,
@@ -450,4 +491,5 @@ document.addEventListener("DOMContentLoaded", function(){
   initOpenerScroll();
   refreshInteractive(); // initServiceCards + initReveal + initLightbox (render.js)
   initHeadingReveal(); // must run after i18n + render.js have populated real heading text
+  initGalleryScrollExpand(); // after heading reveal so SplitText's line-wrapping has already settled the intro's height
 });
