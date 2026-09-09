@@ -13,34 +13,62 @@
 <header id="site-header" class="site-header"></header>
 
 <main id="main">
-  <section class="page-hero">
+  <!-- ================= OPENER — type + photo together ================= -->
+  <section class="page-opener">
     <div class="container">
-      <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.residencias"></span></div>
-      <div class="eyebrow"><span class="eyebrow-label" data-i18n="sedes.eyebrow"></span></div>
-      <h1 data-i18n="sedes.title" style="margin-top:.7rem;max-width:18ch"></h1>
-      <p class="lede" style="margin-top:1.2rem" data-i18n="sedes.lede"></p>
-    </div>
-  </section>
-
-  <section class="section-tight section-dark-editorial">
-    <div class="container">
-      <div class="residence-grid" id="residenceBigGrid"></div>
-      <blockquote class="residencias-quote" id="residenciasQuote" style="margin:2.5rem auto 0;text-align:center;max-width:46ch;border-top:none;padding-top:0"></blockquote>
-    </div>
-  </section>
-
-  <section class="section section-alt">
-    <div class="container">
-      <div class="services-editorial" id="servicesEditorial" data-reveal></div>
-      <div class="text-center" style="margin-top:2.5rem">
-        <a class="btn btn-primary" href="servicios.html" data-i18n="cta.verServicios"></a>
+      <div class="page-opener-grid">
+        <div class="page-opener-intro" data-reveal>
+          <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.residencias"></span></div>
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="sedes.eyebrow"></span></div>
+          <h1 data-i18n="sedes.title"></h1>
+          <p class="lede" data-i18n="sedes.lede"></p>
+          <div class="page-opener-stat">
+            <strong id="sedesCount"></strong>
+            <span data-i18n="sedes.stat"></span>
+          </div>
+        </div>
+        <div class="page-opener-media" data-reveal>
+          <figure class="page-opener-figure-main">
+            <img src="assets/images/sedes/sede-san-borja.jpg" alt="Fachada de la sede San Borja" loading="eager">
+          </figure>
+          <figure class="page-opener-figure-peek">
+            <img src="assets/videos/residencia-dali-poster.jpg" alt="Sede Salvador Dalí" loading="eager">
+          </figure>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- ================= FULL ARCHITECTURAL CHAPTERS — one per sede, inverted order ================= -->
+  <section class="section">
+    <div class="container">
+      <div id="residenceChapters"></div>
+      <blockquote class="residencias-quote" id="residenciasQuote" style="margin-top:clamp(3rem,6vw,4.5rem);max-width:46ch;border-top-color:var(--color-line)"></blockquote>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES CROSS-SELL — brief, no widget duplication ================= -->
+  <section class="section-tight section-alt">
+    <div class="container" data-reveal>
+      <div class="split-editorial" style="align-items:center">
+        <div class="split-editorial-intro">
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="services.eyebrow"></span></div>
+          <h2 style="margin-top:.6rem" data-i18n-html="home.servicesTitleHtml"></h2>
+          <p class="lede" data-i18n="services.lede"></p>
+          <a class="link-arrow" style="margin-top:1.2rem" href="servicios.html"><span data-i18n="cta.verServicios"></span><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <figure class="split-editorial-media">
+          <img src="assets/images/gallery/11.jpg" alt="Habitación adaptada para el adulto mayor" loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VISIT US ================= -->
   <section class="section-tight">
     <div class="container" data-reveal>
-      <div class="cta-band">
+      <div class="cta-band cta-band-photo">
+        <img src="assets/images/gallery/15.jpg" alt="" aria-hidden="true">
         <div>
           <h2 data-i18n="home.ctaBandTitle"></h2>
           <p style="color:rgba(255,255,255,.78);margin-top:.6rem" data-i18n="home.ctaBandLede"></p>
@@ -66,14 +94,14 @@
 <script src="assets/js/main.js"></script>
 <script>
   document.getElementById("ctaWhatsapp").href = SITE_DATA.brand.whatsapp.agendar;
-  registerRender(() => renderResidenceBig("residenceBigGrid"));
+  document.getElementById("sedesCount").textContent = SITE_DATA.sedes.length;
+  registerRender(() => renderResidenceChapters("residenceChapters"));
   registerRender(function(){
     const el = document.getElementById("residenciasQuote");
     const lang = getLang();
     const t = SITE_DATA.testimonials.find(x => x.name === "Humberto Valdivia Yoplac") || SITE_DATA.testimonials[0];
-    el.innerHTML = `<p>&ldquo;${t[lang] || t.es}&rdquo;</p><span>— ${t.name}</span>`;
+    el.innerHTML = `<p style="color:var(--color-ink)">&ldquo;${t[lang] || t.es}&rdquo;</p><span style="color:var(--color-ink-soft)">— ${t.name}</span>`;
   });
-  registerRender(() => renderServicesEditorial("servicesEditorial"));
 </script>
 </body>
 </html>

@@ -526,6 +526,44 @@ function renderResidenceBig(containerId){
   }).join("");
 }
 
+/* ---- Residencias — full architectural chapters (dedicated
+   residencias.html). Each sede gets a full-width media moment (its own
+   real photo, or Sede Salvador Dalí's real video) followed by its real
+   address/phone/description — not the compact side-by-side cards used
+   everywhere else. The two chapters invert their vertical order (media
+   then text / text then media) so they read as complementary, not
+   identical, moments. No amenities are invented beyond what SITE_DATA
+   actually holds for each sede. */
+function renderResidenceChapters(containerId){
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const lang = getLang();
+  el.innerHTML = SITE_DATA.sedes.map(function(s, i){
+    const d = s[lang] || s.es;
+    const badge = s.badge ? (s.badge[lang] || s.badge.es) : "";
+    const num = String(i + 1).padStart(2, "0");
+    const media = s.video
+      ? `<video src="${s.video}" poster="${s.videoPoster || ""}" autoplay muted loop playsinline aria-label="${d.name}"></video>`
+      : `<img src="${s.photo}" alt="${d.name}" loading="lazy">`;
+    const mediaBlock = `<figure class="residence-chapter-media">${media}</figure>`;
+    const bodyBlock = `
+      <div class="residence-chapter-body">
+        ${badge ? `<div class="eyebrow"><span class="eyebrow-label">${badge}</span></div>` : ""}
+        <div class="service-chapter-head" style="margin-top:.6rem">
+          <span class="section-num">${num}</span>
+          <h2>${d.name}</h2>
+        </div>
+        <p class="lede">${d.desc}</p>
+        <div class="flex items-center gap-2" style="margin-top:1.2rem"><span class="icon-sm">${ICONS.pin}</span><span style="font-size:.92rem">${s.address}</span></div>
+        <div class="flex items-center gap-2" style="margin-top:.6rem"><span class="icon-sm">${ICONS.phone}</span><span style="font-size:.92rem">${s.phones.join(" · ")}</span></div>
+        <a class="btn btn-accent" style="margin-top:1.6rem" href="${SITE_DATA.brand.whatsapp.agendar}" target="_blank" rel="noopener" data-i18n="cta.agendarVisita"></a>
+      </div>`;
+    const body = i % 2 === 0 ? mediaBlock + bodyBlock : bodyBlock + mediaBlock;
+    return `<div class="residence-chapter" id="sede-${s.slug}" data-reveal>${body}</div>`;
+  }).join("");
+  applyI18n(lang);
+}
+
 /* ---- Life at Nazareno — legacy mosaic, still used by the full Galería
    page. Superseded on the homepage by renderLifeEditorial below. ---- */
 function renderLifeMosaic(containerId){
