@@ -39,11 +39,11 @@
     </div>
   </section>
 
-  <!-- ================= FULL ARCHITECTURAL CHAPTERS — one per sede, inverted order ================= -->
-  <section class="section">
+  <!-- ================= INTERACTIVE RESIDENCE SWITCHER — signature interaction ================= -->
+  <section class="section section-dark-editorial">
     <div class="container">
-      <div id="residenceChapters"></div>
-      <blockquote class="residencias-quote" id="residenciasQuote" style="margin-top:clamp(3rem,6vw,4.5rem);max-width:46ch;border-top-color:var(--color-line)"></blockquote>
+      <div class="residence-switcher" id="residenceSwitcher" data-reveal></div>
+      <blockquote class="residencias-quote" id="residenciasQuote" style="margin-top:clamp(3rem,6vw,4.5rem);max-width:46ch"></blockquote>
     </div>
   </section>
 
@@ -95,12 +95,12 @@
 <script>
   document.getElementById("ctaWhatsapp").href = SITE_DATA.brand.whatsapp.agendar;
   document.getElementById("sedesCount").textContent = SITE_DATA.sedes.length;
-  registerRender(() => renderResidenceChapters("residenceChapters"));
+  registerRender(() => renderResidenceSwitcher("residenceSwitcher"));
   registerRender(function(){
     const el = document.getElementById("residenciasQuote");
     const lang = getLang();
     const t = SITE_DATA.testimonials.find(x => x.name === "Humberto Valdivia Yoplac") || SITE_DATA.testimonials[0];
-    el.innerHTML = `<p style="color:var(--color-ink)">&ldquo;${t[lang] || t.es}&rdquo;</p><span style="color:var(--color-ink-soft)">— ${t.name}</span>`;
+    el.innerHTML = `<p>&ldquo;${t[lang] || t.es}&rdquo;</p><span>— ${t.name}</span>`;
   });
 </script>
 </body>

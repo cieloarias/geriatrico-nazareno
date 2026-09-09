@@ -577,6 +577,123 @@ function renderResidenceChapters(containerId){
   applyI18n(lang);
 }
 
+/* ---- Residencias — interactive switcher (the dedicated page's signature
+   interaction). Left: numbered selector (01 San Borja / 02 Salvador Dalí)
+   + the active sede's real address/phone/description. Right: one large
+   architectural frame that crossfades between the sede's real photo and
+   Sede Salvador Dalí's real video — never both cards shown at once, so
+   switching genuinely means "now exploring the other place" rather than
+   just visually re-styling a static pair. A two-segment progress line
+   (a restrained nod to "continuity of care" rather than a literal medical
+   motif) tracks which sede is active. ---- */
+function renderResidenceSwitcher(containerId){
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const lang = getLang();
+  const sedes = SITE_DATA.sedes;
+
+  const tabs = sedes.map(function(s, i){
+    const d = s[lang] || s.es;
+    const num = String(i + 1).padStart(2, "0");
+    return `
+      <button type="button" class="residence-switch-tab${i === 0 ? ' is-active' : ''}" data-index="${i}" role="tab" aria-selected="${i === 0}">
+        <span class="section-num">${num}</span>
+        <span>${d.name}</span>
+      </button>`;
+  }).join("");
+
+  const media = sedes.map(function(s, i){
+    const d = s[lang] || s.es;
+    return s.video
+      ? `<video class="${i === 0 ? 'is-active' : ''}" data-index="${i}" src="${s.video}" poster="${s.videoPoster || ''}" autoplay muted loop playsinline aria-label="${d.name}"></video>`
+      : `<img class="${i === 0 ? 'is-active' : ''}" data-index="${i}" src="${s.photo}" alt="${d.name}" loading="eager">`;
+  }).join("");
+
+  const progress = sedes.map(function(s, i){
+    return `<span class="residence-switch-bar${i === 0 ? ' is-active' : ''}" data-index="${i}"></span>`;
+  }).join("");
+
+  const first = sedes[0];
+  const firstD = first[lang] || first.es;
+  const firstBadge = first.badge ? (first.badge[lang] || first.badge.es) : "";
+
+  el.innerHTML = `
+    <div class="residence-switch-intro">
+      <div class="eyebrow"><span class="eyebrow-label" data-i18n="sedes.eyebrow"></span></div>
+      <h2 style="margin-top:.6rem" data-i18n-html="home.sedesTitleHtml"></h2>
+      <div class="residence-switch-tabs" role="tablist" aria-label="Residencias">${tabs}</div>
+      <div class="residence-switch-details">
+        <span class="pill-label" data-role="badge">${firstBadge}</span>
+        <p class="lede" style="margin-top:.9rem" data-role="desc">${firstD.desc}</p>
+        <div class="flex items-center gap-2" style="margin-top:1.1rem"><span class="icon-sm">${ICONS.pin}</span><span style="font-size:.92rem" data-role="address">${first.address}</span></div>
+        <div class="flex items-center gap-2" style="margin-top:.6rem"><span class="icon-sm">${ICONS.phone}</span><span style="font-size:.92rem" data-role="phones">${first.phones.join(" · ")}</span></div>
+        <a class="btn btn-accent" style="margin-top:1.5rem" href="${SITE_DATA.brand.whatsapp.agendar}" target="_blank" rel="noopener" data-i18n="cta.agendarVisita"></a>
+      </div>
+    </div>
+    <div class="residence-switch-visual">
+      <div class="residence-switch-media">${media}</div>
+      <div class="residence-switch-progress">${progress}</div>
+    </div>`;
+  applyI18n(lang);
+
+  const tabEls = el.querySelectorAll(".residence-switch-tab");
+  const mediaEls = el.querySelectorAll(".residence-switch-media > *");
+  const barEls = el.querySelectorAll(".residence-switch-bar");
+  const badgeEl = el.querySelector('[data-role="badge"]');
+  const descEl = el.querySelector('[data-role="desc"]');
+  const addressEl = el.querySelector('[data-role="address"]');
+  const phonesEl = el.querySelector('[data-role="phones"]');
+
+  function activate(i){
+    i = String(i);
+    tabEls.forEach(t => {
+      const on = t.getAttribute("data-index") === i;
+      t.classList.toggle("is-active", on);
+      t.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    barEls.forEach(b => b.classList.toggle("is-active", b.getAttribute("data-index") === i));
+
+    const outgoing = Array.from(mediaEls).find(m => m.classList.contains("is-active"));
+    const incoming = Array.from(mediaEls).find(m => m.getAttribute("data-index") === i);
+    if (incoming && incoming !== outgoing){
+      if (typeof gsap !== "undefined" && !REDUCED_MOTION){
+        if (outgoing) gsap.to(outgoing, { opacity: 0, scale: 1.02, duration: .5, ease: "power2.inOut", onComplete: () => outgoing.classList.remove("is-active") });
+        gsap.fromTo(incoming, { opacity: 0, scale: 1.05 }, { opacity: 1, scale: 1, duration: .7, ease: "power3.out" });
+        incoming.classList.add("is-active");
+      } else {
+        mediaEls.forEach(m => m.classList.toggle("is-active", m === incoming));
+      }
+    }
+
+    const s = sedes[Number(i)];
+    if (!s) return;
+    const d = s[lang] || s.es;
+    const badge = s.badge ? (s.badge[lang] || s.badge.es) : "";
+    const applyText = () => {
+      if (badgeEl) badgeEl.textContent = badge;
+      descEl.textContent = d.desc;
+      addressEl.textContent = s.address;
+      phonesEl.textContent = s.phones.join(" · ");
+    };
+    if (typeof gsap !== "undefined" && !REDUCED_MOTION){
+      gsap.to([descEl, addressEl, phonesEl], {
+        opacity: 0, y: 6, duration: .16, ease: "power1.in",
+        onComplete: () => {
+          applyText();
+          gsap.fromTo([descEl, addressEl, phonesEl], { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .32, stagger: .04, ease: "power2.out" });
+        }
+      });
+    } else {
+      applyText();
+    }
+  }
+
+  tabEls.forEach(tab => {
+    const i = tab.getAttribute("data-index");
+    tab.addEventListener("click", () => activate(i));
+  });
+}
+
 /* ---- Life at Nazareno — legacy mosaic, still used by the full Galería
    page. Superseded on the homepage by renderLifeEditorial below. ---- */
 function renderLifeMosaic(containerId){
