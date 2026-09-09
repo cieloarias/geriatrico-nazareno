@@ -141,6 +141,8 @@ const I18N = {
     "blog.lede": "Lee artículos escritos por profesionales sobre el cuidado del adulto mayor.",
     "blog.stat": "artículos escritos por nuestro equipo de profesionales",
     "blog.externalNote": "Este artículo continúa en el sitio original",
+    "blog.backToBlog": "Volver al blog",
+    "blog.relatedTitle": "Más artículos",
     "blog.featuredTag": "Destacado",
 
     "contact.eyebrow": "Contacto",
@@ -326,6 +328,8 @@ const I18N = {
     "blog.lede": "Read articles written by professionals about caring for older adults.",
     "blog.stat": "articles written by our team of professionals",
     "blog.externalNote": "This article continues on the original site",
+    "blog.backToBlog": "Back to blog",
+    "blog.relatedTitle": "More articles",
     "blog.featuredTag": "Featured",
 
     "contact.eyebrow": "Contact",

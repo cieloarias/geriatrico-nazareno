@@ -305,7 +305,13 @@ function renderBlogArticle(){
       <img src="${post.image}" alt="${d.title}" style="width:100%;height:100%;object-fit:cover">
     </div>
     <div class="article-body lede" style="max-width:70ch">${paragraphs}</div>
-    <div class="cta-band" style="margin-top:3rem">
+    <a class="link-arrow" href="blog.html" style="margin-top:2rem;display:inline-flex">
+      <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      <span data-i18n="blog.backToBlog"></span>
+    </a>
+    <div id="articleRelated" style="margin-top:3.5rem"></div>
+    <div class="cta-band cta-band-photo" style="margin-top:3rem">
+      <img src="assets/images/gallery/navidad1.jpg" alt="" aria-hidden="true">
       <div>
         <h2 data-i18n="home.ctaBandTitle"></h2>
         <p class="text-muted" style="color:rgba(255,255,255,.8)" data-i18n="home.ctaBandLede"></p>
@@ -316,6 +322,13 @@ function renderBlogArticle(){
     </div>`;
   applyI18n(lang);
   document.title = d.title + " | Geriátrico Señor de Nazareno";
+
+  const relatedEl = document.getElementById("articleRelated");
+  if (relatedEl){
+    relatedEl.innerHTML = `<h3 data-i18n="blog.relatedTitle" style="margin-bottom:1.6rem"></h3><div class="grid grid-3" id="articleRelatedGrid"></div>`;
+    applyI18n(lang);
+    renderBlog("articleRelatedGrid", { exclude: [post.slug], limit: 3 });
+  }
 }
 
 /* ---- Services explorer (legacy, still used by nothing directly but kept
