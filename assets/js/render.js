@@ -672,8 +672,7 @@ function renderResidenceSwitcher(containerId){
 
   el.innerHTML = `
     <div class="residence-switch-intro">
-      <div class="eyebrow"><span class="eyebrow-label" data-i18n="sedes.eyebrow"></span></div>
-      <h2 style="margin-top:.6rem" data-i18n-html="home.sedesTitleHtml"></h2>
+      <h2 data-i18n-html="home.sedesTitleHtml"></h2>
       <div class="residence-switch-tabs" role="tablist" aria-label="Residencias">${tabs}</div>
       <div class="residence-switch-details">
         <span class="pill-label" data-role="badge">${firstBadge}</span>
