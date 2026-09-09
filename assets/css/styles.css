@@ -830,13 +830,29 @@ h1 em, .h1 em{ color: inherit; }
 .stat b{ font-family: var(--font-display); font-size: clamp(2.2rem,4vw,3.2rem); display:block; color: var(--color-primary); }
 .stat span{ font-size:.85rem; color: var(--color-ink-soft); }
 
-/* CTA band */
+/* CTA band — subtle depth instead of a flat gradient: two soft blue
+   glows drift slowly behind the content (never over the text/button
+   corner), no image, gated by reduced-motion. Content sits in its own
+   stacking layer so the glow can never reduce readability. */
 .cta-band{
+  position: relative; overflow: hidden; isolation: isolate;
   border-radius: var(--radius-lg);
   background: linear-gradient(135deg, var(--color-primary-ink), var(--color-primary));
   color: #fff; padding: clamp(2.4rem,5vw,4rem);
   display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:2rem;
 }
+.cta-band::before{
+  content: ''; position: absolute; inset: -15%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(36% 55% at 90% 15%, rgba(79,176,255,.32), rgba(79,176,255,0) 70%),
+    radial-gradient(28% 42% at 10% 95%, rgba(0,132,255,.16), rgba(0,132,255,0) 70%);
+  animation: ctaGlowDrift 17s ease-in-out infinite alternate;
+}
+@keyframes ctaGlowDrift{
+  0%{ transform: translate(0, 0) scale(1); }
+  100%{ transform: translate(-3%, 2%) scale(1.1); }
+}
+@media (prefers-reduced-motion: reduce){ .cta-band::before{ animation: none; } }
 .cta-band h2{ color:#fff; max-width: 18ch; }
 .cta-band .actions{ display:flex; flex-wrap:wrap; gap:.9rem; }
 
