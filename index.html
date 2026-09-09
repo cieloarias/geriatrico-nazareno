@@ -233,8 +233,7 @@
   registerRender(() => renderCertifications("certStrip"));
   registerRender(() => renderGallery("galleryPreview", { limit: 8 }));
   registerRender(() => renderBlog("blogGrid", { slugs: ["entorno-seguro-adaptado","prevencion-de-caidas","beneficios-cuidados-geriatricos"] }));
-
-  document.addEventListener("DOMContentLoaded", initSonarGrids);
+  // initSonarGrids() now runs from main.js's shared boot sequence for every page.
 </script>
 </body>
 </html>

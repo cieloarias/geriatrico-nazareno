@@ -492,4 +492,5 @@ document.addEventListener("DOMContentLoaded", function(){
   refreshInteractive(); // initServiceCards + initReveal + initLightbox (render.js)
   initHeadingReveal(); // must run after i18n + render.js have populated real heading text
   initGalleryScrollExpand(); // after heading reveal so SplitText's line-wrapping has already settled the intro's height
+  if (typeof initSonarGrids === "function") initSonarGrids(); // finds every [data-sonar] host on whichever page this is — no-op if none exist
 });
