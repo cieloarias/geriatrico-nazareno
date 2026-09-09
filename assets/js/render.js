@@ -489,7 +489,7 @@ function renderServicesChapters(containerId){
   const el = document.getElementById(containerId);
   if (!el) return;
   const lang = getLang();
-  el.innerHTML = SITE_DATA.services.map(function(s, i){
+  const chapters = SITE_DATA.services.map(function(s, i){
     const d = s[lang] || s.es;
     const num = String(i + 1).padStart(2, "0");
     const photo = `<figure class="split-editorial-media"><img src="${s.image}" alt="${d.title}" loading="lazy"></figure>`;
@@ -503,7 +503,18 @@ function renderServicesChapters(containerId){
       </div>`;
     const body = i % 2 === 0 ? photo + info : info + photo;
     return `<article class="split-editorial service-chapter" data-reveal>${body}</article>`;
-  }).join("");
+  });
+  // Seven identical alternating image/text chapters in a row reads as
+  // templated — a real pull-quote breaks the rhythm partway through
+  // instead of adding an 8th invented layout.
+  const t = SITE_DATA.testimonials.find(x => x.name === "Liz Palomino") || SITE_DATA.testimonials[0];
+  const quote = `
+    <div class="service-chapter-quote" data-reveal>
+      <p>&ldquo;${t[lang] || t.es}&rdquo;</p>
+      <span>— ${t.name}</span>
+    </div>`;
+  chapters.splice(3, 0, quote);
+  el.innerHTML = chapters.join("");
 }
 
 /* ---- Residencias — large architectural cards in the dark immersive
