@@ -67,23 +67,25 @@
     </div>
   </section>
 
-  <!-- ================= WHO WE ARE ================= -->
+  <!-- ================= WHO WE ARE — full-width intro, then a clean
+       photo pair (both at the photos' own native 3/2 ratio, so nothing
+       is stretched to match a sibling column's height) ================= -->
   <section class="section-tight">
     <div class="container">
-      <div class="photo-editorial">
-        <div class="big" data-reveal>
-          <img src="assets/images/gallery/5.jpg" alt="Residentes y personal de cuidado compartiendo una actividad recreativa" loading="lazy">
+      <div class="photo-editorial-v2">
+        <div class="photo-editorial-v2-intro" data-reveal>
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="home.aboutEyebrow"></span></div>
+          <h2 data-i18n="home.aboutTitle" style="margin-top:.6rem"></h2>
+          <p class="lede" style="margin-top:1rem" data-i18n="home.aboutBody"></p>
+          <a class="btn btn-outline" style="margin-top:1.4rem" href="nosotros.html" data-i18n="home.aboutCta"></a>
         </div>
-        <div class="stack">
-          <div data-reveal style="--i:1">
-            <div class="eyebrow"><span class="eyebrow-label" data-i18n="home.aboutEyebrow"></span></div>
-            <h2 data-i18n="home.aboutTitle" style="margin-top:.6rem"></h2>
-            <p class="lede" style="margin-top:1rem" data-i18n="home.aboutBody"></p>
-            <a class="btn btn-outline" style="margin-top:1.4rem" href="nosotros.html" data-i18n="home.aboutCta"></a>
-          </div>
-          <div class="card-media" data-reveal style="--i:2">
+        <div class="photo-editorial-v2-media">
+          <figure data-reveal>
+            <img src="assets/images/gallery/5.jpg" alt="Residentes y personal de cuidado compartiendo una actividad recreativa" loading="lazy">
+          </figure>
+          <figure data-reveal style="--i:1">
             <img src="assets/images/sedes/sede-san-borja.jpg" alt="Fachada de la sede San Borja" loading="lazy">
-          </div>
+          </figure>
         </div>
       </div>
     </div>
