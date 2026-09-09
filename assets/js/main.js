@@ -137,7 +137,7 @@ function initHeadingReveal(){
   if (typeof gsap === "undefined" || typeof SplitText === "undefined" || typeof ScrollTrigger === "undefined") return;
   gsap.registerPlugin(SplitText, ScrollTrigger);
 
-  document.querySelectorAll("h2:not(#heroHeadline):not([data-line-split])").forEach(h2 => {
+  document.querySelectorAll("h1:not(#heroHeadline):not([data-line-split]), h2:not(#heroHeadline):not([data-line-split])").forEach(h2 => {
     if (!h2.textContent.trim()) return; // not yet populated (e.g. i18n hasn't run) — skip safely
     h2.setAttribute("data-line-split", "");
 

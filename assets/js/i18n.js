@@ -125,7 +125,9 @@ const I18N = {
 
     "gallery.eyebrow": "Galería",
     "gallery.title": "Así es la vida en Nazareno",
+    "gallery.titleHtml": "Así es la vida<br>en <em>Nazareno</em>",
     "gallery.lede": "Instalaciones, actividades y momentos compartidos con nuestros residentes.",
+    "gallery.stat": "momentos reales capturados dentro de nuestras dos residencias",
 
     "blog.eyebrow": "Blog",
     "blog.title": "Últimas publicaciones",
@@ -300,7 +302,9 @@ const I18N = {
 
     "gallery.eyebrow": "Gallery",
     "gallery.title": "Life at Nazareno",
+    "gallery.titleHtml": "This is life<br>at <em>Nazareno</em>",
     "gallery.lede": "Facilities, activities, and moments shared with our residents.",
+    "gallery.stat": "real moments captured across our two residences",
 
     "blog.eyebrow": "Blog",
     "blog.title": "Latest articles",

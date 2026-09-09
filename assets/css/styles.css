@@ -796,6 +796,71 @@ h1 em, .h1 em{ color: inherit; }
 .icon-sm{ width: 20px; height: 20px; flex: none; color: var(--color-primary); }
 .icon-sm svg{ width: 100%; height: 100%; display: block; }
 
+/* ---- Gallery editorial opener (galeria.html) — typography and
+   photography share the first viewport instead of a text-only header
+   followed by a huge gap before any image appears. Two real photos in
+   a deliberately asymmetric pairing (large landscape + offset portrait),
+   not a generic hero banner. ---- */
+.gallery-hero-editorial{
+  padding-top: calc(var(--header-h) + clamp(1.6rem, 3.5vw, 2.6rem));
+  padding-bottom: clamp(1.6rem, 3vw, 2.4rem);
+}
+.gallery-hero-grid{
+  display: grid;
+  grid-template-columns: minmax(0, 32fr) minmax(0, 68fr);
+  gap: clamp(1.6rem, 3.5vw, 3.2rem);
+  align-items: end;
+}
+.gallery-hero-intro .eyebrow{ margin-bottom: 1rem; }
+.gallery-hero-intro h1{
+  font-size: clamp(2.1rem, 3.4vw, 2.9rem); line-height: 1.08; letter-spacing: -.005em;
+}
+.gallery-hero-intro .lede{ margin-top: 1.1rem; max-width: 34ch; }
+.gallery-hero-stat{
+  display: flex; align-items: baseline; gap: .7rem;
+  margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--color-line);
+}
+.gallery-hero-stat strong{ font-family: var(--font-display); font-size: 2.4rem; line-height: 1; color: var(--color-primary); }
+.gallery-hero-stat span{ font-size: .85rem; color: var(--color-ink-soft); max-width: 22ch; }
+.gallery-hero-media{
+  display: grid; grid-template-columns: 2fr 1fr; gap: clamp(.9rem, 2vw, 1.4rem);
+  align-items: end;
+}
+.gallery-hero-figure-main{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3; }
+.gallery-hero-figure-peek{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 3/4; transform: translateY(12%); }
+.gallery-hero-figure-main img, .gallery-hero-figure-peek img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 900px){
+  .gallery-hero-grid{ grid-template-columns: 1fr; }
+  .gallery-hero-intro h1{ max-width: none; }
+  .gallery-hero-media{ margin-top: 1.8rem; }
+  .gallery-hero-figure-peek{ transform: none; }
+}
+
+/* Small numbered badge on each mosaic tile — reinforces "curated set",
+   not an uploaded dump. Purely visual metadata, no invented taxonomy. */
+.life-tile-num{
+  position: absolute; top: .8rem; left: .8rem; z-index: 1;
+  font-family: var(--font-display); font-size: .78rem; color: #fff;
+  background: rgba(6,20,38,.55); backdrop-filter: blur(6px);
+  padding: .2rem .55rem; border-radius: 999px;
+  opacity: 0; transition: opacity var(--dur-fast) var(--ease);
+}
+.life-tile:hover .life-tile-num{ opacity: 1; }
+
+/* Photo-backed dark CTA — an alternative to the plain gradient .cta-band
+   for pages ending on a stronger, more immersive note. */
+.cta-band-photo{
+  position: relative; overflow: hidden; isolation: isolate;
+  background: var(--color-primary-ink);
+}
+.cta-band-photo img{
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2;
+}
+.cta-band-photo::before{
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(120deg, rgba(6,20,38,.94) 0%, rgba(6,20,38,.8) 55%, rgba(6,20,38,.55) 100%);
+}
+
 /* Utility */
 .mt-0{ margin-top:0 !important; }
 .flex{ display:flex; }

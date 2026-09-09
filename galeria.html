@@ -13,12 +13,28 @@
 <header id="site-header" class="site-header"></header>
 
 <main id="main">
-  <section class="page-hero">
+  <section class="gallery-hero-editorial">
     <div class="container">
-      <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.galeria"></span></div>
-      <div class="eyebrow"><span class="eyebrow-label" data-i18n="gallery.eyebrow"></span></div>
-      <h1 data-i18n="gallery.title" style="margin-top:.7rem;max-width:18ch"></h1>
-      <p class="lede" style="margin-top:1.2rem" data-i18n="gallery.lede"></p>
+      <div class="gallery-hero-grid">
+        <div class="gallery-hero-intro" data-reveal>
+          <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.galeria"></span></div>
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="gallery.eyebrow"></span></div>
+          <h1 data-i18n-html="gallery.titleHtml"></h1>
+          <p class="lede" data-i18n="gallery.lede"></p>
+          <div class="gallery-hero-stat">
+            <strong id="galleryCount"></strong>
+            <span data-i18n="gallery.stat"></span>
+          </div>
+        </div>
+        <div class="gallery-hero-media" data-reveal>
+          <figure class="gallery-hero-figure-main">
+            <img src="assets/images/gallery/navidad1.jpg" alt="Celebración navideña con nuestros residentes" loading="eager">
+          </figure>
+          <figure class="gallery-hero-figure-peek">
+            <img src="assets/images/gallery/17.jpg" alt="Terraza y zona de comedor exterior" loading="eager">
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -30,7 +46,8 @@
 
   <section class="section-tight">
     <div class="container" data-reveal>
-      <div class="cta-band">
+      <div class="cta-band cta-band-photo">
+        <img src="assets/images/gallery/8.jpg" alt="" aria-hidden="true">
         <div>
           <h2 data-i18n="home.ctaBandTitle"></h2>
           <p style="color:rgba(255,255,255,.78);margin-top:.6rem" data-i18n="home.ctaBandLede"></p>
@@ -55,6 +72,7 @@
 <script src="assets/js/main.js"></script>
 <script>
   document.getElementById("ctaWhatsapp").href = SITE_DATA.brand.whatsapp.agendar;
+  document.getElementById("galleryCount").textContent = SITE_DATA.gallery.length;
   registerRender(() => renderGalleryMosaic("galleryFull"));
 </script>
 </body>

@@ -178,10 +178,11 @@ function renderGalleryMosaic(containerId){
         <source src="${SITE_DATA.brand.heroVideo.mp4}" type="video/mp4">
       </video>
     </figure>`;
-  const tiles = items.map(function(g){
+  const tiles = items.map(function(g, i){
     const cap = g[lang] || g.es;
     const spanClass = g.span === "wide" ? " span-wide" : g.span === "tall" ? " span-tall" : "";
-    return `<figure class="life-tile${spanClass}"><img src="${g.img}" alt="${cap}" loading="lazy"><figcaption>${cap}</figcaption></figure>`;
+    const num = String(i + 1).padStart(2, "0");
+    return `<figure class="life-tile${spanClass}"><span class="life-tile-num">${num}</span><img src="${g.img}" alt="${cap}" loading="lazy"><figcaption>${cap}</figcaption></figure>`;
   });
   // Insert the video moment after the fourth tile so it reads as part of
   // the story rather than bolted on at the start or end.
