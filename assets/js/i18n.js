@@ -139,6 +139,7 @@ const I18N = {
     "blog.eyebrow": "Blog",
     "blog.title": "Últimas publicaciones",
     "blog.lede": "Lee artículos escritos por profesionales sobre el cuidado del adulto mayor.",
+    "blog.stat": "artículos escritos por nuestro equipo de profesionales",
     "blog.externalNote": "Este artículo continúa en el sitio original",
     "blog.featuredTag": "Destacado",
 
@@ -323,6 +324,7 @@ const I18N = {
     "blog.eyebrow": "Blog",
     "blog.title": "Latest articles",
     "blog.lede": "Read articles written by professionals about caring for older adults.",
+    "blog.stat": "articles written by our team of professionals",
     "blog.externalNote": "This article continues on the original site",
     "blog.featuredTag": "Featured",
 
