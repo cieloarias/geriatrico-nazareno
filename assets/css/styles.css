@@ -803,7 +803,7 @@ h1 em, .h1 em{ color: inherit; }
    not a generic hero banner. ---- */
 .page-opener{
   padding-top: calc(var(--header-h) + clamp(1.6rem, 3.5vw, 2.6rem));
-  padding-bottom: clamp(1.6rem, 3vw, 2.4rem);
+  padding-bottom: clamp(2.4rem, 4.5vw, 3.6rem);
 }
 .page-opener-grid{
   display: grid;
@@ -822,18 +822,34 @@ h1 em, .h1 em{ color: inherit; }
 }
 .page-opener-stat strong{ font-family: var(--font-display); font-size: 2.4rem; line-height: 1; color: var(--color-primary); }
 .page-opener-stat span{ font-size: .85rem; color: var(--color-ink-soft); max-width: 22ch; }
-.page-opener-media{
-  display: grid; grid-template-columns: 2fr 1fr; gap: clamp(.9rem, 2vw, 1.4rem);
-  align-items: end;
+
+/* One dominant frame with a second, smaller frame genuinely layered on
+   top of it (overlapping both the right and bottom edges) — not two
+   separate rectangles side by side with a gap between them. The overlap
+   itself is what reads as "one composition" rather than "two floating
+   objects": the sand-colored border matches the page background, so the
+   small frame reads as a physical print set down on top of the large one. */
+.page-opener-media{ position: relative; }
+.page-opener-figure-main{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 16/11; }
+.page-opener-figure-peek{
+  position: absolute; z-index: 2;
+  right: clamp(1rem, 6%, 2.4rem); bottom: -9%;
+  width: min(260px, 38%); aspect-ratio: 4/5;
+  border-radius: var(--radius-md); overflow: hidden;
+  border: 6px solid var(--color-sand);
+  box-shadow: var(--shadow-float);
+  transition: transform var(--dur-med) var(--ease);
 }
-.page-opener-figure-main{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3; }
-.page-opener-figure-peek{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 3/4; transform: translateY(12%); }
+.page-opener-media:hover .page-opener-figure-peek{ transform: translateY(-5px); }
 .page-opener-figure-main img, .page-opener-figure-peek img{ width: 100%; height: 100%; object-fit: cover; display: block; }
 @media (max-width: 900px){
   .page-opener-grid{ grid-template-columns: 1fr; }
   .page-opener-intro h1{ max-width: none; }
   .page-opener-media{ margin-top: 1.8rem; }
-  .page-opener-figure-peek{ transform: none; }
+  .page-opener-figure-peek{
+    position: static; width: 58%; aspect-ratio: 4/5;
+    margin: 1rem 0 0 auto; border-width: 4px;
+  }
 }
 
 /* Small numbered badge on each mosaic tile — reinforces "curated set",
