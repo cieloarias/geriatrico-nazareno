@@ -492,7 +492,10 @@ h1 em, .h1 em{ color: inherit; }
 .trust-typo-num{
   display: block; font-family: var(--font-display); font-weight: 600;
   font-size: clamp(2.6rem, 4.6vw, 3.6rem); line-height: 1;
-  color: var(--color-primary-tint);
+  /* --color-primary-tint was nearly the same pale hex as the page's own
+     background — a translucent navy reads as a genuinely soft
+     background numeral while staying actually legible. */
+  color: rgba(0, 60, 126, .24);
   margin-bottom: .5rem;
 }
 .trust-typo-item h3{
@@ -737,11 +740,17 @@ h1 em, .h1 em{ color: inherit; }
   opacity: .62; filter: brightness(1.3) contrast(1.15) saturate(1.25);
   animation: scienceBgDrift 24s ease-in-out infinite alternate;
 }
+/* Three blue tones instead of one — midnight navy for the text-legible
+   side, a deep medical-blue transition instead of staying flat navy
+   the whole way, an electric-blue glow, and a cooler sky/cyan glow at
+   a different position so the section reads as a real blue family
+   (navy → medical blue → electric → cyan) rather than one flat hue. */
 .science-bg::after{
   content: ''; position: absolute; inset: 0;
   background:
-    radial-gradient(50% 60% at 78% 42%, rgba(79,176,255,.26), rgba(79,176,255,0) 70%),
-    linear-gradient(100deg, var(--color-primary-ink) 0%, rgba(0,31,63,.92) 42%, rgba(0,31,63,.4) 60%, rgba(0,31,63,.2) 78%, rgba(0,31,63,.48) 100%);
+    radial-gradient(42% 55% at 82% 28%, rgba(56,189,248,.24), rgba(56,189,248,0) 70%),
+    radial-gradient(45% 55% at 66% 78%, rgba(0,104,216,.28), rgba(0,104,216,0) 70%),
+    linear-gradient(100deg, var(--color-primary-ink) 0%, rgba(0,31,63,.9) 38%, rgba(0,60,126,.46) 58%, rgba(0,60,126,.24) 78%, rgba(0,31,63,.46) 100%);
 }
 .science-section .container{ position: relative; z-index: 1; }
 @keyframes scienceBgDrift{
@@ -959,33 +968,28 @@ h1 em, .h1 em{ color: inherit; }
 }
 .page-opener-intro .lede{ margin-top: 1.1rem; max-width: 34ch; }
 
-/* ---- Residencias opener — small DNA accent in the headline's negative
-   space ---- (residencias.html only; markup is page-specific). A single
-   small line-art helix, not a full background, sitting beside the
-   headline and bleeding slightly past the text column into the gutter —
-   never inside a card, never a stock image. Kept behind the text (a
-   local stacking context + negative z-index) so any overlap never costs
-   legibility, and rotates very slowly as the opener scrolls past
-   (initDnaAccentScroll in main.js). */
-.opener-dna-accent{
-  position: absolute; z-index: -1; top: -4%; right: -34px;
-  width: clamp(110px, 13.5vw, 180px); opacity: .9; pointer-events: none;
-  transform-origin: 50% 50%;
+/* ---- Residencias opener — dynamic typographic title, no accent
+   graphic ---- (residencias.html only). The DNA accent here wasn't
+   landing, so the headline itself carries the "dynamic/futuristic"
+   feeling instead: a small wide-tracked uppercase label in the body
+   sans, then a much larger serif line below it — real scale contrast
+   within one headline rather than a decorative graphic beside it. */
+.residencias-dynamic-title{ display: flex; flex-direction: column; gap: .5rem; }
+.residencias-dynamic-title .dyn-label{
+  display: block; font-family: var(--font-body); font-weight: 600;
+  text-transform: uppercase; letter-spacing: .14em;
+  font-size: clamp(.92rem, 1.3vw, 1.05rem); color: var(--color-accent);
 }
-/* A light-blue line on a pale ice-blue page has much less natural
-   contrast than the same line on navy (as in Nosotros' science
-   section) — a soft white halo behind a deeper, more saturated stroke
-   is what actually makes it read clearly here, plus a wider blue
-   glow so it still feels like the same signature motif. */
-.opener-dna-accent svg{
-  width: 100%; height: auto; display: block;
-  filter: drop-shadow(0 0 3px rgba(255,255,255,.9)) drop-shadow(0 0 22px rgba(0,102,204,.45));
+.residencias-dynamic-title .dyn-main{
+  display: block; font-family: var(--font-display); font-weight: 600;
+  line-height: .98; letter-spacing: -.015em;
+  font-size: clamp(2.7rem, 5.6vw, 4.4rem); color: var(--color-ink);
 }
-.opener-dna-accent .hv-strand{ fill: none; stroke: #0066CC; stroke-width: 3.2; stroke-linecap: round; }
-.opener-dna-accent .hv-rung{ stroke: rgba(0,102,204,.55); stroke-width: 1.8; stroke-linecap: round; }
-@media (max-width: 900px){
-  .opener-dna-accent{ top: -34px; right: 4px; width: 100px; opacity: .75; }
+.page-opener-stats{
+  display: flex; flex-wrap: wrap; gap: clamp(1.8rem, 3.5vw, 2.8rem);
+  margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--color-line);
 }
+.page-opener-stats .page-opener-stat{ margin-top: 0; padding-top: 0; border-top: none; }
 .page-opener-stat{
   display: flex; align-items: baseline; gap: .7rem;
   margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--color-line);
@@ -1010,29 +1014,17 @@ h1 em, .h1 em{ color: inherit; }
 }
 
 /* ---- Staff Médico hero — the same DNA video as Nosotros' science
-   section, not an illustration ----
-   The opener photo slot is replaced with the real DNA/science video
-   (reused, not a new asset) — a designed medical signal rather than a
-   face, so the doctors' real photos stay reserved for their own
-   profiles further down the page. The sonar dot field sits ON TOP of
-   the video as a particle layer (canvas painted above the video, its
-   own background transparent) rather than behind it, since a full-bleed
-   opaque video would otherwise hide the dots entirely. */
+   section, not an illustration and not the dot field (dots read as
+   noise directly under this much video detail; dropped here). ---- */
 .staff-hero-visual{ position: relative; background: var(--color-primary-ink); }
 .staff-hero-visual-video{
   filter: brightness(1.3) contrast(1.15) saturate(1.3);
   animation: scienceBgDrift 26s ease-in-out infinite alternate;
 }
-/* !important on position: the shared .sonar-host > *:not(.sonar-canvas)
-   rule (defined later in this file, same specificity tier) forces
-   position:relative on every non-canvas child so content sits above
-   the dot canvas — correct for text content, wrong for this scrim,
-   which specifically needs to sit absolutely over the video. */
-.staff-hero-visual .staff-hero-visual-scrim{
-  position: absolute !important; inset: 0; z-index: 1; pointer-events: none;
+.staff-hero-visual-scrim{
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background: radial-gradient(120% 90% at 30% 20%, rgba(0,20,40,.1) 0%, rgba(0,20,40,.58) 100%);
 }
-.staff-hero-visual .sonar-canvas{ z-index: 2; opacity: .8; }
 @media (prefers-reduced-motion: reduce){
   .staff-hero-visual-video{ animation: none; }
 }
