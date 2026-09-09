@@ -316,6 +316,49 @@ function initContactForm(){
   });
 }
 
+/* ---- Page-to-page transitions ----
+   A fast veil fade on internal navigation so moving between pages reads
+   as one continuous site rather than a hard cut — but genuinely fast:
+   ~180ms, well under the point a real click-to-navigate would feel
+   delayed. Only intercepts plain left-clicks on same-origin, same-tab
+   links (respects target=_blank, downloads, modifier keys, mailto/tel,
+   and same-page anchors, which all keep their native behavior). The
+   arrival side is deliberately NOT a matching full-page veil-reveal —
+   that risks a flash-of-unstyled-veil on direct loads/refreshes/back-
+   button for one more layer of engineering risk than a ~180ms exit fade
+   is worth. Arrival already reads as composed via the existing
+   scroll-reveal and masked-heading systems (initReveal/initHeadingReveal),
+   which run on every page regardless. */
+function initPageTransitions(){
+  if (REDUCED_MOTION) return;
+  let veil = null;
+  function ensureVeil(){
+    if (veil) return veil;
+    veil = document.createElement("div");
+    veil.className = "page-transition-veil";
+    veil.setAttribute("aria-hidden", "true");
+    document.body.appendChild(veil);
+    return veil;
+  }
+
+  document.addEventListener("click", (e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest("a[href]");
+    if (!a || a.target === "_blank" || a.hasAttribute("download")) return;
+    const href = a.getAttribute("href");
+    if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("javascript:")) return;
+    let url;
+    try { url = new URL(a.href, location.href); } catch (err) { return; }
+    if (url.origin !== location.origin) return;
+    if (url.pathname === location.pathname && url.hash) return; // same-page anchor
+
+    e.preventDefault();
+    const v = ensureVeil();
+    requestAnimationFrame(() => v.classList.add("is-active"));
+    setTimeout(() => { window.location.href = a.href; }, 180);
+  });
+}
+
 /* ---- Hero entrance sequence (GSAP timeline) ----
    Plays once, on load, on whichever page has a .hero-cinematic (currently
    just the homepage). Sequence matches the brief exactly: nav -> eyebrow
@@ -401,6 +444,7 @@ document.addEventListener("DOMContentLoaded", function(){
   initMobileNav();
   initWhatsappFloat();
   initContactForm();
+  initPageTransitions();
   playHeroEntrance();
   initHeroScrollTransition();
   initOpenerScroll();

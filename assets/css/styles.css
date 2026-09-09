@@ -695,6 +695,17 @@ h1 em, .h1 em{ color: inherit; }
 .gallery-grid figure:focus-visible figcaption, .life-mosaic figure:focus-visible figcaption{ opacity: 1; }
 @media (max-width: 700px){ .gallery-grid{ columns: 2 160px; } }
 
+/* Page-to-page transition veil — see initPageTransitions (main.js).
+   Invisible by default (no flash risk on normal loads); only becomes
+   active for the ~180ms before an internal link actually navigates. */
+.page-transition-veil{
+  position: fixed; inset: 0; z-index: 500;
+  background: var(--color-sand);
+  opacity: 0; pointer-events: none;
+  transition: opacity .18s var(--ease);
+}
+.page-transition-veil.is-active{ opacity: 1; }
+
 .lightbox{
   position: fixed; inset:0; z-index: 200; background: rgba(15,18,22,.92);
   display:flex; align-items:center; justify-content:center; padding: 4vh 4vw;
