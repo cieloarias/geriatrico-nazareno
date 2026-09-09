@@ -312,6 +312,26 @@ function initHeroScrollTransition(){
     .to(scrim, { opacity: .55, ease: "none" }, 0);
 }
 
+/* ---- Page-opener scroll transition ----
+   The interior pages' single opener photograph (index.html's hero is
+   untouched and has its own transition above) subtly continues to scale
+   as the opener scrolls past — a small, section-scoped nod to "the next
+   section is already emerging" rather than a hard cut between the opener
+   and whatever follows it. Scrubbed to the opener's own scroll range,
+   transform-only, skipped under reduced-motion. Runs on every page that
+   has a .page-opener — a no-op everywhere else. */
+function initOpenerScroll(){
+  const opener = document.querySelector(".page-opener");
+  const media = document.querySelector(".page-opener-figure-main img, .page-opener-figure-main video");
+  if (!opener || !media || REDUCED_MOTION) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.to(media, {
+    scale: 1.14, ease: "none",
+    scrollTrigger: { trigger: opener, start: "top top", end: "bottom top", scrub: true }
+  });
+}
+
 /* Boot order matters: header/footer (partials.js) mount on DOMContentLoaded,
    then this runs — but page-specific content (services grid, gallery, etc.)
    is rendered by an inline <script> at the bottom of each page's <body>,
@@ -324,6 +344,7 @@ document.addEventListener("DOMContentLoaded", function(){
   initContactForm();
   playHeroEntrance();
   initHeroScrollTransition();
+  initOpenerScroll();
   refreshInteractive(); // initServiceCards + initReveal + initLightbox (render.js)
   initHeadingReveal(); // must run after i18n + render.js have populated real heading text
 });

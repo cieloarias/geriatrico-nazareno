@@ -668,9 +668,20 @@ function renderResidenceSwitcher(containerId){
     const incoming = Array.from(mediaEls).find(m => m.getAttribute("data-index") === i);
     if (incoming && incoming !== outgoing){
       if (typeof gsap !== "undefined" && !REDUCED_MOTION){
-        if (outgoing) gsap.to(outgoing, { opacity: 0, scale: 1.02, duration: .5, ease: "power2.inOut", onComplete: () => outgoing.classList.remove("is-active") });
-        gsap.fromTo(incoming, { opacity: 0, scale: 1.05 }, { opacity: 1, scale: 1, duration: .7, ease: "power3.out" });
+        // Directional wipe: moving to a higher index arrives from the
+        // right, moving back arrives from the left — spatially consistent
+        // with the tab order, not just an arbitrary crossfade.
+        const outIndex = outgoing ? Number(outgoing.getAttribute("data-index")) : -1;
+        const forward = Number(i) > outIndex;
+        gsap.set(incoming, { clipPath: forward ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)" });
+        incoming.style.zIndex = 2;
+        if (outgoing) outgoing.style.zIndex = 1;
         incoming.classList.add("is-active");
+        gsap.to(incoming, { clipPath: "inset(0 0 0 0%)", duration: .75, ease: "power3.inOut" });
+        if (outgoing){
+          const prevOutgoing = outgoing;
+          gsap.delayedCall(.75, () => prevOutgoing.classList.remove("is-active"));
+        }
       } else {
         mediaEls.forEach(m => m.classList.toggle("is-active", m === incoming));
       }

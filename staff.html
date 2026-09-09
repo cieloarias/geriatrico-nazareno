@@ -31,9 +31,6 @@
           <figure class="page-opener-figure-main" style="aspect-ratio:4/3.4">
             <img id="staffPhotoMain" src="" alt="" loading="eager" style="object-position: top center">
           </figure>
-          <figure class="page-opener-figure-peek">
-            <img id="staffPhotoPeek" src="" alt="" loading="eager" style="object-position: top center">
-          </figure>
         </div>
       </div>
     </div>
@@ -75,11 +72,9 @@
 <script>
   document.getElementById("ctaWhatsapp").href = SITE_DATA.brand.whatsapp.agendar;
   document.getElementById("staffCount").textContent = SITE_DATA.staff.length;
-  var mainDoc = SITE_DATA.staff[0], peekDoc = SITE_DATA.staff[1] || SITE_DATA.staff[0];
+  var mainDoc = SITE_DATA.staff[0];
   var mainImg = document.getElementById("staffPhotoMain");
   mainImg.src = mainDoc.photo; mainImg.alt = mainDoc.name;
-  var peekImg = document.getElementById("staffPhotoPeek");
-  peekImg.src = peekDoc.photo; peekImg.alt = peekDoc.name;
   registerRender(() => renderStaffEditorial("staffProfiles"));
 </script>
 </body>

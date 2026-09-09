@@ -826,33 +826,20 @@ h1 em, .h1 em{ color: inherit; }
 .page-opener-stat strong{ font-family: var(--font-display); font-size: 2.4rem; line-height: 1; color: var(--color-primary); }
 .page-opener-stat span{ font-size: .85rem; color: var(--color-ink-soft); max-width: 22ch; }
 
-/* One dominant frame with a second, smaller frame genuinely layered on
-   top of it (overlapping both the right and bottom edges) — not two
-   separate rectangles side by side with a gap between them. The overlap
-   itself is what reads as "one composition" rather than "two floating
-   objects": the sand-colored border matches the page background, so the
-   small frame reads as a physical print set down on top of the large one. */
-.page-opener-media{ position: relative; }
-.page-opener-figure-main{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 16/11; }
-.page-opener-figure-peek{
-  position: absolute; z-index: 2;
-  right: clamp(1rem, 6%, 2.4rem); bottom: -9%;
-  width: min(260px, 38%); aspect-ratio: 4/5;
-  border-radius: var(--radius-md); overflow: hidden;
-  border: 6px solid var(--color-sand);
-  box-shadow: var(--shadow-float);
-  transition: transform var(--dur-med) var(--ease);
+/* ONE dominant photograph — no second frame overlapping it. Images stay
+   as separate visual surfaces; the sophistication comes from scale,
+   asymmetry (32/68 column split) and the scroll-linked settle handled
+   in initOpenerScroll() (main.js), not from stacking photos. */
+.page-opener-figure-main{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3.1; }
+.page-opener-figure-main img, .page-opener-figure-main video{
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transform: scale(1.04); transform-origin: center;
 }
-.page-opener-media:hover .page-opener-figure-peek{ transform: translateY(-5px); }
-.page-opener-figure-main img, .page-opener-figure-peek img{ width: 100%; height: 100%; object-fit: cover; display: block; }
 @media (max-width: 900px){
   .page-opener-grid{ grid-template-columns: 1fr; }
   .page-opener-intro h1{ max-width: none; }
   .page-opener-media{ margin-top: 1.8rem; }
-  .page-opener-figure-peek{
-    position: static; width: 58%; aspect-ratio: 4/5;
-    margin: 1rem 0 0 auto; border-width: 4px;
-  }
+  .page-opener-figure-main{ aspect-ratio: 4/3.4; }
 }
 
 /* Small numbered badge on each mosaic tile — reinforces "curated set",
@@ -956,8 +943,12 @@ h1 em, .h1 em{ color: inherit; }
 .residence-switch-details [data-role="address"], .residence-switch-details [data-role="phones"]{ color: rgba(255,255,255,.85); }
 .residence-switch-visual{ position: relative; }
 .residence-switch-media{ position: relative; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3.1; }
-.residence-switch-media > *{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; z-index: 0; }
-.residence-switch-media > .is-active{ opacity: 1; z-index: 1; }
+/* Directional clip-path wipe rather than a crossfade — the incoming sede
+   physically "arrives" over the outgoing one rather than the two dissolving
+   into each other. JS drives the actual clip-path values during the
+   transition; these are just the settled default states. */
+.residence-switch-media > *{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; clip-path: inset(0 0 0 100%); }
+.residence-switch-media > .is-active{ z-index: 2; clip-path: inset(0 0 0 0%); }
 .residence-switch-progress{ display: flex; gap: .5rem; margin-top: 1rem; }
 .residence-switch-bar{ flex: 1; height: 2px; background: rgba(255,255,255,.2); position: relative; overflow: hidden; border-radius: 999px; }
 .residence-switch-bar::after{

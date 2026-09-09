@@ -31,9 +31,6 @@
           <figure class="page-opener-figure-main">
             <img id="servicesPhotoMain" src="" alt="" loading="eager">
           </figure>
-          <figure class="page-opener-figure-peek">
-            <img id="servicesPhotoPeek" src="" alt="" loading="eager">
-          </figure>
         </div>
       </div>
     </div>
@@ -94,8 +91,6 @@
   document.getElementById("servicesCount").textContent = SITE_DATA.services.length;
   document.getElementById("servicesPhotoMain").src = SITE_DATA.services[0].image;
   document.getElementById("servicesPhotoMain").alt = SITE_DATA.services[0].es.title;
-  document.getElementById("servicesPhotoPeek").src = SITE_DATA.services[2].image;
-  document.getElementById("servicesPhotoPeek").alt = SITE_DATA.services[2].es.title;
   registerRender(() => renderServicesChapters("servicesChapters"));
   registerRender(() => renderResidenceBig("residenceBigGrid"));
   registerRender(function(){
