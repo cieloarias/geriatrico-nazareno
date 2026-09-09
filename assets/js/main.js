@@ -189,35 +189,84 @@ function initLightbox(){
 
   const lb = document.createElement("div");
   lb.className = "lightbox";
+  lb.setAttribute("role", "dialog");
+  lb.setAttribute("aria-modal", "true");
   lb.innerHTML = `
     <button class="lightbox-close" aria-label="Cerrar">${ICONS_LB_CLOSE}</button>
     <button class="lightbox-nav prev" aria-label="Anterior">${ICONS_LB_PREV}</button>
-    <img alt="">
+    <figure class="lightbox-figure">
+      <img alt="">
+      <figcaption></figcaption>
+    </figure>
     <button class="lightbox-nav next" aria-label="Siguiente">${ICONS_LB_NEXT}</button>
+    <span class="lightbox-count" aria-hidden="true"></span>
   `;
   document.body.appendChild(lb);
   const img = lb.querySelector("img");
+  const caption = lb.querySelector("figcaption");
+  const count = lb.querySelector(".lightbox-count");
+  const closeBtn = lb.querySelector(".lightbox-close");
   let current = 0;
+  let triggerEl = null;
 
-  function show(i){
+  function show(i, animateFrom){
     current = (i + figures.length) % figures.length;
     const fig = figures[current];
-    const src = fig.querySelector("img").getAttribute("src");
-    const alt = fig.querySelector("img").getAttribute("alt") || "";
+    const fImg = fig.querySelector("img");
+    const src = fImg.getAttribute("src");
+    const alt = fImg.getAttribute("alt") || "";
     img.setAttribute("src", src);
     img.setAttribute("alt", alt);
+    caption.textContent = alt;
+    count.textContent = `${String(current + 1).padStart(2, "0")} / ${String(figures.length).padStart(2, "0")}`;
+
+    if (typeof gsap === "undefined" || REDUCED_MOTION) return;
+    if (animateFrom){
+      // Expand from the exact thumbnail that was clicked (a real FLIP:
+      // position/scale the full image to match the thumbnail's rect,
+      // then animate to its natural centered size) rather than an
+      // instant swap or a generic fade.
+      requestAnimationFrame(() => {
+        const imgRect = img.getBoundingClientRect();
+        const dx = (animateFrom.left + animateFrom.width / 2) - (imgRect.left + imgRect.width / 2);
+        const dy = (animateFrom.top + animateFrom.height / 2) - (imgRect.top + imgRect.height / 2);
+        const scale = Math.max(.2, Math.min(animateFrom.width / imgRect.width, animateFrom.height / imgRect.height));
+        gsap.fromTo(img,
+          { x: dx, y: dy, scale, opacity: .6 },
+          { x: 0, y: 0, scale: 1, opacity: 1, duration: .55, ease: "power3.out" }
+        );
+      });
+      gsap.fromTo([caption, count], { opacity: 0 }, { opacity: 1, duration: .4, delay: .2 });
+    } else {
+      // Switching frames within an already-open lightbox: a quiet
+      // crossfade, not the expand animation (that's a one-time "arrival"
+      // moment, not something that should replay on every arrow press).
+      gsap.fromTo(img, { opacity: 0, scale: .98 }, { opacity: 1, scale: 1, duration: .35, ease: "power2.out" });
+      gsap.fromTo([caption, count], { opacity: 0 }, { opacity: 1, duration: .3 });
+    }
   }
-  function open(i){
-    show(i);
+  function open(i, fromEl){
+    triggerEl = fromEl || null;
+    const rect = fromEl ? fromEl.getBoundingClientRect() : null;
     lb.classList.add("is-open");
     document.body.style.overflow = "hidden";
+    show(i, rect);
+    closeBtn.focus();
   }
   function close(){
     lb.classList.remove("is-open");
     document.body.style.overflow = "";
+    if (triggerEl) triggerEl.focus();
   }
-  figures.forEach((fig, i) => fig.addEventListener("click", () => open(i)));
-  lb.querySelector(".lightbox-close").addEventListener("click", close);
+  figures.forEach((fig, i) => {
+    fig.setAttribute("tabindex", "0");
+    fig.setAttribute("role", "button");
+    fig.addEventListener("click", () => open(i, fig.querySelector("img")));
+    fig.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " "){ e.preventDefault(); open(i, fig.querySelector("img")); }
+    });
+  });
+  closeBtn.addEventListener("click", close);
   lb.querySelector(".prev").addEventListener("click", () => show(current - 1));
   lb.querySelector(".next").addEventListener("click", () => show(current + 1));
   lb.addEventListener("click", e => { if (e.target === lb) close(); });
@@ -227,6 +276,16 @@ function initLightbox(){
     if (e.key === "ArrowRight") show(current + 1);
     if (e.key === "ArrowLeft") show(current - 1);
   });
+
+  // Swipe (touch only — mouse users have the arrow buttons/keyboard).
+  let touchX = null;
+  lb.addEventListener("touchstart", e => { touchX = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) show(current + (dx < 0 ? 1 : -1));
+    touchX = null;
+  }, { passive: true });
 }
 const ICONS_LB_CLOSE = '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>';
 const ICONS_LB_PREV = '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>';
