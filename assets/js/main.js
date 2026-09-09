@@ -458,6 +458,23 @@ function initOpenerScroll(){
   });
 }
 
+/* ---- Residencias opener — DNA accent slow rotation on scroll ----
+   A tiny, continuous rotation tied to the opener's own scroll range
+   (same scrub pattern as initOpenerScroll) — perceptible but slow,
+   never a spin. No-op on every page but residencias.html, since the
+   accent only exists there. */
+function initDnaAccentScroll(){
+  const accent = document.getElementById("openerDnaAccent");
+  const opener = document.querySelector(".page-opener");
+  if (!accent || !opener || REDUCED_MOTION) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.to(accent, {
+    rotate: 18, ease: "none",
+    scrollTrigger: { trigger: opener, start: "top top", end: "bottom top", scrub: true }
+  });
+}
+
 /* ---- Galería — vertical mosaic reveal ----
    Plain, ordinary vertical scrolling — no pin, no scroll-hijack, no drag.
    Each tile clip-reveals as it enters the viewport: clip-path wipes open,
@@ -499,6 +516,7 @@ document.addEventListener("DOMContentLoaded", function(){
   playHeroEntrance();
   initHeroScrollTransition();
   initOpenerScroll();
+  initDnaAccentScroll();
   refreshInteractive(); // initServiceCards + initReveal + initLightbox (render.js)
   initHeadingReveal(); // must run after i18n + render.js have populated real heading text
   initGalleryMosaicReveal();
