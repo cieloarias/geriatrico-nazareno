@@ -918,6 +918,47 @@ h1 em, .h1 em{ color: inherit; }
   .page-opener-figure-main{ aspect-ratio: 4/3.4; }
 }
 
+/* ---- Staff Médico hero — medical-motif visual, not a portrait ----
+   The opener photo slot is replaced here with an original line-art
+   composition (pulse line + stethoscope + node dots) over the sonar dot
+   field, in deep navy with an electric-blue glow — a designed medical
+   signal rather than a face, so the doctors' real photos stay reserved
+   for their own profiles further down the page. Slow, clearly
+   perceptible rotation/float (signature-motion tier), gated by
+   reduced-motion. */
+.staff-hero-visual{
+  position: relative; display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(120% 120% at 30% 20%, #0a2a4d 0%, var(--color-primary-ink) 62%, #001428 100%);
+}
+.staff-hero-visual-glow{
+  position: absolute; inset: -10%; z-index: 1; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(79,176,255,.38), rgba(79,176,255,0) 72%);
+  filter: blur(2px);
+  animation: staffGlowPulse 7s ease-in-out infinite;
+}
+.staff-hero-visual-icon{
+  position: relative; z-index: 2; width: 62%; max-width: 300px;
+  filter: drop-shadow(0 0 22px rgba(79,176,255,.45));
+  animation: staffVisualFloat 9s ease-in-out infinite;
+}
+.staff-hero-visual .sonar-canvas{ opacity: .55; }
+.hv-ring{ fill: none; stroke: rgba(191,224,255,.22); stroke-width: 1; }
+.hv-pulse{ fill: none; stroke: #BFE0FF; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .85; }
+.hv-stetho{ fill: none; stroke: #4FB0FF; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.hv-dot{ fill: #0084FF; }
+.hv-dot-lg{ fill: #4FB0FF; }
+@keyframes staffVisualFloat{
+  0%, 100%{ transform: translateY(0) rotate(0deg); }
+  50%{ transform: translateY(-10px) rotate(1.2deg); }
+}
+@keyframes staffGlowPulse{
+  0%, 100%{ opacity: .7; transform: scale(1); }
+  50%{ opacity: 1; transform: scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce){
+  .staff-hero-visual-glow, .staff-hero-visual-icon{ animation: none; }
+}
+
 /* Small numbered badge on each mosaic tile — reinforces "curated set",
    not an uploaded dump. Purely visual metadata, no invented taxonomy. */
 .life-tile-num{
