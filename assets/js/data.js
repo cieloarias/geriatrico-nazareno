@@ -144,14 +144,14 @@ const SITE_DATA = {
         specialty: "Medicina General",
         attention: "Particular",
         location: "San Borja",
-        formation: ["Universidad San Martín de Porres", "Maestría en Geriatría — Universidad Cayetano Heredia", "Diplomado en Geriatría y Gerontología"],
+        formation: ["Universidad San Martín de Porres, Lima, Perú"],
         interest: "Atención del Adulto Mayor"
       },
       en: {
         specialty: "General Medicine",
         attention: "Private",
         location: "San Borja",
-        formation: ["Universidad San Martín de Porres", "Master's Degree in Geriatrics — Universidad Cayetano Heredia", "Postgraduate Diploma in Geriatrics and Gerontology"],
+        formation: ["Universidad San Martín de Porres, Lima, Peru"],
         interest: "Care of Older Adults"
       }
     }
