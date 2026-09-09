@@ -22,6 +22,30 @@ function initHeaderScroll(){
   window.addEventListener("scroll", onScroll, { passive: true });
 }
 
+/* ---- Contextual header (light page / dark section) ----
+   Samples whatever's directly under the header's bottom edge as the
+   page scrolls and toggles .on-dark when it's a dark/navy section —
+   the header itself goes translucent navy with light nav text instead
+   of staying a pale bar on top of a dark section. Runs on every page
+   (not just the homepage hero) since dark sections show up throughout
+   the site (Residencias switcher, Testimonials, Nosotros' science
+   section, dark CTAs...). Cheap: one elementFromPoint per scroll tick,
+   no observers to manage, no motion of its own to gate behind
+   reduced-motion — it's a discrete state swap, not continuous movement. */
+function initHeaderContext(){
+  const header = document.getElementById("site-header");
+  if (!header) return;
+  const darkSelector = ".section-dark-editorial, .science-section, .hero-cinematic, #residenceSwitcher, .cta-band-photo";
+  function check(){
+    const rect = header.getBoundingClientRect();
+    const el = document.elementFromPoint(window.innerWidth / 2, rect.bottom + 4);
+    header.classList.toggle("on-dark", !!(el && el.closest(darkSelector)));
+  }
+  check();
+  window.addEventListener("scroll", check, { passive: true });
+  window.addEventListener("resize", check);
+}
+
 /* ---- Mobile nav drawer ---- */
 function initMobileNav(){
   const toggle = document.querySelector(".nav-toggle:not(.drawer-close)");
@@ -423,11 +447,6 @@ function initHeroScrollTransition(){
    transform-only, skipped under reduced-motion. Runs on every page that
    has a .page-opener — a no-op everywhere else. */
 function initOpenerScroll(){
-  // Galería's opener gets the heavier pinned expand treatment below
-  // instead — running both on the same section would double-scale (the
-  // figure AND the image inside it) and fight over what "end" means once
-  // one of them is pinning the scroll position.
-  if (document.getElementById("galleryOpener")) return;
   const opener = document.querySelector(".page-opener");
   const media = document.querySelector(".page-opener-figure-main img, .page-opener-figure-main video");
   if (!opener || !media || REDUCED_MOTION) return;
@@ -439,40 +458,30 @@ function initOpenerScroll(){
   });
 }
 
-/* ---- Galería — scroll-pinned media expansion ----
-   Adapted from a scroll-expansion-hero interaction pattern (the mechanic:
-   pin the section, grow the media as the user scrolls, let the intro
-   text exit, then release into the content below) — reimplemented here
-   in vanilla GSAP/ScrollTrigger rather than React/Framer Motion, since
-   this site has no build step, and driven by transform/opacity only
-   (never width/height) so it stays GPU-cheap per the performance rules
-   this project already follows elsewhere. This is the one page that
-   gets this heavier treatment — see the brief's own note that the
-   Galería opener-to-collection transition should be "the impressive
-   part," not a sitewide pattern. Single photo throughout — no
-   photo-on-photo. Full-page-reload fallback, no pin, under
-   reduced-motion. */
-function initGalleryScrollExpand(){
-  const opener = document.getElementById("galleryOpener");
-  const media = document.querySelector("#galleryOpener .page-opener-figure-main");
-  const intro = document.querySelector("#galleryOpener .page-opener-intro");
-  if (!opener || !media || !intro || REDUCED_MOTION) return;
-  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+/* ---- Galería — vertical mosaic reveal ----
+   Plain, ordinary vertical scrolling — no pin, no scroll-hijack, no drag.
+   Each tile clip-reveals as it enters the viewport: clip-path wipes open,
+   opacity 0→1, a small translateY settles, and a soft scale-up finishes
+   the arrival. GSAP ScrollTrigger.batch just triggers each tile once as
+   it crosses into view — nothing scrubs against scroll position, so this
+   reads as one clean entrance per tile rather than a continuous drag. */
+function initGalleryMosaicReveal(){
+  const tiles = document.querySelectorAll(".life-tile, .gallery-tile");
+  if (!tiles.length) return;
+  if (REDUCED_MOTION || typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+    tiles.forEach(t => { t.style.opacity = 1; t.style.clipPath = "none"; t.style.transform = "none"; });
+    return;
+  }
   gsap.registerPlugin(ScrollTrigger);
-
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: opener,
-      start: "top top",
-      end: () => "+=" + Math.round(window.innerHeight * .8),
-      scrub: true,
-      pin: true,
-      anticipatePin: 1,
-      invalidateOnRefresh: true
-    }
-  })
-    .to(media, { scale: 1.28, ease: "none" }, 0)
-    .to(intro, { opacity: 0, y: -36, ease: "none" }, 0);
+  gsap.set(tiles, { opacity: 0, y: 16, scale: .98, clipPath: "inset(12% 0 12% 0)" });
+  ScrollTrigger.batch(tiles, {
+    start: "top 88%",
+    once: true,
+    onEnter: batch => gsap.to(batch, {
+      opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0 0% 0)",
+      duration: .8, ease: "power2.out", stagger: .08
+    })
+  });
 }
 
 /* Boot order matters: header/footer (partials.js) mount on DOMContentLoaded,
@@ -482,6 +491,7 @@ function initGalleryScrollExpand(){
    runs, all dynamic content already exists and is safe to bind against. */
 document.addEventListener("DOMContentLoaded", function(){
   initHeaderScroll();
+  initHeaderContext();
   initMobileNav();
   initWhatsappFloat();
   initContactForm();
@@ -491,6 +501,6 @@ document.addEventListener("DOMContentLoaded", function(){
   initOpenerScroll();
   refreshInteractive(); // initServiceCards + initReveal + initLightbox (render.js)
   initHeadingReveal(); // must run after i18n + render.js have populated real heading text
-  initGalleryScrollExpand(); // after heading reveal so SplitText's line-wrapping has already settled the intro's height
+  initGalleryMosaicReveal();
   if (typeof initSonarGrids === "function") initSonarGrids(); // finds every [data-sonar] host on whichever page this is — no-op if none exist
 });

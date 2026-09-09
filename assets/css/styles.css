@@ -269,15 +269,36 @@ h1 em, .h1 em{ color: inherit; }
   height: var(--header-h);
   display: flex; align-items: center;
   transition: height var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
-  background: rgba(250,246,239,.72);
+  background: rgba(232,241,250,.82);
   backdrop-filter: blur(14px) saturate(1.1);
   border-bottom: 1px solid transparent;
 }
 .site-header.is-scrolled{
   height: 68px;
-  background: rgba(250,246,239,.92);
+  background: rgba(232,241,250,.94);
   border-color: var(--color-line);
 }
+/* Contextual header (see initHeaderContext, main.js): while scrolling
+   over any dark/navy section on ANY page — not just the homepage hero —
+   the header itself goes deep translucent navy with light nav text, so
+   it never sits as a pale bar on top of a dark section. Skipped while
+   .on-hero is active (the hero already has its own fully-transparent
+   treatment) and entirely under reduced-motion-adjacent low-effort
+   contexts is unnecessary here since this is a discrete state toggle,
+   not continuous motion. */
+.site-header.on-dark:not(.on-hero){
+  background: rgba(0,31,63,.82);
+  border-color: rgba(255,255,255,.14);
+}
+.site-header.on-dark:not(.on-hero) .nav-links a{ color: rgba(255,255,255,.82); }
+.site-header.on-dark:not(.on-hero) .nav-links a:hover{ color: #fff; }
+.site-header.on-dark:not(.on-hero) .nav-links a::after{ background: #4FB0FF; }
+.site-header.on-dark:not(.on-hero) .brand{ color: #fff; }
+.site-header.on-dark:not(.on-hero) .nav-toggle span{ background: #fff; }
+.site-header.on-dark:not(.on-hero) .btn-outline{ border-color: rgba(255,255,255,.5); color: #fff; }
+.site-header.on-dark:not(.on-hero) .btn-outline:hover{ border-color: #fff; color: #fff; }
+.site-header.on-dark:not(.on-hero) .btn-primary{ background: #0084FF; }
+.site-header.on-dark:not(.on-hero) .btn-primary:hover{ background: #4FB0FF; }
 /* Over the full-bleed video hero (homepage only — toggled by JS whenever
    a .hero-cinematic is present and the page hasn't scrolled past it),
    the nav sits directly on the footage: no background, light text. The
