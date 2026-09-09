@@ -13,32 +13,54 @@
 <header id="site-header" class="site-header"></header>
 
 <main id="main">
-  <section class="page-hero">
+  <!-- ================= OPENER — type + photo together ================= -->
+  <section class="page-opener">
     <div class="container">
-      <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.contacto"></span></div>
-      <div class="eyebrow"><span class="eyebrow-label" data-i18n="contact.eyebrow"></span></div>
-      <h1 data-i18n="contact.title" style="margin-top:.7rem;max-width:20ch"></h1>
-      <p class="lede" style="margin-top:1.2rem" data-i18n="contact.lede"></p>
+      <div class="page-opener-grid">
+        <div class="page-opener-intro" data-reveal>
+          <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.contacto"></span></div>
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="contact.eyebrow"></span></div>
+          <h1 data-i18n="contact.title"></h1>
+          <p class="lede" data-i18n="contact.lede"></p>
+        </div>
+        <div class="page-opener-media" data-reveal>
+          <figure class="page-opener-figure-main">
+            <img src="assets/images/gallery/8.jpg" alt="Recepción de la residencia" loading="eager">
+          </figure>
+          <figure class="page-opener-figure-peek">
+            <img src="assets/images/gallery/10.jpg" alt="Sala de estar común" loading="eager">
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- ================= IMMEDIATE CONTACT OPTIONS — lines + arrows, not boxes ================= -->
   <section class="section-tight">
     <div class="container">
-      <div class="grid grid-3" style="margin-bottom:3rem" data-reveal-stagger>
-        <a class="contact-tile" id="tileWhatsapp" target="_blank" rel="noopener">
-          <span class="ico" id="icoWhatsapp"></span>
-          <div><strong data-i18n="contact.whatsappTitle"></strong><p class="text-muted" style="font-size:.85rem" data-i18n="contact.whatsappBody"></p></div>
+      <div class="contact-options" data-reveal>
+        <a class="contact-option" id="tileWhatsapp" target="_blank" rel="noopener">
+          <span class="contact-option-num">01</span>
+          <span class="contact-option-body"><strong data-i18n="contact.whatsappTitle"></strong><span data-i18n="contact.whatsappBody"></span></span>
+          <span class="contact-option-arrow"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
-        <a class="contact-tile" id="tilePhone">
-          <span class="ico" id="icoPhone"></span>
-          <div><strong data-i18n="contact.phoneTitle"></strong><p class="text-muted" style="font-size:.85rem" data-i18n="contact.phoneBody"></p></div>
+        <a class="contact-option" id="tilePhone">
+          <span class="contact-option-num">02</span>
+          <span class="contact-option-body"><strong data-i18n="contact.phoneTitle"></strong><span data-i18n="contact.phoneBody"></span></span>
+          <span class="contact-option-arrow"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
-        <div class="contact-tile">
-          <span class="ico" id="icoPin"></span>
-          <div><strong data-i18n="contact.locationTitle"></strong><p class="text-muted" style="font-size:.85rem" data-i18n="contact.locationBody"></p></div>
-        </div>
+        <a class="contact-option" href="#contactSedes">
+          <span class="contact-option-num">03</span>
+          <span class="contact-option-body"><strong data-i18n="contact.locationTitle"></strong><span data-i18n="contact.locationBody"></span></span>
+          <span class="contact-option-arrow"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
       </div>
+    </div>
+  </section>
 
+  <!-- ================= FORM + LOCATION — one integrated composition ================= -->
+  <section class="section">
+    <div class="container">
       <div class="grid grid-2" style="gap:3rem;align-items:flex-start">
         <div data-reveal>
           <h2 data-i18n="contact.formTitle"></h2>
@@ -77,11 +99,22 @@
           </div>
         </div>
 
-        <div data-reveal style="--i:1">
-          <div class="card-media" style="aspect-ratio:4/3;border-radius:var(--radius-lg);margin-bottom:1.5rem">
-            <img src="assets/images/sedes/mapa-san-borja.webp" alt="Ubicación Sede San Borja" loading="lazy">
-          </div>
-          <div id="contactSedes" class="grid" style="gap:1rem"></div>
+        <div data-reveal style="--i:1" id="contactSedes"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VISIT US ================= -->
+  <section class="section-tight">
+    <div class="container" data-reveal>
+      <div class="cta-band cta-band-photo">
+        <img src="assets/images/gallery/navidad3.jpg" alt="" aria-hidden="true">
+        <div>
+          <h2 data-i18n="home.ctaBandTitle"></h2>
+          <p style="color:rgba(255,255,255,.78);margin-top:.6rem" data-i18n="home.ctaBandLede"></p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-accent" id="ctaWhatsappBand" target="_blank" rel="noopener" data-i18n="cta.agendarVisita"></a>
         </div>
       </div>
     </div>
@@ -101,20 +134,21 @@
 <script>
   document.getElementById("tileWhatsapp").href = SITE_DATA.brand.whatsapp.info;
   document.getElementById("tilePhone").href = SITE_DATA.brand.telHref;
-  document.getElementById("icoWhatsapp").innerHTML = ICONS.whatsapp;
-  document.getElementById("icoPhone").innerHTML = ICONS.phone;
-  document.getElementById("icoPin").innerHTML = ICONS.pin;
+  document.getElementById("ctaWhatsappBand").href = SITE_DATA.brand.whatsapp.agendar;
 
   function renderContactSedes(){
     const el = document.getElementById("contactSedes");
     const lang = getLang();
     el.innerHTML = SITE_DATA.sedes.map(function(s){
       const d = s[lang] || s.es;
-      return `<div class="card" style="padding:1.2rem 1.4rem">
-        <strong>${d.name}</strong>
-        <p class="text-muted" style="font-size:.88rem;margin-top:.3rem">${s.address}</p>
-        <p class="text-muted" style="font-size:.88rem">${s.phones.join(" · ")}</p>
-      </div>`;
+      return `<article class="contact-location-card">
+        <div class="map-thumb"><img src="${s.mapImage}" alt="${(I18N[lang] && I18N[lang]["contact.locationTitle"]) || "Ubicación"} — ${d.name}" loading="lazy"></div>
+        <div>
+          <strong>${d.name}</strong>
+          <p>${s.address}</p>
+          <p>${s.phones.join(" · ")}</p>
+        </div>
+      </article>`;
     }).join("");
   }
   registerRender(renderContactSedes);

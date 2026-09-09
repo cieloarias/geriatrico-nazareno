@@ -873,6 +873,39 @@ h1 em, .h1 em{ color: inherit; }
 .staff-profile + .staff-profile{ margin-top: clamp(2.5rem, 5vw, 4rem); }
 @media (max-width: 900px){ .staff-profile .split-editorial-media{ max-width: none; } }
 
+/* ---- Contact options — a numbered, typography-led list replacing three
+   near-identical boxed tiles. Lines + an arrow instead of a card
+   background/border, per the "not everything needs to be a box" rule. ---- */
+.contact-options{ border-top: 1px solid var(--color-line); margin-top: 1.8rem; }
+.contact-option{
+  display: flex; align-items: center; gap: 1.4rem;
+  padding: 1.3rem 0; border-bottom: 1px solid var(--color-line);
+  text-decoration: none; color: inherit; cursor: pointer;
+  transition: padding-left var(--dur-fast) var(--ease);
+}
+.contact-option:hover{ padding-left: .5rem; }
+.contact-option-num{ font-family: var(--font-display); font-size: 1.15rem; color: var(--color-accent); flex: none; width: 2.2ch; }
+.contact-option-body{ flex: 1; display: flex; flex-direction: column; gap: .15rem; }
+.contact-option-body strong{ font-size: 1.1rem; }
+.contact-option-body span{ font-size: .87rem; color: var(--color-ink-soft); }
+.contact-option-arrow{ flex: none; width: 20px; height: 20px; color: var(--color-ink-soft); transition: transform var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.contact-option-arrow svg{ width: 100%; height: 100%; display: block; }
+.contact-option:hover .contact-option-arrow{ transform: translateX(5px); color: var(--color-accent); }
+
+/* ---- Contact location cards — map thumbnail + address integrated into
+   one card per sede, instead of one floating map image above a separate
+   generic text-card list. ---- */
+.contact-location-card{
+  display: flex; gap: 1rem; align-items: center;
+  border: 1px solid var(--color-line); border-radius: var(--radius-md);
+  padding: 1rem; background: var(--color-cream);
+}
+.contact-location-card + .contact-location-card{ margin-top: 1rem; }
+.contact-location-card .map-thumb{ width: 96px; height: 96px; border-radius: var(--radius-sm); overflow: hidden; flex: none; }
+.contact-location-card .map-thumb img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+.contact-location-card strong{ display: block; font-size: 1rem; }
+.contact-location-card p{ font-size: .85rem; color: var(--color-ink-soft); margin-top: .2rem; }
+
 /* Photo-backed dark CTA — an alternative to the plain gradient .cta-band
    for pages ending on a stronger, more immersive note. */
 .cta-band-photo{
