@@ -1243,7 +1243,10 @@ h1 em, .h1 em{ color: inherit; }
   content: '';
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(0deg, rgba(6,20,38,.86) 0%, rgba(6,20,38,.35) 45%, rgba(6,20,38,.05) 70%);
-  transition: background var(--dur-med) var(--ease);
+  /* Hover, not a modal — a card someone might mouse over repeatedly while
+     browsing wants a snappier response than the 500ms shared with
+     occasional UI (accordions, drawers). */
+  transition: background var(--dur-fast) var(--ease);
 }
 .residence-big:hover::before{
   background: linear-gradient(0deg, rgba(6,20,38,.92) 0%, rgba(6,20,38,.45) 45%, rgba(6,20,38,.1) 70%);
@@ -1254,7 +1257,7 @@ h1 em, .h1 em{ color: inherit; }
   padding: clamp(1.6rem, 3vw, 2.8rem);
   color: #fff;
   display: flex; flex-direction: column;
-  transition: transform var(--dur-med) var(--ease);
+  transition: transform var(--dur-fast) var(--ease);
 }
 .residence-big:hover .residence-big-body{ transform: translateY(-4px); }
 .residence-big-body .eyebrow{ color: rgba(255,255,255,.75); }
