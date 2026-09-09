@@ -1,1 +1,6 @@
 .DS_Store
+
+# AI agent tooling (skills, local config) — not part of the published site
+.agents/
+.claude/
+skills-lock.json
