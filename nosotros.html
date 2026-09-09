@@ -13,76 +13,96 @@
 <header id="site-header" class="site-header"></header>
 
 <main id="main">
-  <section class="page-hero">
+  <!-- ================= OPENER — who we are, type + photo together ================= -->
+  <section class="page-opener">
     <div class="container">
-      <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.nosotros"></span></div>
-      <div class="eyebrow"><span class="eyebrow-label" data-i18n="about.eyebrow"></span></div>
-      <h1 data-i18n="about.title" style="margin-top:.7rem;max-width:16ch"></h1>
-      <p class="lede" style="margin-top:1.2rem" data-i18n="about.lede"></p>
-    </div>
-  </section>
-
-  <section class="section-tight">
-    <div class="container">
-      <div class="photo-editorial" data-reveal>
-        <div class="big"><img src="assets/images/gallery/4.jpg" alt="Personal médico de Nazareno junto a la imagen del Señor de Nazareno en la residencia" loading="lazy"></div>
-        <div class="stack">
-          <div class="card-media"><img src="assets/images/sedes/sede-san-borja.jpg" alt="Fachada de la sede San Borja" loading="lazy"></div>
-          <div class="card-media"><img src="assets/images/gallery/7.jpg" alt="Áreas comunes al aire libre de la residencia" loading="lazy"></div>
+      <div class="page-opener-grid">
+        <div class="page-opener-intro" data-reveal>
+          <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.nosotros"></span></div>
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="about.eyebrow"></span></div>
+          <h1 data-i18n="about.title"></h1>
+          <p class="lede" data-i18n="about.lede"></p>
+        </div>
+        <div class="page-opener-media" data-reveal>
+          <figure class="page-opener-figure-main">
+            <img src="assets/images/gallery/4.jpg" alt="Personal médico de Nazareno junto a la imagen del Señor de Nazareno en la residencia" loading="eager">
+          </figure>
+          <figure class="page-opener-figure-peek">
+            <img src="assets/images/sedes/sede-san-borja.jpg" alt="Fachada de la sede San Borja" loading="eager">
+          </figure>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ================= NUESTRO ENFOQUE — approach, text + photo ================= -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="split-editorial" data-reveal>
+        <div class="split-editorial-intro">
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="about.approachEyebrow"></span></div>
+          <h2 style="margin-top:.6rem" data-i18n="about.approachTitle"></h2>
+          <p class="lede" data-i18n="about.body1"></p>
+          <p class="lede" style="margin-top:1rem" data-i18n="about.body2"></p>
+        </div>
+        <figure class="split-editorial-media">
+          <img src="assets/images/gallery/7.jpg" alt="Áreas comunes al aire libre de la residencia" loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NUESTRO EQUIPO — dark immersive, people-led ================= -->
+  <section class="section section-dark-editorial">
+    <div class="container">
+      <div class="split-editorial" data-reveal>
+        <figure class="split-editorial-media">
+          <img src="assets/images/gallery/3.jpg" alt="Nuestro equipo de enfermería y médico" loading="lazy">
+        </figure>
+        <div class="split-editorial-intro">
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="about.teamEyebrow"></span></div>
+          <h2 style="margin-top:.6rem" data-i18n="about.teamTitle"></h2>
+          <p class="lede" style="color:rgba(255,255,255,.75)" data-i18n="about.teamBody"></p>
+          <a class="btn btn-outline" style="margin-top:1.4rem;border-color:rgba(255,255,255,.4);color:#fff" href="staff.html" data-i18n="cta.verStaff"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LA RESIDENCIA — real certifications, not icons ================= -->
   <section class="section">
     <div class="container">
-      <div class="grid grid-2" style="gap:3rem">
-        <div data-reveal>
-          <p class="lede mt-0" data-i18n="about.body1"></p>
-          <p class="lede" style="margin-top:1.2rem" data-i18n="about.body2"></p>
+      <div class="split-editorial" data-reveal>
+        <div class="split-editorial-intro">
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="about.residenceEyebrow"></span></div>
+          <h2 style="margin-top:.6rem" data-i18n="about.residenceTitle"></h2>
+          <p class="lede" data-i18n="about.residenceBody"></p>
         </div>
-        <div data-reveal style="--i:1">
-          <h3 data-i18n="about.residenceTitle"></h3>
-          <p class="lede" style="margin-top:.8rem" data-i18n="about.residenceBody"></p>
-          <h3 style="margin-top:2rem" data-i18n="about.teamTitle"></h3>
-          <p class="lede" style="margin-top:.8rem" data-i18n="about.teamBody"></p>
-        </div>
+        <div class="cert-strip" id="certStripAbout" style="justify-content:flex-start"></div>
       </div>
     </div>
   </section>
 
-  <section class="section-tight section-alt">
-    <div class="container" data-reveal>
-      <div class="trust-strip">
-        <div class="trust-item">
-          <span class="ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.6c0 4.4-8.8 10.2-8.8 10.2S3.2 13 3.2 8.6a4.6 4.6 0 0 1 8.8-1.9 4.6 4.6 0 0 1 8.8 1.9Z"/></svg></span>
-          <div><strong data-i18n="home.trust1t"></strong><p data-i18n="home.trust1p"></p></div>
-        </div>
-        <div class="trust-item">
-          <span class="ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1L6.6 18.3l1.3-6-4.6-4.1 6.1-.6L12 2Z"/></svg></span>
-          <div><strong data-i18n="home.trust2t"></strong><p data-i18n="home.trust2p"></p></div>
-        </div>
-        <div class="trust-item">
-          <span class="ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 4.8-3 8.9-7 10-4-1.1-7-5.2-7-10V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg></span>
-          <div><strong data-i18n="home.trust3t"></strong><p data-i18n="home.trust3p"></p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
+  <!-- ================= NUESTRAS RESIDENCIAS — dark, reuses the sitewide residence component ================= -->
+  <section class="section section-dark-editorial">
     <div class="container">
-      <div class="section-head center" data-reveal>
-        <div class="eyebrow"><span class="eyebrow-label" data-i18n="home.sedesEyebrow"></span></div>
-        <h2 data-i18n="home.sedesTitle" style="margin-top:.6rem"></h2>
+      <div class="residencias-dark-grid">
+        <div class="residencias-dark-intro" data-reveal>
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="home.sedesEyebrow"></span></div>
+          <h2 data-i18n-html="home.sedesTitleHtml"></h2>
+          <p class="lede" style="color:rgba(255,255,255,.75)" data-i18n="home.sedesLede"></p>
+          <a class="btn btn-accent" href="residencias.html" data-i18n="cta.conocerResidencias"></a>
+        </div>
+        <div class="residence-grid" id="residenceGridAbout"></div>
       </div>
-      <div class="grid" style="gap:1.6rem" id="sedesGrid"></div>
     </div>
   </section>
 
+  <!-- ================= VISIT US ================= -->
   <section class="section-tight">
     <div class="container" data-reveal>
-      <div class="cta-band">
+      <div class="cta-band cta-band-photo">
+        <img src="assets/images/gallery/navidad2.jpg" alt="" aria-hidden="true">
         <div>
           <h2 data-i18n="home.ctaBandTitle"></h2>
           <p style="color:rgba(255,255,255,.78);margin-top:.6rem" data-i18n="home.ctaBandLede"></p>
@@ -107,7 +127,8 @@
 <script src="assets/js/main.js"></script>
 <script>
   document.getElementById("ctaWhatsapp").href = SITE_DATA.brand.whatsapp.agendar;
-  registerRender(() => renderSedes("sedesGrid"));
+  registerRender(() => renderResidenceBig("residenceGridAbout"));
+  registerRender(() => renderCertifications("certStripAbout"));
 </script>
 </body>
 </html>

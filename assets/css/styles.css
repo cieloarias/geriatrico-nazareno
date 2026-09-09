@@ -801,39 +801,39 @@ h1 em, .h1 em{ color: inherit; }
    followed by a huge gap before any image appears. Two real photos in
    a deliberately asymmetric pairing (large landscape + offset portrait),
    not a generic hero banner. ---- */
-.gallery-hero-editorial{
+.page-opener{
   padding-top: calc(var(--header-h) + clamp(1.6rem, 3.5vw, 2.6rem));
   padding-bottom: clamp(1.6rem, 3vw, 2.4rem);
 }
-.gallery-hero-grid{
+.page-opener-grid{
   display: grid;
   grid-template-columns: minmax(0, 32fr) minmax(0, 68fr);
   gap: clamp(1.6rem, 3.5vw, 3.2rem);
   align-items: end;
 }
-.gallery-hero-intro .eyebrow{ margin-bottom: 1rem; }
-.gallery-hero-intro h1{
+.page-opener-intro .eyebrow{ margin-bottom: 1rem; }
+.page-opener-intro h1{
   font-size: clamp(2.1rem, 3.4vw, 2.9rem); line-height: 1.08; letter-spacing: -.005em;
 }
-.gallery-hero-intro .lede{ margin-top: 1.1rem; max-width: 34ch; }
-.gallery-hero-stat{
+.page-opener-intro .lede{ margin-top: 1.1rem; max-width: 34ch; }
+.page-opener-stat{
   display: flex; align-items: baseline; gap: .7rem;
   margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--color-line);
 }
-.gallery-hero-stat strong{ font-family: var(--font-display); font-size: 2.4rem; line-height: 1; color: var(--color-primary); }
-.gallery-hero-stat span{ font-size: .85rem; color: var(--color-ink-soft); max-width: 22ch; }
-.gallery-hero-media{
+.page-opener-stat strong{ font-family: var(--font-display); font-size: 2.4rem; line-height: 1; color: var(--color-primary); }
+.page-opener-stat span{ font-size: .85rem; color: var(--color-ink-soft); max-width: 22ch; }
+.page-opener-media{
   display: grid; grid-template-columns: 2fr 1fr; gap: clamp(.9rem, 2vw, 1.4rem);
   align-items: end;
 }
-.gallery-hero-figure-main{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3; }
-.gallery-hero-figure-peek{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 3/4; transform: translateY(12%); }
-.gallery-hero-figure-main img, .gallery-hero-figure-peek img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+.page-opener-figure-main{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3; }
+.page-opener-figure-peek{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 3/4; transform: translateY(12%); }
+.page-opener-figure-main img, .page-opener-figure-peek img{ width: 100%; height: 100%; object-fit: cover; display: block; }
 @media (max-width: 900px){
-  .gallery-hero-grid{ grid-template-columns: 1fr; }
-  .gallery-hero-intro h1{ max-width: none; }
-  .gallery-hero-media{ margin-top: 1.8rem; }
-  .gallery-hero-figure-peek{ transform: none; }
+  .page-opener-grid{ grid-template-columns: 1fr; }
+  .page-opener-intro h1{ max-width: none; }
+  .page-opener-media{ margin-top: 1.8rem; }
+  .page-opener-figure-peek{ transform: none; }
 }
 
 /* Small numbered badge on each mosaic tile — reinforces "curated set",
@@ -846,6 +846,25 @@ h1 em, .h1 em{ color: inherit; }
   opacity: 0; transition: opacity var(--dur-fast) var(--ease);
 }
 .life-tile:hover .life-tile-num{ opacity: 1; }
+
+/* ---- Split editorial — a reusable two-column "story beat": editorial
+   text on one side, one real photograph on the other. Used to break up
+   pages that would otherwise be pure text blocks. Works on both light
+   and dark section backgrounds (inherits text color from the wrapping
+   .section-dark-editorial when nested there). Put the photo markup
+   before or after the intro in the HTML to control which side it's on
+   — no modifier class needed. ---- */
+.split-editorial{
+  display: grid; grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
+  gap: clamp(1.8rem, 4vw, 3.6rem); align-items: center;
+}
+.split-editorial-intro .lede{ margin-top: 1.1rem; }
+.split-editorial-media{ border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3.1; }
+.split-editorial-media img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 900px){
+  .split-editorial{ grid-template-columns: 1fr; }
+  .split-editorial-media{ order: -1; }
+}
 
 /* Photo-backed dark CTA — an alternative to the plain gradient .cta-band
    for pages ending on a stronger, more immersive note. */
