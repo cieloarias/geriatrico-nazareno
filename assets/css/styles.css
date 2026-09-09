@@ -865,6 +865,13 @@ h1 em, .h1 em{ color: inherit; }
   .split-editorial{ grid-template-columns: 1fr; }
   .split-editorial-media{ order: -1; }
 }
+/* Staff profiles specifically: portrait crop (matches the compact
+   .staff-card treatment) so a doctor's face is never cropped out by the
+   split-editorial's default landscape aspect ratio. */
+.staff-profile .split-editorial-media{ aspect-ratio: 3/4; max-width: 420px; }
+.staff-profile .split-editorial-media img{ object-position: top center; }
+.staff-profile + .staff-profile{ margin-top: clamp(2.5rem, 5vw, 4rem); }
+@media (max-width: 900px){ .staff-profile .split-editorial-media{ max-width: none; } }
 
 /* Photo-backed dark CTA — an alternative to the plain gradient .cta-band
    for pages ending on a stronger, more immersive note. */

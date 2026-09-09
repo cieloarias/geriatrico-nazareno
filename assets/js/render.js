@@ -109,6 +109,44 @@ function renderStaff(containerId){
   applyI18n(lang);
 }
 
+/* ---- Staff — full editorial profile (dedicated staff.html page) ----
+   Each real doctor gets a full split-editorial profile (photo + complete
+   credentials), alternating which side the photo sits on so the two
+   profiles don't read as identical repeated cards. Reuses the same
+   .staff-meta/.staff-list pieces as the compact renderStaff() card so
+   the two stay visually consistent. */
+function renderStaffEditorial(containerId){
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const lang = getLang();
+  el.innerHTML = SITE_DATA.staff.map(function(m, i){
+    const d = m[lang] || m.es;
+    const formation = d.formation.map(f => `<li>${f}</li>`).join("");
+    const photo = `<figure class="split-editorial-media"><img src="${m.photo}" alt="${m.name}" loading="lazy" style="object-position: top center"></figure>`;
+    const info = `
+      <div class="split-editorial-intro">
+        <div class="eyebrow"><span class="eyebrow-label">${m.cmp}</span></div>
+        <h2 style="margin-top:.6rem">${m.name}</h2>
+        <dl class="staff-meta" style="margin-top:1.2rem">
+          <div><dt data-i18n="staff.specialty"></dt><dd>${d.specialty}</dd></div>
+          <div><dt data-i18n="staff.attention"></dt><dd>${d.attention}</dd></div>
+          <div><dt data-i18n="staff.location"></dt><dd>${d.location}</dd></div>
+          <div><dt data-i18n="staff.interest"></dt><dd>${d.interest}</dd></div>
+        </dl>
+        <div style="margin-top:.6rem">
+          <dt style="font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--color-ink-soft)" data-i18n="staff.formation"></dt>
+          <ul class="staff-list" style="margin-top:.5rem">${formation}</ul>
+        </div>
+        <a class="btn btn-outline btn-sm" style="align-self:flex-start;margin-top:1.2rem" href="${SITE_DATA.brand.whatsapp.agendar}" target="_blank" rel="noopener" data-i18n="cta.agendarVisita"></a>
+      </div>`;
+    // Even profiles: photo left. Odd profiles: photo right (reversed) —
+    // alternation is purely visual (DOM order), no content difference.
+    const body = i % 2 === 0 ? photo + info : info + photo;
+    return `<div class="split-editorial staff-profile" data-reveal>${body}</div>`;
+  }).join("");
+  applyI18n(lang);
+}
+
 /* ---- Testimonials ---- */
 /* Real hierarchy, not decoration: the testimonial with the most substance
    (Patricia Boza's, by far the longest and most detailed) is featured in
