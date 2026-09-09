@@ -152,29 +152,72 @@ function renderStaffEditorial(containerId){
    (Patricia Boza's, by far the longest and most detailed) is featured in
    a large light card; the two short, quotable ones sit as translucent
    secondary cards. All three are the real, unedited testimonials. */
+/* Elegant, calm carousel through all the real testimonials (there are
+   only 3 — every one gets shown, in the order they exist in SITE_DATA,
+   not just "featured + 2 others"). Quote/name crossfade and the counter
+   updates on each step; arrows wrap around. No star ratings — the
+   source site never published any, so showing them would be a
+   fabricated trust signal. */
 function renderTestimonials(containerId){
   const el = document.getElementById(containerId);
   if (!el) return;
   const lang = getLang();
   const items = SITE_DATA.testimonials;
-  const featured = items.reduce((a, b) => (b.es.length > a.es.length ? b : a), items[0]);
-  const secondary = items.filter(t => t !== featured);
-
   function initials(name){ return name.split(" ").map(w => w[0]).slice(0, 2).join(""); }
-  function card(tItem, cls){
-    const quote = tItem[lang] || tItem.es;
-    return `
-      <div class="${cls}">
-        <p>&ldquo;${quote}&rdquo;</p>
-        <div class="testi-who">
-          <span class="testi-avatar">${initials(tItem.name)}</span>
-          <strong>${tItem.name}</strong>
-        </div>
-      </div>`;
-  }
 
-  el.innerHTML = `${card(featured, "testi-featured")}
-    <div class="testi-secondary-stack">${secondary.map(t => card(t, "testi-secondary")).join("")}</div>`;
+  el.innerHTML = `
+    <div class="testi-carousel-quote">
+      <p data-role="quote"></p>
+      <div class="testi-who">
+        <span class="testi-avatar" data-role="avatar"></span>
+        <strong data-role="name"></strong>
+      </div>
+    </div>
+    <div class="testi-carousel-nav">
+      <span class="testi-carousel-counter" data-role="counter"></span>
+      <div class="testi-carousel-arrows">
+        <button type="button" data-dir="-1" aria-label="Anterior">
+          <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button type="button" data-dir="1" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>`;
+
+  const quoteEl = el.querySelector('[data-role="quote"]');
+  const avatarEl = el.querySelector('[data-role="avatar"]');
+  const nameEl = el.querySelector('[data-role="name"]');
+  const counterEl = el.querySelector('[data-role="counter"]');
+  let current = 0;
+
+  function show(i){
+    current = (i + items.length) % items.length;
+    const t = items[current];
+    const quote = t[lang] || t.es;
+    const applyText = () => {
+      quoteEl.textContent = quote;
+      avatarEl.textContent = initials(t.name);
+      nameEl.textContent = t.name;
+      counterEl.textContent = `${String(current + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
+    };
+    if (typeof gsap !== "undefined" && !REDUCED_MOTION){
+      gsap.to([quoteEl, nameEl, avatarEl], {
+        opacity: 0, y: 6, duration: .16, ease: "power1.in",
+        onComplete: () => {
+          applyText();
+          gsap.fromTo([quoteEl, nameEl, avatarEl], { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .35, stagger: .03, ease: "power2.out" });
+        }
+      });
+    } else {
+      applyText();
+    }
+  }
+  show(0);
+
+  el.querySelectorAll(".testi-carousel-arrows button").forEach(btn => {
+    btn.addEventListener("click", () => show(current + Number(btn.getAttribute("data-dir"))));
+  });
 }
 
 /* ---- Certifications ---- */
