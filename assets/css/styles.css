@@ -14,28 +14,28 @@
   --nazareno-green:     #84BD00;
   --nazareno-orange:    #FF6B00;
 
-  /* Refined premium palette — deliberately restrained to ONE dominant
-     chromatic authority (the deepened Nazareno blue) and ONE warm accent
-     (an amber-terracotta, closer to gold than orange), following the
-     single-accent restraint pattern common to premium editorial systems:
-     a near-monochrome base earns its "expensive" feeling by NOT competing
-     with itself. The old sage-green tertiary accent is retired — three
-     accent colors read as a template; one reads as a decision. */
-  --color-ink:          #141C25;   /* near-black warm charcoal, primary text — deepened for more confident contrast */
-  --color-ink-soft:     #4B5768;   /* secondary text */
-  --color-sand:         #F7F3EC;   /* warm ivory background */
-  --color-sand-deep:    #EFE7D8;   /* slightly deeper warm surface */
-  --color-cream:        #FFFDF9;   /* card surface, near white with warmth */
-  --color-line:         #E4DCCB;   /* hairline borders on sand */
-  --color-line-cool:    #D8DEE6;   /* hairline borders on white */
+  /* Palette v2 — deliberate move away from the warm beige/terracotta
+     system toward midnight navy × deep medical blue × electric blue ×
+     ice blue × white. Beige is retired as a dominant tone; every token
+     below keeps its ORIGINAL NAME so the rest of this file (every rule
+     in it) inherits the new palette without a per-rule rewrite. The one
+     exception: --color-whatsapp stays WhatsApp's real brand green —
+     that one is functional/recognition-critical, not aesthetic. */
+  --color-ink:          #0F1B2E;   /* cool near-black navy, primary text */
+  --color-ink-soft:     #47586D;   /* secondary text */
+  --color-sand:         #EEF5FC;   /* ice blue background (was warm ivory) */
+  --color-sand-deep:    #DCEAF8;   /* deeper ice blue surface */
+  --color-cream:        #FFFFFF;   /* pure white card surface (was warm cream) */
+  --color-line:         #D2E2F1;   /* cool hairline on ice blue */
+  --color-line-cool:    #D6E3F0;   /* hairline on white */
 
-  --color-primary:      #0B3F86;   /* deepened Nazareno blue — the system's one dominant color */
-  --color-primary-ink:  #051C3B;   /* darkened further for full-bleed dark sections and hero scrims */
-  --color-primary-tint: #E7EEF7;
+  --color-primary:      #003C7E;   /* deep medical blue — the system's dominant color */
+  --color-primary-ink:  #001F3F;   /* midnight navy for full-bleed dark sections and hero scrims */
+  --color-primary-tint: #E4F0FC;
 
-  --color-accent:       #A9682E;   /* amber-terracotta — warmer/richer than a plain orange, reads as gold-adjacent premium rather than "brand orange" */
-  --color-accent-deep:  #8A5223;
-  --color-accent-tint:  #F3E7D8;
+  --color-accent:       #0068D8;   /* electric medical blue — the one accent, replacing amber-terracotta */
+  --color-accent-deep:  #00509E;
+  --color-accent-tint:  #DCEEFF;
 
   --color-whatsapp:     #25D366;
 
@@ -404,7 +404,7 @@ h1 em, .h1 em{ color: inherit; }
   background: linear-gradient(180deg, rgba(17,22,29,.55) 0%, rgba(17,22,29,.15) 32%, rgba(17,22,29,.35) 62%, rgba(14,18,24,.86) 100%);
 }
 .hero-content{ position: relative; z-index: 1; width: 100%; padding-bottom: clamp(2.5rem, 6vw, 5rem); }
-.hero .eyebrow{ color: #F3D9C4; }
+.hero .eyebrow{ color: #BFE0FF; }
 .hero h1{ color: #fff; max-width: 15ch; }
 .hero .lede{ color: rgba(255,255,255,.86); margin-top: 1.1rem; }
 .hero-actions{ display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2rem; }
@@ -591,7 +591,7 @@ h1 em, .h1 em{ color: inherit; }
   width: 38px; height: 38px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-weight: 700; font-size: .78rem; flex: none;
-  background: var(--color-accent); color: #1a1006;
+  background: var(--color-accent); color: #fff;
 }
 .testi-who strong{ display: block; font-size: .88rem; font-weight: 600; color: #fff; }
 
@@ -675,6 +675,29 @@ h1 em, .h1 em{ color: inherit; }
 .cert-strip{ display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap: clamp(1.5rem,4vw,3.5rem); }
 .cert-strip img{ height: 76px; width:auto; filter: grayscale(1) contrast(1.05); opacity:.75; transition: filter var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease); }
 .cert-strip img:hover{ filter:none; opacity:1; }
+/* On a dark/science background, grayscale-and-fade reads as "hidden" —
+   each real logo instead sits on its own small white chip so it stays
+   fully legible regardless of what's behind it. */
+.cert-strip-dark{ gap: 1.2rem; }
+.cert-strip-dark img{
+  height: 52px; padding: .9rem 1.3rem; background: #fff;
+  border-radius: var(--radius-sm); filter: none; opacity: 1;
+}
+.cert-strip-dark img:hover{ transform: translateY(-2px); }
+
+/* ---- Science/certifications section — a real DNA-science video plays
+   very faintly behind the real certification logos, framing "official
+   accreditation" as the site's one legitimate science moment rather
+   than a decorative medical-lab motif. Extremely subdued: this is
+   texture, not a feature video. ---- */
+.science-section{ position: relative; overflow: hidden; }
+.science-bg{ position: absolute; inset: 0; z-index: 0; }
+.science-bg video{ width: 100%; height: 100%; object-fit: cover; opacity: .22; }
+.science-bg::after{
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(120deg, var(--color-primary-ink) 0%, rgba(0,31,63,.72) 55%, var(--color-primary-ink) 100%);
+}
+.science-section .container{ position: relative; z-index: 1; }
 
 /* Gallery */
 .gallery-grid{
@@ -1106,7 +1129,7 @@ h1 em, .h1 em{ color: inherit; }
   width: 100%;
   padding-block: clamp(2.5rem, 7vw, 5rem);
 }
-.hero-overlay .eyebrow{ color: #E8C9A4; text-shadow: 0 1px 12px rgba(0,0,0,.4); }
+.hero-overlay .eyebrow{ color: #BFE0FF; text-shadow: 0 1px 12px rgba(0,0,0,.4); }
 .hero-overlay h1{
   margin-top: .9rem;
   color: #fff;
@@ -1363,7 +1386,7 @@ h1 em, .h1 em{ color: inherit; }
 .section-immersive{ padding-block: 0; }
 .section-compact{ padding-block: clamp(2.5rem, 4vw, 3.5rem); }
 .section-dark-editorial{ background: var(--color-primary-ink); color: #fff; }
-.section-dark-editorial .eyebrow{ color: #F3D9C4; }
+.section-dark-editorial .eyebrow{ color: #BFE0FF; }
 .section-dark-editorial h2, .section-dark-editorial h3{ color: #fff; }
 .section-dark-editorial .text-muted{ color: rgba(255,255,255,.68); }
 
