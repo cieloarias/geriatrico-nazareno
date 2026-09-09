@@ -837,4 +837,60 @@ function renderLifeEditorial(containerId){
     }, { root: strip, threshold: [0.6] });
     figures.forEach(fig => io.observe(fig));
   }
+
+  // Keyboard support: the strip is a real navigable region, not just a
+  // scroll container. Left/Right step through frames the same as the
+  // arrow buttons.
+  strip.setAttribute("tabindex", "0");
+  strip.setAttribute("role", "region");
+  strip.setAttribute("aria-label", (I18N[lang] && I18N[lang]["home.lifeEyebrow"]) || "Vida en Nazareno");
+  strip.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight"){ e.preventDefault(); goTo(current + 1); }
+    if (e.key === "ArrowLeft"){ e.preventDefault(); goTo(current - 1); }
+  });
+
+  // Desktop mouse drag with momentum — touch/pen keep native OS scrolling
+  // (which already has better momentum than anything hand-rolled here).
+  // Emil Kowalski's momentum pattern: track release velocity, decay it
+  // each frame instead of requiring a hard drag-distance threshold.
+  if (typeof window !== "undefined" && "PointerEvent" in window){
+    let dragging = false, startX = 0, startScroll = 0, lastX = 0, lastT = 0, velocity = 0, raf = null;
+
+    function stopMomentum(){ if (raf){ cancelAnimationFrame(raf); raf = null; } }
+
+    strip.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "mouse") return;
+      stopMomentum();
+      dragging = true;
+      strip.classList.add("is-dragging");
+      startX = e.clientX; startScroll = strip.scrollLeft;
+      lastX = e.clientX; lastT = performance.now();
+      velocity = 0;
+      strip.setPointerCapture(e.pointerId);
+    });
+    strip.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      strip.scrollLeft = startScroll - (e.clientX - startX);
+      const now = performance.now();
+      const dt = now - lastT;
+      if (dt > 0) velocity = (e.clientX - lastX) / dt;
+      lastX = e.clientX; lastT = now;
+    });
+    function endDrag(){
+      if (!dragging) return;
+      dragging = false;
+      strip.classList.remove("is-dragging");
+      let v = velocity;
+      function decay(){
+        if (Math.abs(v) < 0.02){ raf = null; return; }
+        strip.scrollLeft -= v * 16;
+        v *= 0.93;
+        raf = requestAnimationFrame(decay);
+      }
+      raf = requestAnimationFrame(decay);
+    }
+    strip.addEventListener("pointerup", endDrag);
+    strip.addEventListener("pointerleave", endDrag);
+    strip.addEventListener("pointercancel", endDrag);
+  }
 }

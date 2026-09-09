@@ -1512,8 +1512,15 @@ h1 em, .h1 em{ color: inherit; }
 .life-strip{
   display: flex; align-items: flex-end; gap: 1.1rem; overflow-x: auto; scroll-snap-type: x proximity;
   scrollbar-width: none; padding-bottom: .3rem;
+  cursor: grab;
 }
 .life-strip::-webkit-scrollbar{ display: none; }
+.life-strip:focus-visible{ outline: 2px solid var(--color-accent); outline-offset: 6px; }
+/* Desktop mouse drag (see renderLifeEditorial) — touch/pen use native
+   OS scrolling untouched. Snap is suspended mid-drag so the manually
+   driven scrollLeft doesn't fight the browser's own snap points. */
+.life-strip.is-dragging{ cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.life-strip.is-dragging .life-strip-item img{ transition: none; }
 .life-strip-item{
   position: relative; flex: 0 0 auto;
   width: min(42%, 340px);
