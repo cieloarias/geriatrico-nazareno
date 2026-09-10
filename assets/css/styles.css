@@ -1078,11 +1078,18 @@ h1 em, .h1 em{ color: inherit; }
    now mirrors that structure with slightly darker stops and a calmer
    video to account for this page's brighter default frame, instead of
    a flat dark rectangle over the whole thing. */
+/* Third pass: the real gap wasn't brightness, it was contrast/
+   saturation — Nosotros' vivid "electric" look comes from punchy
+   contrast+saturation, and lowering those alongside brightness (the
+   previous fix) made this read as flat/washed rather than just darker.
+   Darkness now comes entirely from opacity + the gradient overlay;
+   contrast and saturation stay as punchy as (or punchier than) the
+   shared value so the DNA reads with the same vividness. */
 .staff-opener-hero .science-bg video{
-  opacity: .55; filter: brightness(1.05) contrast(1.02) saturate(1.05);
+  opacity: .58; filter: brightness(1.1) contrast(1.2) saturate(1.35);
 }
 .staff-opener-hero .science-bg::after{
-  background: linear-gradient(100deg, var(--color-primary-ink) 0%, rgba(0,31,63,.92) 44%, rgba(0,60,126,.5) 62%, rgba(0,60,126,.28) 80%, rgba(0,31,63,.52) 100%);
+  background: linear-gradient(100deg, var(--color-primary-ink) 0%, rgba(0,31,63,.92) 44%, rgba(0,60,126,.42) 62%, rgba(0,60,126,.2) 80%, rgba(0,31,63,.44) 100%);
 }
 
 /* Small numbered badge on each mosaic tile — reinforces "curated set",
