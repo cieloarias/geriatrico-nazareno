@@ -839,29 +839,19 @@ h1 em, .h1 em{ color: inherit; }
 }
 .photo-editorial-v2-intro{ max-width: 62ch; }
 .photo-editorial-v2-intro .lede{ max-width: 58ch; }
-/* The uploaded render has a flat off-white studio backdrop. Neither a
-   multiply blend nor mask-image on the <video> itself reliably erased
-   it (mask-image support on video elements is inconsistent, and
-   multiply alone wasn't enough against an off-white that isn't quite
-   pure white) — so instead a pseudo-element paints a radial gradient
-   FROM the page's own real background color directly over the video's
-   edges: transparent at the center (objects stay fully clear) fading
-   to an opaque, exact match of the page background at the rim. This
-   guarantees a seamless blend regardless of the video's own backdrop
-   tone, since it doesn't depend on blend math at all. object-fit:
-   box matches the video's own real ~16/9 ratio with object-fit: cover
-   (not contain) — contain inside a square box left the video
-   letterboxed, so its own rectangle's corners sat outside the fade
-   gradient's reach and stayed visibly beige. farthest-corner sizing
-   (not closest-side) guarantees the fade actually reaches every
-   corner of the box, whatever its aspect ratio. */
-.photo-editorial-v2-visual{ position: relative; aspect-ratio: 16/9; }
+/* This render (unlike the first one used here) already has a dark
+   near-black studio backdrop, so it sits naturally in a simple dark
+   box next to the text — same light-touch approach as Staff Médico's
+   boxed video: real colors preserved, just a soft corner vignette for
+   polish, no fade-to-page-color masking needed. */
+.photo-editorial-v2-visual{ position: relative; aspect-ratio: 16/9; background: var(--color-primary-ink); border-radius: var(--radius-lg); overflow: hidden; }
 .photo-editorial-v2-visual video{
   width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: brightness(1.02) contrast(1.05) saturate(1.1);
 }
 .photo-editorial-v2-visual::after{
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(farthest-corner, transparent 38%, var(--color-sand) 78%);
+  background: linear-gradient(200deg, rgba(0,20,40,.22) 0%, rgba(0,20,40,0) 35%);
 }
 .photo-editorial-v2-media{
   display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.2rem;
