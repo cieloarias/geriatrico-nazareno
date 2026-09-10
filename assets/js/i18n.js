@@ -52,6 +52,7 @@ const I18N = {
 
     "home.aboutEyebrow": "Quiénes somos",
     "home.aboutTitle": "Una familia dedicada al bienestar del adulto mayor",
+    "home.aboutTitleDynamicHtml": "<span class=\"dyn-label\">Quiénes somos</span><span class=\"dyn-main\">Una familia dedicada al bienestar del <em>adulto mayor</em></span>",
     "home.aboutBody": "Somos una entidad autorizada por la Dirección de Salud Lima Centro del Ministerio de Salud, conformada por profesionales de la salud debidamente acreditados. Nuestras residencias están ubicadas en las mejores zonas de San Borja: cálidas, acogedoras, con áreas comunes, comedores interiores y al aire libre, y estaciones de enfermería en cada piso.",
     "home.aboutCta": "Conocer más sobre nosotros",
 
@@ -88,6 +89,7 @@ const I18N = {
 
     "home.galleryEyebrow": "Galería",
     "home.galleryTitle": "Así se vive el día a día en Nazareno",
+    "home.galleryTitleDynamicHtml": "<span class=\"dyn-label\">Galería</span><span class=\"dyn-main\">Así se vive el día a día en <em>Nazareno</em></span>",
 
     "home.ctaBandTitle": "¿Tienes alguna consulta? Contáctanos ahora",
     "home.ctaBandLede": "Con gusto resolvemos tus dudas y coordinamos una visita a cualquiera de nuestras sedes.",
@@ -129,6 +131,7 @@ const I18N = {
     "staff.lede": "Siempre listos para cuidarte. Profesionales acreditados por el Colegio Médico del Perú, especializados en la atención del adulto mayor.",
     "staff.stat": "médicos acreditados por el Colegio Médico del Perú (CMP)",
     "staff.teamTitle": "El equipo detrás de cada médico",
+    "staff.teamTitleDynamicHtml": "<span class=\"dyn-label\">Nuestro equipo</span><span class=\"dyn-main\">El equipo detrás de cada <em>médico</em></span>",
     "staff.teamBody": "Personal de enfermería presente en cada piso, las 24 horas, listo para responder de inmediato ante cualquier necesidad de los residentes.",
     "staff.specialty": "Especialidad",
     "staff.attention": "Tipo de atención",
@@ -245,6 +248,7 @@ const I18N = {
 
     "home.aboutEyebrow": "Who we are",
     "home.aboutTitle": "A family devoted to the well-being of older adults",
+    "home.aboutTitleDynamicHtml": "<span class=\"dyn-label\">Who we are</span><span class=\"dyn-main\">A family devoted to the well-being of <em>older adults</em></span>",
     "home.aboutBody": "We are an entity authorized by the Dirección de Salud Lima Centro of the Ministry of Health, made up of duly accredited healthcare professionals. Our residences are located in some of San Borja's best areas: warm and welcoming, with common areas, indoor and outdoor dining rooms, and nursing stations on every floor.",
     "home.aboutCta": "Learn more about us",
 
@@ -281,6 +285,7 @@ const I18N = {
 
     "home.galleryEyebrow": "Gallery",
     "home.galleryTitle": "Everyday life at Nazareno",
+    "home.galleryTitleDynamicHtml": "<span class=\"dyn-label\">Gallery</span><span class=\"dyn-main\">Everyday life at <em>Nazareno</em></span>",
 
     "home.ctaBandTitle": "Have a question? Get in touch today",
     "home.ctaBandLede": "We're happy to answer your questions and help you schedule a visit to either of our locations.",
@@ -322,6 +327,7 @@ const I18N = {
     "staff.lede": "Always ready to care for you. Professionals accredited by the Peruvian Medical Association (CMP), specialized in the care of older adults.",
     "staff.stat": "doctors accredited by the Peruvian Medical Association (CMP)",
     "staff.teamTitle": "The team behind every doctor",
+    "staff.teamTitleDynamicHtml": "<span class=\"dyn-label\">Our team</span><span class=\"dyn-main\">The team behind every <em>doctor</em></span>",
     "staff.teamBody": "Nursing staff present on every floor, around the clock, ready to respond immediately to any resident's needs.",
     "staff.specialty": "Specialty",
     "staff.attention": "Type of care",

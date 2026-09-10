@@ -458,6 +458,23 @@ function initOpenerScroll(){
   });
 }
 
+/* ---- Staff nursing-team photo — subtle scroll-linked scale ----
+   The same scrub-scale idea as initOpenerScroll, scoped to this one
+   photo so the section doesn't sit perfectly still like a poster.
+   No-op everywhere but staff.html, since #staffTeamPhoto only exists
+   there. */
+function initTeamPhotoScroll(){
+  const section = document.querySelector(".staff-team-band");
+  const media = document.querySelector("#staffTeamPhoto img");
+  if (!section || !media || REDUCED_MOTION) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.fromTo(media, { scale: 1.08 }, {
+    scale: 1, ease: "none",
+    scrollTrigger: { trigger: section, start: "top bottom", end: "bottom top", scrub: true }
+  });
+}
+
 /* ---- Page-opener stat — count up once, on entry ----
    The single real number on each opener ("2 sedes", "22 momentos"...)
    counts up from 0 the first time it scrolls into view instead of just
@@ -527,6 +544,7 @@ document.addEventListener("DOMContentLoaded", function(){
   playHeroEntrance();
   initHeroScrollTransition();
   initOpenerScroll();
+  initTeamPhotoScroll();
   initCountUp();
   refreshInteractive(); // initServiceCards + initReveal + initLightbox (render.js)
   initHeadingReveal(); // must run after i18n + render.js have populated real heading text

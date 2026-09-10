@@ -737,8 +737,8 @@ h1 em, .h1 em{ color: inherit; }
 .science-bg{ position: absolute; inset: 0; z-index: 0; }
 .science-bg video{
   width: 100%; height: 100%; object-fit: cover;
-  opacity: .62; filter: brightness(1.3) contrast(1.15) saturate(1.25);
-  animation: scienceBgDrift 24s ease-in-out infinite alternate;
+  opacity: .62; filter: brightness(1.22) contrast(1.08) saturate(1.15);
+  animation: scienceBgDrift 30s ease-in-out infinite alternate;
 }
 /* Three blue tones instead of one — midnight navy for the text-legible
    side, a deep medical-blue transition instead of staying flat navy
@@ -754,8 +754,8 @@ h1 em, .h1 em{ color: inherit; }
 }
 .science-section .container{ position: relative; z-index: 1; }
 @keyframes scienceBgDrift{
-  0%{ transform: scale(1.03) translate(0, 0); }
-  100%{ transform: scale(1.14) translate(-2%, -1.5%); }
+  0%{ transform: scale(1.02) translate(0, 0); }
+  100%{ transform: scale(1.07) translate(-1.2%, -1%); }
 }
 @media (prefers-reduced-motion: reduce){
   .science-bg video{ animation: none; }
@@ -839,22 +839,29 @@ h1 em, .h1 em{ color: inherit; }
 }
 .photo-editorial-v2-intro{ max-width: 62ch; }
 .photo-editorial-v2-intro .lede{ max-width: 58ch; }
-/* The uploaded render has a flat off-white studio background — multiply
-   render has a flat off-white studio backdrop that isn't quite pure
-   white, so a plain multiply blend against the page's pale blue still
-   left a visible rectangle — a radial mask fading to transparent at
-   the edges works regardless of the backdrop's exact tone, letting
-   the real page background show through at the edges while the
-   medical objects at the center stay fully opaque. object-fit: contain
-   (not cover) because this is a floating object, not a photo meant to
-   fill its frame edge to edge. No isolation:isolate — that would cut
-   the multiply blend off from the page background it blends against. */
-.photo-editorial-v2-visual{ aspect-ratio: 1/1; }
+/* The uploaded render has a flat off-white studio backdrop. Neither a
+   multiply blend nor mask-image on the <video> itself reliably erased
+   it (mask-image support on video elements is inconsistent, and
+   multiply alone wasn't enough against an off-white that isn't quite
+   pure white) — so instead a pseudo-element paints a radial gradient
+   FROM the page's own real background color directly over the video's
+   edges: transparent at the center (objects stay fully clear) fading
+   to an opaque, exact match of the page background at the rim. This
+   guarantees a seamless blend regardless of the video's own backdrop
+   tone, since it doesn't depend on blend math at all. object-fit:
+   box matches the video's own real ~16/9 ratio with object-fit: cover
+   (not contain) — contain inside a square box left the video
+   letterboxed, so its own rectangle's corners sat outside the fade
+   gradient's reach and stayed visibly beige. farthest-corner sizing
+   (not closest-side) guarantees the fade actually reaches every
+   corner of the box, whatever its aspect ratio. */
+.photo-editorial-v2-visual{ position: relative; aspect-ratio: 16/9; }
 .photo-editorial-v2-visual video{
-  width: 100%; height: 100%; object-fit: contain; display: block;
-  mix-blend-mode: multiply;
-  -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
-  mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.photo-editorial-v2-visual::after{
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(farthest-corner, transparent 38%, var(--color-sand) 78%);
 }
 .photo-editorial-v2-media{
   display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.2rem;
@@ -897,7 +904,7 @@ h1 em, .h1 em{ color: inherit; }
   0%{ transform: translate(0, 0) scale(1); }
   100%{ transform: translate(-3%, 2%) scale(1.1); }
 }
-@media (prefers-reduced-motion: reduce){ .cta-band::before{ animation: none; } }
+@media (prefers-reduced-motion: reduce){ .cta-band::before, .staff-team-glow{ animation: none; } }
 .cta-band h2{ color:#fff; max-width: 18ch; }
 .cta-band .actions{ display:flex; flex-wrap:wrap; gap:.9rem; }
 
@@ -991,23 +998,27 @@ h1 em, .h1 em{ color: inherit; }
 }
 .page-opener-intro .lede{ margin-top: 1.1rem; max-width: 34ch; }
 
-/* ---- Residencias opener — dynamic typographic title, no accent
-   graphic ---- (residencias.html only). The DNA accent here wasn't
-   landing, so the headline itself carries the "dynamic/futuristic"
-   feeling instead: a small wide-tracked uppercase label in the body
+/* ---- Dynamic typographic title — reusable pattern, not a one-off ----
+   First used on the Residencias opener when its DNA accent graphic
+   wasn't landing: a small wide-tracked uppercase label in the body
    sans, then a much larger serif line below it — real scale contrast
-   within one headline rather than a decorative graphic beside it. */
-.residencias-dynamic-title{ display: flex; flex-direction: column; gap: .5rem; }
-.residencias-dynamic-title .dyn-label{
+   within one headline rather than a decorative graphic beside it. Now
+   reused wherever a heading needs that same typographic punch instead
+   of another accent graphic (About Us, the gallery teaser). Sizes are
+   a shared default; .dynamic-title-lg is the opener-scale variant. */
+.dynamic-title{ display: flex; flex-direction: column; gap: .5rem; }
+.dynamic-title .dyn-label{
   display: block; font-family: var(--font-body); font-weight: 600;
   text-transform: uppercase; letter-spacing: .14em;
-  font-size: clamp(.92rem, 1.3vw, 1.05rem); color: var(--color-accent);
+  font-size: clamp(.85rem, 1.1vw, .95rem); color: var(--color-accent);
 }
-.residencias-dynamic-title .dyn-main{
+.dynamic-title .dyn-main{
   display: block; font-family: var(--font-display); font-weight: 600;
-  line-height: .98; letter-spacing: -.015em;
-  font-size: clamp(2.7rem, 5.6vw, 4.4rem); color: var(--color-ink);
+  line-height: 1; letter-spacing: -.015em;
+  font-size: clamp(2.2rem, 4.2vw, 3.2rem); color: var(--color-ink);
 }
+.dynamic-title-lg .dyn-label{ font-size: clamp(.92rem, 1.3vw, 1.05rem); }
+.dynamic-title-lg .dyn-main{ line-height: .98; font-size: clamp(2.7rem, 5.6vw, 4.4rem); }
 .page-opener-stats{
   display: flex; flex-wrap: wrap; gap: clamp(1.8rem, 3.5vw, 2.8rem);
   margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--color-line);
@@ -1579,6 +1590,26 @@ h1 em, .h1 em{ color: inherit; }
 .section-dark-editorial .eyebrow{ color: #BFE0FF; }
 .section-dark-editorial h2, .section-dark-editorial h3{ color: #fff; }
 .section-dark-editorial .text-muted{ color: rgba(255,255,255,.68); }
+/* .dynamic-title's spans set their own explicit colors (tuned for
+   light backgrounds), which would otherwise win over the h2 rule
+   above by specificity and leave dark-navy text invisible on a dark
+   section. */
+.section-dark-editorial .dynamic-title .dyn-label{ color: #BFE0FF; }
+.section-dark-editorial .dynamic-title .dyn-main{ color: #fff; }
+
+/* ---- Staff Médico nursing-team band — small touches so this specific
+   split-editorial doesn't read as a static poster like every other
+   photo+text dark section: a soft drifting glow behind the content,
+   and a slow scroll-linked scale on the photo (initTeamPhotoScroll in
+   main.js) instead of a perfectly still image. ---- */
+.staff-team-band{ position: relative; overflow: hidden; }
+.staff-team-glow{
+  position: absolute; inset: -20%; z-index: 0; pointer-events: none;
+  background: radial-gradient(38% 50% at 78% 30%, rgba(56,189,248,.22), rgba(56,189,248,0) 70%),
+              radial-gradient(32% 45% at 20% 80%, rgba(0,104,216,.2), rgba(0,104,216,0) 70%);
+  animation: ctaGlowDrift 20s ease-in-out infinite alternate;
+}
+.staff-team-band .container{ position: relative; z-index: 1; }
 
 /* ==========================================================================
    ITERATION 4 — Editorial art direction for everything after the hero:
