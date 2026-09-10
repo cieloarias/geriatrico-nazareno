@@ -1064,32 +1064,27 @@ h1 em, .h1 em{ color: inherit; }
 .staff-opener-hero .page-opener-stat{ border-top-color: rgba(255,255,255,.22); }
 .staff-opener-hero .page-opener-stat strong{ color: #fff; }
 .staff-opener-hero .page-opener-stat span{ color: rgba(255,255,255,.65); }
-/* This opener is taller than Nosotros' science section (page-opener
-   padding + intro content stacked above it), so the same .science-bg
-   gradient — sized in percentages along its gradient line — projects
-   differently and left this version reading noticeably brighter/
-   washed-out by comparison. Scoped override: quieter glows, a darker
-   and later-breaking wash, and a calmer video so it actually matches
-   the reference section's richer, deeper look. */
-/* Second pass overcorrected — the uniform heavy wash made the DNA
-   barely visible ("doesn't look like it's there"). Nosotros' reference
-   works by staying DIRECTIONAL (solid on the text side, genuinely
-   clear on the right two-thirds), not by flattening everything — this
-   now mirrors that structure with slightly darker stops and a calmer
-   video to account for this page's brighter default frame, instead of
-   a flat dark rectangle over the whole thing. */
-/* Third pass: the real gap wasn't brightness, it was contrast/
-   saturation — Nosotros' vivid "electric" look comes from punchy
-   contrast+saturation, and lowering those alongside brightness (the
-   previous fix) made this read as flat/washed rather than just darker.
-   Darkness now comes entirely from opacity + the gradient overlay;
-   contrast and saturation stay as punchy as (or punchier than) the
-   shared value so the DNA reads with the same vividness. */
-.staff-opener-hero .science-bg video{
-  opacity: .58; filter: brightness(1.1) contrast(1.2) saturate(1.35);
+/* ---- Staff Médico opener background — a real holographic medical-
+   dashboard video (heart visualization + vitals over a desk scene),
+   not the DNA/cell footage used elsewhere. Its own dedicated treatment
+   since the source material is different: a mostly light gray desk
+   scene needs a much heavier, more uniform dark wash than the DNA
+   video's deep-blue footage did, or the light background dominates
+   and the text becomes unreadable. */
+.medical-tech-section{ position: relative; overflow: hidden; }
+.medical-tech-bg{ position: absolute; inset: 0; z-index: 0; }
+.medical-tech-bg video{
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: .55; filter: brightness(.95) contrast(1.12) saturate(1.15);
+  animation: scienceBgDrift 30s ease-in-out infinite alternate;
 }
-.staff-opener-hero .science-bg::after{
-  background: linear-gradient(100deg, var(--color-primary-ink) 0%, rgba(0,31,63,.92) 44%, rgba(0,60,126,.42) 62%, rgba(0,60,126,.2) 80%, rgba(0,31,63,.44) 100%);
+.medical-tech-bg::after{
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(100deg, var(--color-primary-ink) 0%, rgba(0,31,63,.94) 40%, rgba(0,31,63,.72) 62%, rgba(0,31,63,.5) 82%, rgba(0,31,63,.7) 100%);
+}
+.medical-tech-section .container{ position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce){
+  .medical-tech-bg video{ animation: none; }
 }
 
 /* Small numbered badge on each mosaic tile — reinforces "curated set",
