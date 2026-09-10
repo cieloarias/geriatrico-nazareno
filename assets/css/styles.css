@@ -827,14 +827,35 @@ h1 em, .h1 em{ color: inherit; }
 }
 
 /* Editorial photo grid (about/services) */
-/* Full-width intro, then a photo pair below it — replaces an earlier
-   text-column/photo-column split where the photo was force-stretched
-   to match the text column's height (that either cropped half the
-   photo away, or left a blank gap once the crop was fixed). Here every
-   figure gets the photos' own native 3/2 ratio, so nothing is
-   stretched to match anything else and there's no leftover void. */
+/* Text + a small medical-trust visual side by side, then a photo pair
+   below — replaces an earlier text-column/photo-column split where a
+   real photo was force-stretched to match the text column's height
+   (that either cropped half the photo away, or left a blank gap once
+   the crop was fixed). The photo pair below still gets each image's
+   own native 3/2 ratio, so nothing is stretched to match anything else. */
+.photo-editorial-v2-top{
+  display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: center;
+}
 .photo-editorial-v2-intro{ max-width: 62ch; }
 .photo-editorial-v2-intro .lede{ max-width: 58ch; }
+/* The uploaded render has a flat off-white studio background — multiply
+   render has a flat off-white studio backdrop that isn't quite pure
+   white, so a plain multiply blend against the page's pale blue still
+   left a visible rectangle — a radial mask fading to transparent at
+   the edges works regardless of the backdrop's exact tone, letting
+   the real page background show through at the edges while the
+   medical objects at the center stay fully opaque. object-fit: contain
+   (not cover) because this is a floating object, not a photo meant to
+   fill its frame edge to edge. No isolation:isolate — that would cut
+   the multiply blend off from the page background it blends against. */
+.photo-editorial-v2-visual{ aspect-ratio: 1/1; }
+.photo-editorial-v2-visual video{
+  width: 100%; height: 100%; object-fit: contain; display: block;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+}
 .photo-editorial-v2-media{
   display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.2rem;
   margin-top: clamp(2rem, 4vw, 3rem);
@@ -844,6 +865,8 @@ h1 em, .h1 em{ color: inherit; }
 }
 .photo-editorial-v2-media img{ width:100%; height:100%; object-fit:cover; display:block; }
 @media (max-width: 800px){
+  .photo-editorial-v2-top{ grid-template-columns: 1fr; }
+  .photo-editorial-v2-visual{ order: -1; max-width: 260px; margin: 0 auto; }
   .photo-editorial-v2-media{ grid-template-columns: 1fr; }
 }
 
@@ -1013,21 +1036,23 @@ h1 em, .h1 em{ color: inherit; }
   .page-opener-figure-main{ aspect-ratio: 4/3.4; }
 }
 
-/* ---- Staff Médico hero — the same DNA video as Nosotros' science
-   section, not an illustration and not the dot field (dots read as
-   noise directly under this much video detail; dropped here). ---- */
-.staff-hero-visual{ position: relative; background: var(--color-primary-ink); }
-.staff-hero-visual-video{
-  filter: brightness(1.3) contrast(1.15) saturate(1.3);
-  animation: scienceBgDrift 26s ease-in-out infinite alternate;
-}
-.staff-hero-visual-scrim{
-  position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: radial-gradient(120% 90% at 30% 20%, rgba(0,20,40,.1) 0%, rgba(0,20,40,.58) 100%);
-}
-@media (prefers-reduced-motion: reduce){
-  .staff-hero-visual-video{ animation: none; }
-}
+/* ---- Staff Médico opener — full-bleed DNA video hero ----
+   Reuses .science-section/.science-bg wholesale (same video, same
+   drift, same gradient) rather than the boxed-photo page-opener
+   template — text overlays the video directly, same structural idea
+   as the homepage's own cinematic hero. Only the text-color overrides
+   below are specific to this page, since .page-opener-intro's
+   children default to dark-on-light styling everywhere else. */
+.staff-opener-hero{ padding-bottom: clamp(3.5rem, 7vw, 5.5rem); }
+.staff-opener-hero .breadcrumb{ color: rgba(255,255,255,.6); }
+.staff-opener-hero .breadcrumb a{ color: rgba(255,255,255,.8); }
+.staff-opener-hero .breadcrumb a:hover{ color: #fff; }
+.staff-opener-hero .eyebrow{ color: #BFE0FF; }
+.staff-opener-hero h1{ color: #fff; }
+.staff-opener-hero .lede{ color: rgba(255,255,255,.75); }
+.staff-opener-hero .page-opener-stat{ border-top-color: rgba(255,255,255,.22); }
+.staff-opener-hero .page-opener-stat strong{ color: #fff; }
+.staff-opener-hero .page-opener-stat span{ color: rgba(255,255,255,.65); }
 
 /* Small numbered badge on each mosaic tile — reinforces "curated set",
    not an uploaded dump. Purely visual metadata, no invented taxonomy. */
@@ -1304,6 +1329,12 @@ h1 em, .h1 em{ color: inherit; }
 .hero-overlay h1 .word{ display: inline-block; will-change: transform; }
 .hero-overlay .lede{ margin-top: 1.4rem; max-width: 44ch; color: rgba(255,255,255,.86); text-shadow: 0 2px 16px rgba(0,0,0,.4); }
 .hero-overlay .hero-actions{ margin-top: 2.2rem; }
+/* The header nav's own .btn-outline already gets a white-on-dark
+   variant (.site-header.on-hero .btn-outline) — this is the same fix
+   for the hero's own outline CTA, which was still using the default
+   dark-navy text/border and was unreadable over the video. */
+.hero-overlay .btn-outline{ border-color: rgba(255,255,255,.55); color: #fff; }
+.hero-overlay .btn-outline:hover{ border-color: #fff; background: rgba(255,255,255,.1); }
 .hero-overlay .hero-badges{
   border-top-color: rgba(255,255,255,.22);
   margin-top: clamp(2.4rem, 5vw, 3.6rem);
@@ -1725,46 +1756,52 @@ h1 em, .h1 em{ color: inherit; }
 .life-strip-nav button:hover{ background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
 .life-strip-nav svg{ width: 16px; height: 16px; }
 
-/* Deliberately NOT a grid: an editorial story strip where the first frame
-   is large/landscape (the establishing shot) and the rest are narrower
-   portrait frames — varied widths, not a repeating unit, and the strip is
-   wide enough that the last visible frame is always cut by the container
-   edge, signaling there's more to scroll to. */
-.life-strip{
-  display: flex; align-items: flex-end; gap: 1.1rem; overflow-x: auto; scroll-snap-type: x proximity;
-  scrollbar-width: none; padding-bottom: .3rem;
-  cursor: grab;
+/* Circular/staggered carousel — only three frames ever visible: active
+   centered at full scale, prev/next scaled down and tilted to the
+   sides in 3D. Percentage transforms (not pixel gaps) so this scales
+   with the container at any width with no resize listener. See
+   renderLifeEditorial in render.js for the class-toggling logic. */
+.life-circular{
+  position: relative;
+  height: clamp(300px, 32vw, 420px);
+  perspective: 1200px;
+  outline: none;
 }
-.life-strip::-webkit-scrollbar{ display: none; }
-.life-strip:focus-visible{ outline: 2px solid var(--color-accent); outline-offset: 6px; }
-/* Desktop mouse drag (see renderLifeEditorial) — touch/pen use native
-   OS scrolling untouched. Snap is suspended mid-drag so the manually
-   driven scrollLeft doesn't fight the browser's own snap points. */
-.life-strip.is-dragging{ cursor: grabbing; scroll-snap-type: none; user-select: none; }
-.life-strip.is-dragging .life-strip-item img{ transition: none; }
-.life-strip-item{
-  position: relative; flex: 0 0 auto;
-  width: min(42%, 340px);
-  aspect-ratio: 5/4;
-  border-radius: var(--radius-md); overflow: hidden; scroll-snap-align: start;
+.life-circular:focus-visible{ outline: 2px solid var(--color-accent); outline-offset: 8px; }
+.life-circular-item{
+  position: absolute; inset: 0; margin: 0;
+  border-radius: var(--radius-lg); overflow: hidden;
+  opacity: 0; pointer-events: none;
+  transition: transform .8s cubic-bezier(.34,1.4,.4,1), opacity .5s var(--ease);
 }
-.life-strip-item.is-tall{
-  width: min(24%, 200px);
-  aspect-ratio: 3/4.4;
+.life-circular-item.is-active{
+  transform: translateX(0) translateY(0) scale(1) rotateY(0deg);
+  opacity: 1; z-index: 3; pointer-events: auto;
 }
-.life-strip-item img{ width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1s var(--ease-out); }
-.life-strip-item:hover img{ transform: scale(1.05); }
-.life-strip-item figcaption{
+.life-circular-item.is-left{
+  transform: translateX(-8%) translateY(-4%) scale(.82) rotateY(20deg);
+  opacity: 1; z-index: 2;
+}
+.life-circular-item.is-right{
+  transform: translateX(8%) translateY(-4%) scale(.82) rotateY(-20deg);
+  opacity: 1; z-index: 2;
+}
+.life-circular-item img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+.life-circular-item figcaption{
   position: absolute; inset: auto 0 0 0; padding: 1.1rem 1.2rem;
   background: linear-gradient(0deg, rgba(6,20,38,.8), transparent 60%);
   color: #fff; font-family: var(--font-display); font-size: 1rem; font-style: italic;
-  transform: translateY(4px); transition: transform var(--dur-fast) var(--ease);
+  opacity: 0; transition: opacity var(--dur-fast) var(--ease);
 }
-.life-strip-item:hover figcaption{ transform: translateY(0); }
+.life-circular-item.is-active figcaption{ opacity: 1; }
+@media (prefers-reduced-motion: reduce){
+  .life-circular-item{ transition: opacity .3s var(--ease); }
+}
 
 @media (max-width: 900px){
   .life-editorial{ grid-template-columns: 1fr; }
   .life-editorial-controls{ margin-top: 1.4rem; }
-  .life-strip-item{ width: min(78%, 300px); aspect-ratio: 4/3.4; }
-  .life-strip-item.is-tall{ width: min(58%, 220px); aspect-ratio: 3/4; }
+  .life-circular{ height: clamp(260px, 62vw, 340px); perspective: 800px; }
+  .life-circular-item.is-left{ transform: translateX(-10%) translateY(-3%) scale(.8) rotateY(20deg); }
+  .life-circular-item.is-right{ transform: translateX(10%) translateY(-3%) scale(.8) rotateY(-20deg); }
 }

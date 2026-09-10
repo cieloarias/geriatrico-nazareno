@@ -13,27 +13,26 @@
 <header id="site-header" class="site-header"></header>
 
 <main id="main">
-  <!-- ================= OPENER — type + photo together ================= -->
-  <section class="page-opener">
+  <!-- ================= OPENER — full-bleed DNA video background, same
+       structure as Nosotros' "La Residencia" science section (and, at
+       root, the homepage hero): the video sits behind the whole
+       section, text overlaid directly on it, not in a separate boxed
+       photo slot beside a light column. ================= -->
+  <section class="page-opener staff-opener-hero science-section">
+    <div class="science-bg" aria-hidden="true">
+      <video autoplay muted loop playsinline preload="metadata" poster="assets/videos/dna-science-poster.jpg">
+        <source src="assets/videos/dna-science.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="container">
-      <div class="page-opener-grid">
-        <div class="page-opener-intro" data-reveal>
-          <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.staff"></span></div>
-          <div class="eyebrow"><span class="eyebrow-label" data-i18n="staff.eyebrow"></span></div>
-          <h1 data-i18n="staff.title"></h1>
-          <p class="lede" data-i18n="staff.lede"></p>
-          <div class="page-opener-stat">
-            <strong id="staffCount"></strong>
-            <span data-i18n="staff.stat"></span>
-          </div>
-        </div>
-        <div class="page-opener-media" data-reveal>
-          <figure class="page-opener-figure-main staff-hero-visual" style="aspect-ratio:4/3.4">
-            <video class="staff-hero-visual-video" autoplay muted loop playsinline preload="metadata" poster="assets/videos/dna-science-poster.jpg" aria-hidden="true">
-              <source src="assets/videos/dna-science.mp4" type="video/mp4">
-            </video>
-            <div class="staff-hero-visual-scrim" aria-hidden="true"></div>
-          </figure>
+      <div class="page-opener-intro" data-reveal>
+        <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.staff"></span></div>
+        <div class="eyebrow"><span class="eyebrow-label" data-i18n="staff.eyebrow"></span></div>
+        <h1 data-i18n="staff.title"></h1>
+        <p class="lede" data-i18n="staff.lede"></p>
+        <div class="page-opener-stat">
+          <strong id="staffCount"></strong>
+          <span data-i18n="staff.stat"></span>
         </div>
       </div>
     </div>

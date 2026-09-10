@@ -774,18 +774,26 @@ function renderLifeMosaic(containerId){
    human moment) as the large anchor image, the rest of the real photos in
    a horizontally-scrollable strip alongside a real testimonial reused as
    a pull-quote (not a new/invented quote). ---- */
+/* Circular/staggered photo carousel — the mechanic behind a well-known
+   React "circular testimonials" component, ported to plain CSS
+   transforms + vanilla JS (no React/Framer Motion/shadcn install,
+   consistent with how this project has ported every other borrowed
+   interaction pattern). Only three frames are ever visible: the active
+   one centered and at full scale, the previous/next ones scaled down,
+   pushed to the sides and tilted in 3D via rotateY — everything else
+   is invisible. Percentage-based transforms (not the reference
+   component's resize-observed pixel gap) so it never needs a resize
+   listener. No autoplay: this is a rare, deliberate interaction the
+   visitor drives, not ambient motion. */
 function renderLifeEditorial(containerId){
   const el = document.getElementById(containerId);
   if (!el) return;
   const lang = getLang();
   const items = SITE_DATA.lifeAtNazareno;
 
-  const stripItems = items.map(function(item, i){
+  const circularItems = items.map(function(item, i){
     const cap = item[lang] || item.es;
-    // Editorial story strip, not a grid: the first frame is the large
-    // establishing shot; the rest are narrower portrait frames.
-    const sizeClass = i === 0 ? "" : " is-tall";
-    return `<figure class="life-strip-item${sizeClass}" data-index="${i}"><img src="${item.img}" alt="${cap}" loading="${i === 0 ? 'eager' : 'lazy'}"><figcaption>${cap}</figcaption></figure>`;
+    return `<figure class="life-circular-item" data-index="${i}"><img src="${item.img}" alt="${cap}" loading="${i === 0 ? 'eager' : 'lazy'}"><figcaption>${cap}</figcaption></figure>`;
   }).join("");
 
   el.innerHTML = `
@@ -801,93 +809,43 @@ function renderLifeEditorial(containerId){
         </div>
       </div>
     </div>
-    <div class="life-strip">${stripItems}</div>`;
+    <div class="life-circular" tabindex="0" role="region">${circularItems}</div>`;
   applyI18n(lang);
 
-  const strip = el.querySelector(".life-strip");
-  const figures = Array.from(el.querySelectorAll(".life-strip-item"));
+  const stage = el.querySelector(".life-circular");
+  stage.setAttribute("aria-label", (I18N[lang] && I18N[lang]["home.lifeEyebrow"]) || "Vida en Nazareno");
+  const figures = Array.from(el.querySelectorAll(".life-circular-item"));
   const counter = el.querySelector('[data-role="counter"]');
-  let current = 0;
+  const total = items.length;
+  let active = 0;
 
-  function updateCounter(i){
-    current = i;
-    counter.textContent = String(i + 1).padStart(2, "0") + " / " + String(items.length).padStart(2, "0");
+  function apply(){
+    figures.forEach((fig, i) => {
+      const offset = (i - active + total) % total;
+      fig.classList.toggle("is-active", offset === 0);
+      fig.classList.toggle("is-left", offset === total - 1);
+      fig.classList.toggle("is-right", offset === 1);
+    });
+    counter.textContent = String(active + 1).padStart(2, "0") + " / " + String(total).padStart(2, "0");
   }
-  function goTo(i){
-    i = Math.max(0, Math.min(items.length - 1, i));
-    figures[i]?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
-    updateCounter(i);
-  }
-  el.querySelector(".prev")?.addEventListener("click", () => goTo(current - 1));
-  el.querySelector(".next")?.addEventListener("click", () => goTo(current + 1));
+  function go(delta){ active = (active + delta + total) % total; apply(); }
+  apply();
 
-  // Keep the counter honest if the visitor scrolls the strip directly
-  // (touch/trackpad) rather than using the arrows.
-  if (typeof IntersectionObserver !== "undefined"){
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.6){
-          const i = Number(entry.target.getAttribute("data-index"));
-          if (!Number.isNaN(i)) updateCounter(i);
-        }
-      });
-    }, { root: strip, threshold: [0.6] });
-    figures.forEach(fig => io.observe(fig));
-  }
-
-  // Keyboard support: the strip is a real navigable region, not just a
-  // scroll container. Left/Right step through frames the same as the
-  // arrow buttons.
-  strip.setAttribute("tabindex", "0");
-  strip.setAttribute("role", "region");
-  strip.setAttribute("aria-label", (I18N[lang] && I18N[lang]["home.lifeEyebrow"]) || "Vida en Nazareno");
-  strip.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight"){ e.preventDefault(); goTo(current + 1); }
-    if (e.key === "ArrowLeft"){ e.preventDefault(); goTo(current - 1); }
+  el.querySelector(".prev")?.addEventListener("click", () => go(-1));
+  el.querySelector(".next")?.addEventListener("click", () => go(1));
+  stage.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight"){ e.preventDefault(); go(1); }
+    if (e.key === "ArrowLeft"){ e.preventDefault(); go(-1); }
   });
 
-  // Desktop mouse drag with momentum — touch/pen keep native OS scrolling
-  // (which already has better momentum than anything hand-rolled here).
-  // Emil Kowalski's momentum pattern: track release velocity, decay it
-  // each frame instead of requiring a hard drag-distance threshold.
-  if (typeof window !== "undefined" && "PointerEvent" in window){
-    let dragging = false, startX = 0, startScroll = 0, lastX = 0, lastT = 0, velocity = 0, raf = null;
-
-    function stopMomentum(){ if (raf){ cancelAnimationFrame(raf); raf = null; } }
-
-    strip.addEventListener("pointerdown", (e) => {
-      if (e.pointerType !== "mouse") return;
-      stopMomentum();
-      dragging = true;
-      strip.classList.add("is-dragging");
-      startX = e.clientX; startScroll = strip.scrollLeft;
-      lastX = e.clientX; lastT = performance.now();
-      velocity = 0;
-      strip.setPointerCapture(e.pointerId);
-    });
-    strip.addEventListener("pointermove", (e) => {
-      if (!dragging) return;
-      strip.scrollLeft = startScroll - (e.clientX - startX);
-      const now = performance.now();
-      const dt = now - lastT;
-      if (dt > 0) velocity = (e.clientX - lastX) / dt;
-      lastX = e.clientX; lastT = now;
-    });
-    function endDrag(){
-      if (!dragging) return;
-      dragging = false;
-      strip.classList.remove("is-dragging");
-      let v = velocity;
-      function decay(){
-        if (Math.abs(v) < 0.02){ raf = null; return; }
-        strip.scrollLeft -= v * 16;
-        v *= 0.93;
-        raf = requestAnimationFrame(decay);
-      }
-      raf = requestAnimationFrame(decay);
-    }
-    strip.addEventListener("pointerup", endDrag);
-    strip.addEventListener("pointerleave", endDrag);
-    strip.addEventListener("pointercancel", endDrag);
-  }
+  // Touch swipe — the stage no longer scrolls, so a horizontal drag
+  // needs its own gesture instead of native OS scrolling.
+  let touchStartX = null;
+  stage.addEventListener("touchstart", (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener("touchend", (e) => {
+    if (touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+    touchStartX = null;
+  }, { passive: true });
 }
