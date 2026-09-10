@@ -13,27 +13,30 @@
 <header id="site-header" class="site-header"></header>
 
 <main id="main">
-  <!-- ================= OPENER — full-bleed medical-tech video
-       background, same structural idea as Nosotros' science section
-       (and, at root, the homepage hero): the video sits behind the
-       whole section, text overlaid directly on it. Its own dedicated
-       treatment (not .science-bg) since this is a distinct real asset
-       — a holographic medical dashboard, not the DNA/cell footage. ================= -->
-  <section class="page-opener staff-opener-hero medical-tech-section">
-    <div class="medical-tech-bg" aria-hidden="true">
-      <video autoplay muted loop playsinline preload="metadata" poster="assets/videos/medical-tech-poster.jpg">
-        <source src="assets/videos/medical-tech.mp4" type="video/mp4">
-      </video>
-    </div>
+  <!-- ================= OPENER — back to text + boxed visual side by
+       side (not the full-bleed hero treatment): the medical-tech video
+       lives in its own contained frame next to the text, keeping its
+       real colors rather than needing a heavy dark wash for text
+       legibility, since no text sits on top of it here. ================= -->
+  <section class="page-opener">
     <div class="container">
-      <div class="page-opener-intro" data-reveal>
-        <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.staff"></span></div>
-        <div class="eyebrow"><span class="eyebrow-label" data-i18n="staff.eyebrow"></span></div>
-        <h1 data-i18n="staff.title"></h1>
-        <p class="lede" data-i18n="staff.lede"></p>
-        <div class="page-opener-stat">
-          <strong id="staffCount"></strong>
-          <span data-i18n="staff.stat"></span>
+      <div class="page-opener-grid">
+        <div class="page-opener-intro" data-reveal>
+          <div class="breadcrumb"><a href="index.html" data-i18n="nav.inicio"></a> / <span data-i18n="nav.staff"></span></div>
+          <div class="eyebrow"><span class="eyebrow-label" data-i18n="staff.eyebrow"></span></div>
+          <h1 data-i18n="staff.title"></h1>
+          <p class="lede" data-i18n="staff.lede"></p>
+          <div class="page-opener-stat">
+            <strong id="staffCount"></strong>
+            <span data-i18n="staff.stat"></span>
+          </div>
+        </div>
+        <div class="page-opener-media" data-reveal>
+          <figure class="page-opener-figure-main medical-tech-visual" style="aspect-ratio:4/3.4">
+            <video autoplay muted loop playsinline preload="metadata" poster="assets/videos/medical-tech-poster.jpg">
+              <source src="assets/videos/medical-tech.mp4" type="video/mp4">
+            </video>
+          </figure>
         </div>
       </div>
     </div>

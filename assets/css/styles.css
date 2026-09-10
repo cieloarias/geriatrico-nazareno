@@ -1047,44 +1047,21 @@ h1 em, .h1 em{ color: inherit; }
   .page-opener-figure-main{ aspect-ratio: 4/3.4; }
 }
 
-/* ---- Staff Médico opener — full-bleed DNA video hero ----
-   Reuses .science-section/.science-bg wholesale (same video, same
-   drift, same gradient) rather than the boxed-photo page-opener
-   template — text overlays the video directly, same structural idea
-   as the homepage's own cinematic hero. Only the text-color overrides
-   below are specific to this page, since .page-opener-intro's
-   children default to dark-on-light styling everywhere else. */
-.staff-opener-hero{ padding-bottom: clamp(3.5rem, 7vw, 5.5rem); }
-.staff-opener-hero .breadcrumb{ color: rgba(255,255,255,.6); }
-.staff-opener-hero .breadcrumb a{ color: rgba(255,255,255,.8); }
-.staff-opener-hero .breadcrumb a:hover{ color: #fff; }
-.staff-opener-hero .eyebrow{ color: #BFE0FF; }
-.staff-opener-hero h1{ color: #fff; }
-.staff-opener-hero .lede{ color: rgba(255,255,255,.75); }
-.staff-opener-hero .page-opener-stat{ border-top-color: rgba(255,255,255,.22); }
-.staff-opener-hero .page-opener-stat strong{ color: #fff; }
-.staff-opener-hero .page-opener-stat span{ color: rgba(255,255,255,.65); }
-/* ---- Staff Médico opener background — a real holographic medical-
-   dashboard video (heart visualization + vitals over a desk scene),
-   not the DNA/cell footage used elsewhere. Its own dedicated treatment
-   since the source material is different: a mostly light gray desk
-   scene needs a much heavier, more uniform dark wash than the DNA
-   video's deep-blue footage did, or the light background dominates
-   and the text becomes unreadable. */
-.medical-tech-section{ position: relative; overflow: hidden; }
-.medical-tech-bg{ position: absolute; inset: 0; z-index: 0; }
-.medical-tech-bg video{
-  width: 100%; height: 100%; object-fit: cover;
-  opacity: .55; filter: brightness(.95) contrast(1.12) saturate(1.15);
-  animation: scienceBgDrift 30s ease-in-out infinite alternate;
+/* ---- Staff Médico opener visual — boxed video, not a full-bleed hero
+   ----
+   Back to the standard text-left/media-right page-opener template: the
+   real holographic medical-dashboard video sits in its own contained
+   frame beside the text. Since no text overlays it here, it doesn't
+   need a heavy dark wash for legibility — just a very light corner
+   vignette for polish, keeping its real colors intact. */
+.medical-tech-visual{ position: relative; background: var(--color-primary-ink); }
+.medical-tech-visual video{
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: brightness(1.02) contrast(1.05) saturate(1.1);
 }
-.medical-tech-bg::after{
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(100deg, var(--color-primary-ink) 0%, rgba(0,31,63,.94) 40%, rgba(0,31,63,.72) 62%, rgba(0,31,63,.5) 82%, rgba(0,31,63,.7) 100%);
-}
-.medical-tech-section .container{ position: relative; z-index: 1; }
-@media (prefers-reduced-motion: reduce){
-  .medical-tech-bg video{ animation: none; }
+.medical-tech-visual::after{
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(200deg, rgba(0,20,40,.22) 0%, rgba(0,20,40,0) 35%);
 }
 
 /* Small numbered badge on each mosaic tile — reinforces "curated set",
