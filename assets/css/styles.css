@@ -1071,14 +1071,16 @@ h1 em, .h1 em{ color: inherit; }
    washed-out by comparison. Scoped override: quieter glows, a darker
    and later-breaking wash, and a calmer video so it actually matches
    the reference section's richer, deeper look. */
+/* First pass wasn't enough — this footage has its own baked-in white
+   sparkle/lens-flare highlights, and the added glow accents were
+   compounding that rather than countering it. Dropped the glows
+   entirely here and pushed the video much darker/flatter, with a
+   near-uniform heavy wash instead of a mostly-clear right two-thirds. */
 .staff-opener-hero .science-bg video{
-  opacity: .48; filter: brightness(1.05) contrast(1.05) saturate(1.05);
+  opacity: .32; filter: brightness(0.9) contrast(1) saturate(.95);
 }
 .staff-opener-hero .science-bg::after{
-  background:
-    radial-gradient(40% 50% at 82% 26%, rgba(56,189,248,.14), rgba(56,189,248,0) 70%),
-    radial-gradient(42% 50% at 66% 76%, rgba(0,104,216,.16), rgba(0,104,216,0) 70%),
-    linear-gradient(100deg, var(--color-primary-ink) 0%, rgba(0,31,63,.95) 46%, rgba(0,60,126,.62) 64%, rgba(0,60,126,.42) 82%, rgba(0,31,63,.62) 100%);
+  background: linear-gradient(100deg, var(--color-primary-ink) 0%, rgba(0,31,63,.96) 50%, rgba(0,60,126,.78) 68%, rgba(0,60,126,.65) 86%, rgba(0,31,63,.8) 100%);
 }
 
 /* Small numbered badge on each mosaic tile — reinforces "curated set",
