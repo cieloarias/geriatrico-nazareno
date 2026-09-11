@@ -935,7 +935,10 @@ h1 em, .h1 em{ color: inherit; }
 
 /* Floating WhatsApp (mobile) */
 .wa-float{
-  position: fixed; right: 18px; bottom: 18px; z-index: 90;
+  /* bottom offset cleared to sit above Netlify's own "Powered by
+     Netlify" badge, which occupies the same corner and isn't
+     something this stylesheet controls. */
+  position: fixed; right: 18px; bottom: 84px; z-index: 90;
   width: 58px; height: 58px; border-radius: 50%; background: var(--color-whatsapp);
   color:#fff; display:flex; align-items:center; justify-content:center; box-shadow: var(--shadow-float);
   transition: transform var(--dur-fast) var(--ease);
