@@ -33,9 +33,9 @@ const I18N = {
     "cta.verMapa": "Ver ubicación",
     "cta.volver": "Volver",
 
-    "home.eyebrow": "Casa de reposo · San Borja, Lima",
+    "home.eyebrow": "Residencia geriátrica · San Borja, Lima",
     "home.heroTitle": "Un hogar donde cada persona mayor vive con dignidad y calidez",
-    "home.heroLede": "Casa de Reposo y Residencia Geriátrica Señor de Nazareno: atención médica, enfermería y cuidado humano las 24 horas, en dos residencias dentro de San Borja.",
+    "home.heroLede": "Residencia Geriátrica Señor de Nazareno: atención médica, cuidados de enfermería las 24 horas. Dos sedes en el distrito de San Borja.",
     "home.badge1n": "2",
     "home.badge1t": "Residencias en San Borja",
     "home.badge2n": "7",
@@ -229,9 +229,9 @@ const I18N = {
     "cta.verMapa": "View location",
     "cta.volver": "Back",
 
-    "home.eyebrow": "Residential care home · San Borja, Lima",
+    "home.eyebrow": "Geriatric residence · San Borja, Lima",
     "home.heroTitle": "A home where every older adult lives with dignity and warmth",
-    "home.heroLede": "Casa de Reposo y Residencia Geriátrica Señor de Nazareno: medical care, nursing, and human care around the clock, across two residences in San Borja.",
+    "home.heroLede": "Residencia Geriátrica Señor de Nazareno: medical care, round-the-clock nursing care. Two locations in the San Borja district.",
     "home.badge1n": "2",
     "home.badge1t": "Residences in San Borja",
     "home.badge2n": "7",

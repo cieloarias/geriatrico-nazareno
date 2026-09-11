@@ -47,7 +47,34 @@ function renderHeader(active){
         <span></span><span></span><span></span>
       </button>
     </div>
-  </div>
+  </div>`;
+}
+
+/* The mobile drawer used to be nested inside #site-header's own markup —
+   but .site-header has backdrop-filter, and backdrop-filter (like
+   transform/filter/perspective) creates a new containing block for any
+   position:fixed descendant. That silently broke "position:fixed; inset:0"
+   on the drawer: instead of covering the viewport, it was being sized to
+   the HEADER's own small box (just its height), so the drawer's real
+   background only covered a thin strip and its overflowing nav links
+   rendered with no backdrop behind them — visible bleed-through over
+   whatever was under the header (worst on iOS Safari, but a real bug
+   everywhere). Fix: render the drawer as its own top-level element,
+   appended directly to <body>, never nested inside anything with
+   backdrop-filter/filter/transform. */
+function renderMobileDrawer(){
+  const b = SITE_DATA.brand;
+  const links = [
+    ["index.html","nav.inicio","inicio"],
+    ["nosotros.html","nav.nosotros","nosotros"],
+    ["servicios.html","nav.servicios","servicios"],
+    ["residencias.html","nav.residencias","residencias"],
+    ["staff.html","nav.staff","staff"],
+    ["galeria.html","nav.galeria","galeria"],
+    ["blog.html","nav.blog","blog"],
+    ["contacto.html","nav.contacto","contacto"]
+  ];
+  return `
   <div class="mobile-drawer" id="mobileDrawer">
     <div class="flex items-center gap-2" style="justify-content:space-between">
       <div class="lang-switch" role="group" aria-label="Idioma / Language"><span class="lang-thumb" aria-hidden="true"></span>
@@ -126,6 +153,12 @@ function mountPartials(){
   const footerEl = document.getElementById("site-footer");
   if (headerEl){ headerEl.innerHTML = renderHeader(active); }
   if (footerEl){ footerEl.innerHTML = renderFooter(); }
+  // Appended directly to <body> — must NOT be nested inside #site-header
+  // (or anything else with backdrop-filter/filter/transform), see the
+  // comment on renderMobileDrawer for why.
+  if (!document.getElementById("mobileDrawer")){
+    document.body.insertAdjacentHTML("beforeend", renderMobileDrawer());
+  }
   const yearEl = document.getElementById("year");
   if (yearEl){ yearEl.textContent = new Date().getFullYear(); }
 

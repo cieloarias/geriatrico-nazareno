@@ -379,7 +379,7 @@ h1 em, .h1 em{ color: inherit; }
 
 /* Mobile nav drawer */
 .mobile-drawer{
-  position: fixed; inset: 0; z-index: 99;
+  position: fixed; inset: 0; z-index: 200;
   background: var(--color-sand);
   display: flex; flex-direction: column;
   padding: calc(var(--header-h) + 1rem) var(--gutter) 2rem;
