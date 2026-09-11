@@ -76,7 +76,7 @@ function renderMobileDrawer(){
   ];
   return `
   <div class="mobile-drawer" id="mobileDrawer">
-    <div class="flex items-center gap-2" style="justify-content:space-between">
+    <div class="drawer-topbar flex items-center gap-2" style="justify-content:space-between">
       <div class="lang-switch" role="group" aria-label="Idioma / Language"><span class="lang-thumb" aria-hidden="true"></span>
         <button type="button" data-lang="es" aria-pressed="true">ES</button>
         <button type="button" data-lang="en" aria-pressed="false">EN</button>

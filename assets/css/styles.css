@@ -383,6 +383,12 @@ h1 em, .h1 em{ color: inherit; }
   background: var(--color-sand);
   display: flex; flex-direction: column;
   padding: calc(var(--header-h) + 1rem) var(--gutter) 2rem;
+  /* 8 nav links at this size plus both buttons don't fit every phone's
+     viewport height (shorter phones, or with the browser's own address
+     bar chrome eating into it) — without this the bottom content (the
+     second button) was simply cut off with no way to reach it. */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   transform: translateY(-8px);
   opacity: 0; visibility: hidden; pointer-events: none;
   transition: opacity var(--dur-med) var(--ease), transform var(--dur-med) var(--ease), visibility 0s linear var(--dur-med);
@@ -390,6 +396,13 @@ h1 em, .h1 em{ color: inherit; }
 .mobile-drawer.is-open{
   opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
   transition: opacity var(--dur-med) var(--ease), transform var(--dur-med) var(--ease), visibility 0s;
+}
+/* Sticky so the close button and language toggle stay reachable while
+   scrolling through the links below — otherwise, once scrolling is
+   enabled, closing the menu means scrolling all the way back up first. */
+.drawer-topbar{
+  position: sticky; top: 0; z-index: 1;
+  background: var(--color-sand); padding-top: .3rem; margin-top: -.3rem;
 }
 .mobile-drawer nav{ display: flex; flex-direction: column; gap: 1.6rem; margin-top: 1rem; }
 .mobile-drawer nav a{ font-family: var(--font-display); font-size: 1.9rem; font-weight: 600; }
